@@ -12,7 +12,7 @@
 | **ب – نظارت بالینی** | داشبورد سوپروایزر، گردش‌کار بازبینی ← بازخورد ← اقدام اصلاحی ← بستن، مسائل کیفیت و ارجاع (escalation)، ردپای حسابرسی کامل |
 | **ج – موتور تشخیص تقلب و ناهنجاری** | قواعد + آمار مقاوم + Isolation Forest + تحلیل گراف؛ امتیاز ریسک **قابل‌توضیح**؛ گردش‌کار تحقیق که فقط انسان در آن تصمیم می‌گیرد؛ **دستیار تحقیق LLM با محافظ‌ها** (ارجاع‌دار، مقید به شواهد، red-team‌شده – ر.ک. [docs/fa/LLM_ASSISTANT.md](docs/fa/LLM_ASSISTANT.md)) |
 
-> **تازه‌وارد هستید؟ اول [docs/fa/UNDERSTANDING.md](docs/fa/UNDERSTANDING.md) را بخوانید** – تور راهنما: مفاهیم، مسیر یک درخواست، الگوهای طراحی، SOLID/DRY با ارجاع به فایل‌ها، و راهنمای توسعه.
+> **می‌خواهید نصب و اجرا کنید؟ [docs/fa/GUIDE.md](docs/fa/GUIDE.md) را دنبال کنید.** **تازه‌وارد هستید؟ اول [docs/fa/UNDERSTANDING.md](docs/fa/UNDERSTANDING.md) را بخوانید** – تور راهنما: مفاهیم، مسیر یک درخواست، الگوهای طراحی، SOLID/DRY با ارجاع به فایل‌ها، و راهنمای توسعه.
 
 ---
 
@@ -131,6 +131,7 @@ cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دو�
 
 | خروجی | فایل |
 |---|---|
+| **راهنمای کامل: نصب، اجرا، پیکربندی، کارکرد همه‌چیز، عیب‌یابی** | [docs/fa/GUIDE.md](docs/fa/GUIDE.md) |
 | فهم پروژه، الگوهای طراحی، SOLID/DRY، راهنمای توسعه | [docs/fa/UNDERSTANDING.md](docs/fa/UNDERSTANDING.md) |
 | قواعد مهندسی و راهنمای گام‌به‌گام (افزودن آشکارساز، تغییر RBAC، ارزیابی…) | [docs/fa/ENGINEERING_RULES.md](docs/fa/ENGINEERING_RULES.md) · [docs/fa/HOWTO.md](docs/fa/HOWTO.md) |
 | الف. معماری (سیستم، ماژول‌ها، ERD، جریان داده، معماری تشخیص تقلب، امنیت، مقیاس‌پذیری) | [docs/fa/ARCHITECTURE.md](docs/fa/ARCHITECTURE.md) · [ماتریس RBAC](docs/RBAC_MATRIX.md) · [OpenAPI](docs/openapi.yaml) |

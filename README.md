@@ -12,7 +12,7 @@ Three modules on one shared data model:
 | **B – Clinical Supervision** | supervisor dashboard, review → feedback → corrective action → close, quality issues & escalation, full audit |
 | **C – Fraud & Anomaly Engine** | rules + robust statistics + Isolation Forest + graph analysis; explainable risk scores; human-only investigation workflow; **guarded LLM investigation assistant** (cited, evidence-bound, red-teamed – see [docs/LLM_ASSISTANT.md](docs/LLM_ASSISTANT.md)) |
 
-> **New here? Read [docs/UNDERSTANDING.md](docs/UNDERSTANDING.md)** – the guided tour: concepts, request flow, design patterns, SOLID/DRY with file references, how to extend.
+> **Installing or running it? Follow [docs/GUIDE.md](docs/GUIDE.md).** **New here? Read [docs/UNDERSTANDING.md](docs/UNDERSTANDING.md)** – the guided tour: concepts, request flow, design patterns, SOLID/DRY with file references, how to extend.
 
 ---
 
@@ -131,6 +131,7 @@ Configuration: `backend/.env.example` (DATABASE_URL — SQLite default, PostgreS
 
 | Deliverable | File |
 |---|---|
+| **Complete guide: install, run, configure, how everything works, troubleshooting** | [docs/GUIDE.md](docs/GUIDE.md) |
 | Understanding, patterns, SOLID/DRY, extension guide | [docs/UNDERSTANDING.md](docs/UNDERSTANDING.md) |
 | Engineering rules and how-to playbooks (add a detector, change RBAC, evaluate…) | [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) · [docs/HOWTO.md](docs/HOWTO.md) |
 | Persian/English support (design, limits) | [docs/I18N.md](docs/I18N.md) |
