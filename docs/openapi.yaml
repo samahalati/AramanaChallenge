@@ -1,0 +1,983 @@
+openapi: 3.0.3
+info:
+  title: ARAMANA governance API
+  version: 2.0.0
+paths:
+  /api/admin/activity:
+    get:
+      operationId: admin_activity_retrieve
+      tags:
+      - admin
+      responses:
+        '200':
+          description: No response body
+  /api/admin/users:
+    get:
+      operationId: admin_users_retrieve
+      description: Platform account administration (no HR/clinical content).
+      tags:
+      - admin
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: admin_users_create
+      description: Platform account administration (no HR/clinical content).
+      tags:
+      - admin
+      responses:
+        '201':
+          description: No response body
+  /api/admin/users/{id}/role:
+    patch:
+      operationId: admin_users_role_partial_update
+      description: Platform account administration (no HR/clinical content).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - admin
+      responses:
+        '200':
+          description: No response body
+  /api/admin/users/{id}/status:
+    patch:
+      operationId: admin_users_status_partial_update
+      description: Platform account administration (no HR/clinical content).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - admin
+      responses:
+        '200':
+          description: No response body
+  /api/alerts:
+    get:
+      operationId: alerts_retrieve
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/alerts/{aid}:
+    get:
+      operationId: alerts_retrieve_2
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/alerts/{aid}/actions:
+    post:
+      operationId: alerts_actions_create
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/alerts/{aid}/ai-summary:
+    post:
+      operationId: alerts_ai_summary_create
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/alerts/{aid}/assistant:
+    get:
+      operationId: alerts_assistant_retrieve
+      description: Grounded Q&A over one alert's evidence. GET = history; POST {question}
+        = ask (guardrails + citations).
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: alerts_assistant_create
+      description: Grounded Q&A over one alert's evidence. GET = history; POST {question}
+        = ask (guardrails + citations).
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/alerts/{aid}/route-to-supervisor:
+    post:
+      operationId: alerts_route_to_supervisor_create
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - alerts
+      responses:
+        '200':
+          description: No response body
+  /api/audit:
+    get:
+      operationId: audit_retrieve
+      tags:
+      - audit
+      responses:
+        '200':
+          description: No response body
+  /api/audit/access-events:
+    get:
+      operationId: audit_access_events_retrieve
+      tags:
+      - audit
+      responses:
+        '200':
+          description: No response body
+  /api/audit/verify:
+    get:
+      operationId: audit_verify_retrieve
+      tags:
+      - audit
+      responses:
+        '200':
+          description: No response body
+  /api/auth/login:
+    post:
+      operationId: auth_login_create
+      tags:
+      - auth
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/me:
+    get:
+      operationId: auth_me_retrieve
+      tags:
+      - auth
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/my-clients:
+    get:
+      operationId: clinical_my_clients_retrieve
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/practitioners/{pid}/sessions:
+    get:
+      operationId: clinical_practitioners_sessions_retrieve
+      description: Role grants the *kind* of access; the relationship (own / current
+        supervisee / alerted subject) grants the *record*.
+      parameters:
+      - in: path
+        name: pid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/sessions:
+    post:
+      operationId: clinical_sessions_create
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/sessions/{sid}:
+    patch:
+      operationId: clinical_sessions_partial_update
+      parameters:
+      - in: path
+        name: sid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/sessions/{sid}/checkin:
+    post:
+      operationId: clinical_sessions_checkin_create
+      parameters:
+      - in: path
+        name: sid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/clinical/sessions/{sid}/checkout:
+    post:
+      operationId: clinical_sessions_checkout_create
+      parameters:
+      - in: path
+        name: sid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - clinical
+      responses:
+        '200':
+          description: No response body
+  /api/detection/config:
+    get:
+      operationId: detection_config_retrieve
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+  /api/detection/evaluation:
+    get:
+      operationId: detection_evaluation_retrieve
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+  /api/detection/run:
+    get:
+      operationId: detection_run_retrieve
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: detection_run_create
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+  /api/detection/runs:
+    get:
+      operationId: detection_runs_retrieve
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: detection_runs_create
+      tags:
+      - detection
+      responses:
+        '200':
+          description: No response body
+  /api/health:
+    get:
+      operationId: health_retrieve
+      tags:
+      - health
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/hr/assignments:
+    get:
+      operationId: hr_assignments_retrieve
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: hr_assignments_create
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/contracts/{id}:
+    put:
+      operationId: hr_contracts_update
+      description: PATCH one child record of a practitioner and log it as an administrative
+        activity.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Contract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Contract'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+          description: ''
+    patch:
+      operationId: hr_contracts_partial_update
+      description: PATCH one child record of a practitioner and log it as an administrative
+        activity.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContract'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+          description: ''
+  /api/hr/credentials/{id}:
+    put:
+      operationId: hr_credentials_update
+      description: PATCH one child record of a practitioner and log it as an administrative
+        activity.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credential'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Credential'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Credential'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+          description: ''
+    patch:
+      operationId: hr_credentials_partial_update
+      description: PATCH one child record of a practitioner and log it as an administrative
+        activity.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCredential'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCredential'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCredential'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+          description: ''
+  /api/hr/dashboard:
+    get:
+      operationId: hr_dashboard_retrieve
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/org-units:
+    get:
+      operationId: hr_org_units_retrieve
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners:
+    get:
+      operationId: hr_practitioners_retrieve
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: hr_practitioners_create
+      tags:
+      - hr
+      responses:
+        '201':
+          description: No response body
+  /api/hr/practitioners/{id}:
+    get:
+      operationId: hr_practitioners_retrieve_2
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners/{id}/contracts:
+    post:
+      operationId: hr_practitioners_contracts_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners/{id}/credentials:
+    post:
+      operationId: hr_practitioners_credentials_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners/{id}/lifecycle:
+    post:
+      operationId: hr_practitioners_lifecycle_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners/{id}/profile:
+    patch:
+      operationId: hr_practitioners_profile_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/meta/labels:
+    get:
+      operationId: meta_labels_retrieve
+      description: Persian labels for every backend vocabulary (roles, statuses, actions,
+        evidence keys…). Empty for English – the UI falls back to the raw tokens.
+      tags:
+      - meta
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/meta/rbac:
+    get:
+      operationId: meta_rbac_retrieve
+      description: The matrix the API enforces – the UI renders exactly this (single
+        source of truth).
+      tags:
+      - meta
+      responses:
+        '200':
+          description: No response body
+  /api/monitoring/summary:
+    get:
+      operationId: monitoring_summary_retrieve
+      tags:
+      - monitoring
+      responses:
+        '200':
+          description: No response body
+  /api/monitoring/users/{uid}/history:
+    get:
+      operationId: monitoring_users_history_retrieve
+      parameters:
+      - in: path
+        name: uid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - monitoring
+      responses:
+        '200':
+          description: No response body
+  /api/referrals:
+    post:
+      operationId: referrals_create
+      tags:
+      - referrals
+      responses:
+        '200':
+          description: No response body
+  /api/referrals/eligible:
+    get:
+      operationId: referrals_eligible_retrieve
+      tags:
+      - referrals
+      responses:
+        '200':
+          description: No response body
+  /api/referrals/mine:
+    get:
+      operationId: referrals_mine_retrieve
+      tags:
+      - referrals
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/corrective-actions/{aid}:
+    patch:
+      operationId: supervision_corrective_actions_partial_update
+      parameters:
+      - in: path
+        name: aid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/dashboard:
+    get:
+      operationId: supervision_dashboard_retrieve
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/meetings:
+    post:
+      operationId: supervision_meetings_create
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/meetings/{mid}:
+    patch:
+      operationId: supervision_meetings_partial_update
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      parameters:
+      - in: path
+        name: mid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/my-reviews:
+    get:
+      operationId: supervision_my_reviews_retrieve
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/quality-issues:
+    get:
+      operationId: supervision_quality_issues_retrieve
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: supervision_quality_issues_create
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/quality-issues/{iid}/escalate:
+    post:
+      operationId: supervision_quality_issues_escalate_create
+      parameters:
+      - in: path
+        name: iid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/quality-issues/{iid}/resolve:
+    post:
+      operationId: supervision_quality_issues_resolve_create
+      parameters:
+      - in: path
+        name: iid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews:
+    get:
+      operationId: supervision_reviews_retrieve
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: supervision_reviews_create
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews/{rid}:
+    get:
+      operationId: supervision_reviews_retrieve_2
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      parameters:
+      - in: path
+        name: rid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews/{rid}/close:
+    post:
+      operationId: supervision_reviews_close_create
+      description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
+        one class, one table (DRY).
+      parameters:
+      - in: path
+        name: rid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews/{rid}/corrective-actions:
+    post:
+      operationId: supervision_reviews_corrective_actions_create
+      description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
+        one class, one table (DRY).
+      parameters:
+      - in: path
+        name: rid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews/{rid}/decision:
+    post:
+      operationId: supervision_reviews_decision_create
+      description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
+        one class, one table (DRY).
+      parameters:
+      - in: path
+        name: rid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/reviews/{rid}/start:
+    post:
+      operationId: supervision_reviews_start_create
+      description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
+        one class, one table (DRY).
+      parameters:
+      - in: path
+        name: rid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/supervisees:
+    get:
+      operationId: supervision_supervisees_retrieve
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+  /api/supervision/supervisees/{uid}:
+    get:
+      operationId: supervision_supervisees_retrieve_2
+      description: 'Base for Module-B endpoints: reads need supervision:read, writes
+        supervision:write.'
+      parameters:
+      - in: path
+        name: uid
+        schema:
+          type: integer
+        required: true
+      tags:
+      - supervision
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Contract:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          type: string
+          maxLength: 40
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          maxLength: 20
+        document_ref:
+          type: string
+          nullable: true
+          maxLength: 120
+      required:
+      - id
+      - kind
+      - start_date
+    Credential:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          type: string
+          maxLength: 30
+        title:
+          type: string
+          maxLength: 160
+        number:
+          type: string
+          maxLength: 60
+        issuer:
+          type: string
+          maxLength: 160
+        issued_on:
+          type: string
+          format: date
+          nullable: true
+        expires_on:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          maxLength: 20
+        days_to_expiry:
+          type: string
+          readOnly: true
+      required:
+      - days_to_expiry
+      - id
+      - kind
+      - number
+      - title
+    PatchedContract:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          type: string
+          maxLength: 40
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          maxLength: 20
+        document_ref:
+          type: string
+          nullable: true
+          maxLength: 120
+    PatchedCredential:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          type: string
+          maxLength: 30
+        title:
+          type: string
+          maxLength: 160
+        number:
+          type: string
+          maxLength: 60
+        issuer:
+          type: string
+          maxLength: 160
+        issued_on:
+          type: string
+          format: date
+          nullable: true
+        expires_on:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          maxLength: 20
+        days_to_expiry:
+          type: string
+          readOnly: true

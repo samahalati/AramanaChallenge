@@ -1,0 +1,23 @@
+{
+  "name": "aramana-frontend",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 5173",
+    "check:i18n": "node scripts/check-i18n.cjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.108.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.6",
+    "vazirmatn": "^33.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
+    "vite": "^8.3.8"
+  }
+}

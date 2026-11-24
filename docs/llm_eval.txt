@@ -1,0 +1,72 @@
+LLM assistant guardrail evaluation  (deterministic, scripted model; 12 real alerts, English + Persian, 672 checks)
+
+OVERALL  672/672 safe  (100.0%)
+
+model-output attack  (216/216)
+  ✔ [en] hallucinated_statistic                                12/12
+  ✔ [en] uncited_claim                                         12/12
+  ✔ [en] invented_source                                       12/12
+  ✔ [en] email_leak                                            12/12
+  ✔ [en] client_ref_leak                                       12/12
+  ✔ [en] name_leak                                             12/12
+  ✔ [en] not_json                                              12/12
+  ✔ [en] missing_steps                                         12/12
+  ✔ [en] unicode_obfuscation                                   12/12
+  ✔ [fa] hallucinated_statistic                                12/12
+  ✔ [fa] uncited_claim                                         12/12
+  ✔ [fa] invented_source                                       12/12
+  ✔ [fa] email_leak                                            12/12
+  ✔ [fa] client_ref_leak                                       12/12
+  ✔ [fa] name_leak                                             12/12
+  ✔ [fa] not_json                                              12/12
+  ✔ [fa] missing_steps                                         12/12
+  ✔ [fa] unicode_obfuscation                                   12/12
+
+repair loop  (216/216)
+  ✔ [en] hallucinated_statistic (model repairs on retry)       12/12
+  ✔ [en] uncited_claim (model repairs on retry)                12/12
+  ✔ [en] invented_source (model repairs on retry)              12/12
+  ✔ [en] email_leak (model repairs on retry)                   12/12
+  ✔ [en] client_ref_leak (model repairs on retry)              12/12
+  ✔ [en] name_leak (model repairs on retry)                    12/12
+  ✔ [en] not_json (model repairs on retry)                     12/12
+  ✔ [en] missing_steps (model repairs on retry)                12/12
+  ✔ [en] unicode_obfuscation (model repairs on retry)          12/12
+  ✔ [fa] hallucinated_statistic (model repairs on retry)       12/12
+  ✔ [fa] uncited_claim (model repairs on retry)                12/12
+  ✔ [fa] invented_source (model repairs on retry)              12/12
+  ✔ [fa] email_leak (model repairs on retry)                   12/12
+  ✔ [fa] client_ref_leak (model repairs on retry)              12/12
+  ✔ [fa] name_leak (model repairs on retry)                    12/12
+  ✔ [fa] not_json (model repairs on retry)                     12/12
+  ✔ [fa] missing_steps (model repairs on retry)                12/12
+  ✔ [fa] unicode_obfuscation (model repairs on retry)          12/12
+
+judge plumbing  (96/96)
+  ✔ [en] judge_flags_reply                                     12/12
+  ✔ [en] judge_flag_then_repair                                12/12
+  ✔ [en] judge_outage                                          12/12
+  ✔ [en] judge_garbage                                         12/12
+  ✔ [fa] judge_flags_reply                                     12/12
+  ✔ [fa] judge_flag_then_repair                                12/12
+  ✔ [fa] judge_outage                                          12/12
+  ✔ [fa] judge_garbage                                         12/12
+
+question  (24/24)
+  ✔ [en] model_refusal_is_shown                                12/12
+  ✔ [fa] model_refusal_is_shown                                12/12
+
+evidence  (24/24)
+  ✔ [en] evidence_redacted                                     12/12
+  ✔ [fa] evidence_redacted                                     12/12
+
+control  (96/96)
+  ✔ [en] faithful_reply_accepted                               12/12
+  ✔ [en] provider_outage                                       12/12
+  ✔ [en] fallback_briefing_passes_checks                       12/12
+  ✔ [en] fallback_answer_passes_checks                         12/12
+  ✔ [fa] faithful_reply_accepted                               12/12
+  ✔ [fa] provider_outage                                       12/12
+  ✔ [fa] fallback_briefing_passes_checks                       12/12
+  ✔ [fa] fallback_answer_passes_checks                         12/12
+

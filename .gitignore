@@ -1,0 +1,41 @@
+# ───────────── Secrets & local configuration (never commit real keys) ─────────────
+.env
+.env.*
+!.env.example
+
+# ───────────── Python ─────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ───────────── Node / frontend ─────────────
+node_modules/
+frontend/dist/
+frontend/shots/
+
+# ───────────── Local databases & generated data ─────────────
+*.db
+*.sqlite
+*.sqlite3
+data/*
+!data/.gitkeep
+
+# ───────────── Logs & temporary files ─────────────
+*.log
+*.tmp
+*.bak
+
+# ───────────── Editors & OS ─────────────
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

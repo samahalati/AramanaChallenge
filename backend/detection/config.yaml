@@ -1,0 +1,95 @@
+# Fraud & anomaly detection configuration. VERSIONED: bump `ruleset_version` on any change;
+# every alert stores the ruleset + model version that produced it.
+ruleset_version: "rules-1.0.0"
+random_seed: 42
+
+windows:
+  recent_days: 28        # "recent behaviour" window for peer comparison / ML
+  lookback_days: 56      # window for referral & overlap analysis
+
+risk:
+  min_alert_score: 15    # below this no alert is raised
+  levels: {low: 0, medium: 35, high: 60, critical: 80}
+  max_indicator_contribution: 0.97
+  # alerts supported ONLY by these weak indicators are capped (corroboration requirement)
+  weak_indicators: [ml_isolation_forest, peer_outlier_load, peer_outlier_n_decided, approval_burst]
+  weak_only_cap: 34
+
+# Weight = max contribution of an indicator at full strength (noisy-OR aggregation, see scoring.py)
+weights:
+  # A – therapist
+  overlap_pairs: 0.70
+  impossible_location: 0.55
+  completed_overlap: 0.45
+  excessive_daily_hours: 0.35
+  inflated_duration_share: 0.80
+  no_checkin_share: 0.50
+  # B – counselor referral analysis
+  referral_concentration_p: 0.55
+  referral_js_divergence: 0.50
+  referral_top2_excess: 0.40
+  referral_spec_mismatch: 0.30
+  # C – supervisor
+  approvals_missing_docs: 0.70
+  rapid_approvals: 0.60
+  approval_burst: 0.15
+  # D – admin / platform
+  denied_access_burst: 0.75
+  scope_probing: 0.45
+  account_creation_burst: 0.55
+  privilege_grants: 0.55
+  admin_modification_burst: 0.75
+  failed_login_burst: 0.70
+  multi_account_ip: 0.60
+  # E – graph
+  exclusive_referral_dependency: 0.55
+  lax_approval_edge: 0.50
+  # generic behavioural indicators (stats + ML) – deliberately weak on their own
+  peer_outlier_rate: 0.30
+  peer_outlier_volume: 0.10
+  ml_isolation_forest: 0.30
+
+thresholds:
+  overlap_tolerance_min: 5
+  overlap_pairs_full: 4
+  max_daily_hours: 11
+  duration_slack_min: 10
+  duration_slack_ratio: 0.25
+  duration_min_events: 4
+  duration_min_share: 0.12
+  duration_share_full: 0.40
+  min_referrals: 20
+  referral_alpha: 0.001
+  referral_js_min: 0.20
+  referral_js_full: 0.60
+  referral_simulations: 4000
+  referral_policy_slack: 0.05   # share of referrals tolerated outside strict specialisation policy
+  approvals_missing_min: 3
+  approvals_missing_share: 0.12
+  rapid_review_minutes: 3.0
+  rapid_review_min: 5
+  rapid_review_share: 0.15
+  burst_window_hours: 48
+  burst_ratio_min: 3.0
+  denied_burst_min: 3
+  denied_burst_window_min: 60
+  account_burst_min: 3
+  account_burst_window_min: 30
+  admin_burst_min: 8
+  admin_burst_window_min: 60
+  failed_login_min: 8
+  failed_login_window_min: 30
+  multi_ip_min_accounts: 4
+  multi_ip_window_min: 60
+  robust_z_min: 3.5
+  min_cohort: 5
+  ml_percentile: 0.97
+  ml_recent_weeks: 2
+  graph_min_referrals: 10
+  graph_out_share_min: 0.25
+  graph_in_share_min: 0.50
+  graph_lift_min: 2.0
+  graph_min_reviews: 8
+  graph_approve_rate_min: 0.97
+
+privileged_roles: [compliance_reviewer, hr_admin, clinical_supervisor, platform_admin]

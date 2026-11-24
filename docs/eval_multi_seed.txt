@@ -1,0 +1,9 @@
+seed   1: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   2: precision=0.842 recall=1.000 F1=0.914 hard-neg FP=0 (fp=3 fn=0)
+seed   3: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   4: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   5: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   6: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   7: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+seed   8: precision=1.000 recall=1.000 F1=1.000 hard-neg FP=0 (fp=0 fn=0)
+mean   : precision=0.980 recall=1.000 F1=0.989
