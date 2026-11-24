@@ -50,7 +50,7 @@ def bursts(df: pd.DataFrame, key: str, window_min: float, min_count: int, distin
     width = pd.Timedelta(minutes=window_min)
     for k, g in df.groupby(key):
         g = g.sort_values(ts).reset_index(drop=True)
-        best, lo, left = (0, 0, 0), 0, 0
+        best, left = (0, 0, 0), 0
         for i in range(len(g)):
             while g[ts][i] - g[ts][left] > width:
                 left += 1

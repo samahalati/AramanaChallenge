@@ -14,7 +14,7 @@ from accounts.selectors import briefs
 from core import i18n
 from core.audit import audit
 from core.constants import CATEGORY_LABELS, RISK_LEVELS, AlertStatus as S, Domain
-from core.rbac import ALERT_DOMAIN_VISIBILITY, INVESTIGATE_DOMAINS, can_see_client_refs, has_perm
+from core.rbac import INVESTIGATE_DOMAINS, can_see_client_refs, has_perm
 from core.statemachine import StateMachine
 from hr.selectors import current_supervisor_id
 from monitoring import localize

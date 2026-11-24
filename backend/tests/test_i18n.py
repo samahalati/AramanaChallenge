@@ -119,3 +119,10 @@ def test_service_serves_persian_briefing_and_stays_advisory(api):
     assert PERSIAN.search(body["content"]["summary"]) and PERSIAN.search(body["advisory"]) and all(v == "pass" for v in body["guardrails"]["output"]["checks"].values())
     after = Alert.objects.get(id=row["id"])
     assert (after.risk_score, after.status) == (before.risk_score, before.status) and set(body["guardrails"]["output"]["checks"]) == set(CHECKS)
+
+
+def test_seed_catalogs_exist_for_both_languages():
+    """`seed_demo --lang en` once crashed because the English name lists were lost: both languages must be complete and parallel."""
+    from seed import generate as g
+    assert len(g.FIRST) > 20 and len(g.LAST) > 10 and len(g.FIRST_FA) > 20 and len(g.LAST_FA) > 10
+    assert set(g.TEXT["en"]) == set(g.TEXT["fa"])

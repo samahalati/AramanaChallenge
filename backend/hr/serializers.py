@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from accounts.models import User
 from core.constants import SPECIALIZATIONS
-from hr.models import Contract, Credential, LifecycleEvent, SupervisionAssignment
+from hr.models import Contract, Credential, LifecycleEvent
 
 PRACTITIONER_ROLES = ["therapist", "assistant_counselor", "clinical_supervisor"]
 

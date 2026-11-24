@@ -128,7 +128,6 @@ MESSAGES = {
     "Assignee must be an active reviewer authorised for this alert's domain": "واگذارشونده باید بازبینِ فعالِ مجاز برای حوزه‌ی این هشدار باشد",
     "Client is not in your caseload": "این مراجع در پرونده‌های شما نیست", "E-mail already registered": "این ایمیل قبلاً ثبت شده است", "Invalid credentials": "ایمیل یا رمز عبور نادرست است",
     "Invalid or expired token": "توکن نامعتبر یا منقضی است", "Issue not found": "مسئله یافت نشد", "Meeting not found": "جلسه‌ی نظارت یافت نشد", "No check-in recorded": "ورودی ثبت نشده است",
-    "AI output is advisory and may be wrong. Every statement must be checked against the cited evidence; decisions are made by authorised humans.": "خروجی هوش مصنوعی صرفاً مشورتی است و ممکن است نادرست باشد. هر گزاره باید با شواهدِ ارجاع‌شده بررسی شود؛ تصمیم‌ها را افرادِ مجاز می‌گیرند.",
     "Approved without supporting documentation. This is recorded and visible to compliance monitoring.": "بدون مستندات پشتیبان تأیید شد. این مورد ثبت شده و برای پایش انطباق قابل مشاهده است.",
     "Not allowed to route this alert": "اجازه‌ی ارجاع این هشدار را ندارید", "Only investigating reviewers may see the AI assistant history": "فقط بازبین‌های تحقیق‌کننده می‌توانند تاریخچه‌ی دستیار هوش مصنوعی را ببینند",
     "Only operational/clinical concerns are routed to supervisors; potential misconduct stays with compliance/HR": "فقط نگرانی‌های عملیاتی/بالینی به سوپروایزرها ارجاع می‌شود؛ تخلف بالقوه نزد انطباق/منابع انسانی می‌ماند",

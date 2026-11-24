@@ -65,6 +65,12 @@ class UnitOfWork:
 
 
 DEMO_PASSWORD = "Demo!2345"
+FIRST = ["Amira", "Basil", "Carmen", "Dario", "Elena", "Farid", "Gina", "Hugo", "Ines", "Jamal", "Kira", "Lukas",
+         "Mona", "Nabil", "Olga", "Pavel", "Quinn", "Rania", "Sven", "Tala", "Uma", "Viktor", "Wafa", "Xenia",
+         "Yara", "Zane", "Alina", "Bruno", "Celia", "Dimitri", "Edda", "Felix", "Greta", "Hana", "Ivo", "Jada"]
+LAST = ["Ardent", "Brook", "Calder", "Dane", "Ellery", "Fenwick", "Garnet", "Hollis", "Iverson", "Jarrow", "Keane",
+        "Lorne", "Marlow", "Nash", "Oakes", "Pryce", "Quill", "Rowan", "Sutter", "Thorne", "Underhill", "Vance",
+        "Wren", "Yardley", "Zeller"]
 FIRST_FA = ["آرزو", "بهراد", "پریسا", "داریوش", "الهام", "فرید", "گلناز", "هومن", "ایلیا", "جمال", "کیانا", "لادن", "مینا", "نیما", "اشکان", "پویا", "ندا", "رضا", "سپیده", "طاها",
             "شبنم", "وحید", "یاسمن", "زهره", "آیدا", "بابک", "سیما", "دانیال", "الناز", "فرهاد", "گیتا", "حسام", "ایرج", "جاوید", "کامیار", "لیلی"]
 LAST_FA = ["احمدی", "بهرامی", "پورمحمد", "دهقان", "رحیمی", "فرهادی", "گودرزی", "حسینی", "ایزدی", "جلالی", "کریمی", "لطفی", "مرادی", "نوری", "اسدی", "پاکزاد", "قاسمی", "رضوی",

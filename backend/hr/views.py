@@ -3,7 +3,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.audit import log_admin
 from hr import services
 from hr.models import Contract, Credential
 from hr.serializers import (AssignmentSerializer, ContractSerializer, CredentialSerializer, LifecycleActionSerializer, LifecycleEventSerializer,

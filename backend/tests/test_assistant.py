@@ -7,7 +7,7 @@ from accounts.models import User
 from core.models import AuditLog
 from detection.assistant import fallback, redteam
 from detection.assistant import investigator
-from detection.assistant.guardrails import CHECKS, validate, violations
+from detection.assistant.guardrails import CHECKS, validate
 from detection.assistant.pack import build_pack, clean
 from monitoring.models import Alert, AssistantExchange, InvestigationEvent
 from monitoring.services import assistant as svc
