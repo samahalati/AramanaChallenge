@@ -1,4 +1,4 @@
-"""HR boundary: workforce data. Owns profiles, credentials, contracts, lifecycle history and effective-dated assignments."""
+"""HR boundary: workforce data. Owns profiles, credentials, contracts, professional development, lifecycle history and effective-dated assignments."""
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -52,6 +52,17 @@ class LifecycleEvent(models.Model):
     effective_date = models.DateField()
     actor_id = models.IntegerField(null=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+
+class ProfessionalDevelopment(models.Model):
+    """Professional development activities (trainings, courses, conferences, supervision hours) – feeds the HR activity view (spec §3.3)."""
+    user = models.ForeignKey(U, on_delete=models.CASCADE, related_name="development")
+    kind = models.CharField(max_length=30)  # training | course | conference | workshop | supervision_hours
+    title = models.CharField(max_length=160)
+    provider = models.CharField(max_length=160, blank=True, default="")
+    hours = models.FloatField(default=0)
+    completed_on = models.DateField(db_index=True)
+    recorded_by = models.IntegerField(null=True)
 
 
 class SupervisionAssignment(models.Model):

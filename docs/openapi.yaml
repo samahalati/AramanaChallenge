@@ -509,6 +509,22 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/hr/practitioners/{id}/activity:
+    get:
+      operationId: hr_practitioners_activity_retrieve
+      description: Aggregated activity, quality, participation and development indicators
+        (no clinical content).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
   /api/hr/practitioners/{id}/contracts:
     post:
       operationId: hr_practitioners_contracts_create
@@ -526,6 +542,20 @@ paths:
   /api/hr/practitioners/{id}/credentials:
     post:
       operationId: hr_practitioners_credentials_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - hr
+      responses:
+        '200':
+          description: No response body
+  /api/hr/practitioners/{id}/development:
+    post:
+      operationId: hr_practitioners_development_create
       parameters:
       - in: path
         name: id

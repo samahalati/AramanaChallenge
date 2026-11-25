@@ -6,6 +6,7 @@ import { DataTable } from "../../components/DataTable";
 import { useForm } from "../../components/FormModal";
 import { Query } from "../../components/Query";
 import { Badge, Card, Grid, Muted, Status } from "../../components/ui";
+import Activity from "./Activity";
 import { d10, isFa, num, pretty, t } from "../../lib/i18n";
 
 // which lifecycle actions are offered from each status (the server's state machine is the authority)
@@ -68,6 +69,7 @@ export default function PractitionerDetail() {
               <DataTable rows={d.lifecycle} columns={[{ h: t("Date"), f: (r) => d10(r.effective_date) }, { h: t("Event"), f: (r) => pretty(r.event) }, { h: t("Reason"), f: (r) => r.reason }]} />
             </Card>
           </Grid>
+          <Activity id={id} write={write} />
           <Muted>{t("Edits are recorded as administrative activity and are visible to compliance monitoring.")}</Muted>
         </>
       );

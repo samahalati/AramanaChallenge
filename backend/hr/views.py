@@ -3,10 +3,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from hr import services
+from hr import activity, services
 from hr.models import Contract, Credential
 from hr.serializers import (AssignmentSerializer, ContractSerializer, CredentialSerializer, LifecycleActionSerializer, LifecycleEventSerializer,
-                            PractitionerCreateSerializer, PractitionerListSerializer, ProfilePatchSerializer)
+                            DevelopmentSerializer, PractitionerCreateSerializer, PractitionerListSerializer, ProfilePatchSerializer)
 
 
 def validated(serializer_cls, request, **kw):
@@ -16,7 +16,7 @@ def validated(serializer_cls, request, **kw):
 
 
 class PractitionerViewSet(viewsets.ViewSet):
-    perms = {"list": "hr:read", "retrieve": "hr:read", "*": "hr:write"}
+    perms = {"list": "hr:read", "retrieve": "hr:read", "activity": "hr:read", "*": "hr:write"}
 
     def list(self, request):
         qs, q = services.practitioners().order_by("full_name"), request.query_params
@@ -44,6 +44,16 @@ class PractitionerViewSet(viewsets.ViewSet):
             "lifecycle": LifecycleEventSerializer(user.lifecycle.order_by("-id"), many=True).data,
             "assignments": [a for a in services.assignments_list(current_only=False) if user.id in (a["supervisor_id"], a["supervisee_id"])],
         })
+
+    @action(detail=True, methods=["get"])
+    def activity(self, request, pk):
+        """Aggregated activity, quality, participation and development indicators (no clinical content)."""
+        return Response(activity.practitioner_activity(request.user, services.get_practitioner(int(pk))))
+
+    @action(detail=True, methods=["post"])
+    def development(self, request, pk):
+        item = services.add_development(request.user, int(pk), validated(DevelopmentSerializer, request))
+        return Response(DevelopmentSerializer(item).data, status=201)
 
     @action(detail=True, methods=["patch"])
     def profile(self, request, pk):

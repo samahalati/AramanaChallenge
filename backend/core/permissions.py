@@ -9,13 +9,19 @@ raw signal for the "unauthorized administrative activity" scenario.
 """
 from rest_framework.permissions import BasePermission
 
+import logging
+
 from core.audit import audit, record_access
 from core.rbac import has_perm
 
 AUTHENTICATED = "authenticated"   # any signed-in user
 
 
+log = logging.getLogger("aramana.security")
+
+
 def deny(request, permission: str) -> None:
+    log.warning("access denied user=%s permission=%s method=%s path=%s ip=%s", request.user.id, permission, request.method, request.path, request.META.get("REMOTE_ADDR"))
     resource = request.path.strip("/").split("/")[1:2] or ["root"]
     record_access(request.user.id, "access_denied", permission=permission, resource_type=resource[0], path=request.path,
                   ip=request.META.get("REMOTE_ADDR"))

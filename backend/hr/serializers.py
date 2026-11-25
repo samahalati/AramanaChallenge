@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from accounts.models import User
 from core.constants import SPECIALIZATIONS
-from hr.models import Contract, Credential, LifecycleEvent
+from hr.models import Contract, Credential, LifecycleEvent, ProfessionalDevelopment
 
 PRACTITIONER_ROLES = ["therapist", "assistant_counselor", "clinical_supervisor"]
 
@@ -86,3 +86,22 @@ class AssignmentSerializer(serializers.Serializer):
     effective_from = serializers.DateField(required=False, allow_null=True)
     schedule_every_days = serializers.IntegerField(min_value=1, max_value=90, default=7)
     reason = serializers.CharField(min_length=5, max_length=500)
+
+
+DEVELOPMENT_KINDS = ["training", "course", "conference", "workshop", "supervision_hours"]
+
+
+class DevelopmentSerializer(serializers.ModelSerializer):
+    kind = serializers.ChoiceField(DEVELOPMENT_KINDS)
+    title = serializers.CharField(min_length=3, max_length=160)
+    hours = serializers.FloatField(min_value=0.5, max_value=200)
+
+    class Meta:
+        model = ProfessionalDevelopment
+        fields = ["id", "kind", "title", "provider", "hours", "completed_on"]
+
+    def validate_completed_on(self, value):
+        from datetime import date
+        if value > date.today():
+            raise serializers.ValidationError("Completion date cannot be in the future")
+        return value

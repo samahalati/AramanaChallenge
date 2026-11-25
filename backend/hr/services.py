@@ -11,7 +11,7 @@ from core.audit import log_admin
 from core.constants import Role, UserStatus
 from core.errors import Conflict
 from core.statemachine import StateMachine
-from hr.models import Contract, Credential, LifecycleEvent, OrgUnit, PractitionerProfile, SupervisionAssignment
+from hr.models import Contract, Credential, LifecycleEvent, OrgUnit, PractitionerProfile, ProfessionalDevelopment, SupervisionAssignment
 from hr.selectors import current_assignments
 from hr.serializers import PRACTITIONER_ROLES
 
@@ -93,6 +93,14 @@ def assign_supervisor(actor: User, d: dict) -> SupervisionAssignment:
     add_history(supervisee.id, "supervisor_reassigned" if previous else "supervisor_assigned", d["reason"], actor.id, start)
     log_admin(actor, "assignment_edit", supervisee.id, supervisor=supervisor.id, effective_from=str(start), replaced=[a.id for a in previous])
     return new
+
+
+@transaction.atomic
+def add_development(actor: User, uid: int, d: dict) -> ProfessionalDevelopment:
+    get_practitioner(uid)
+    item = ProfessionalDevelopment.objects.create(user_id=uid, recorded_by=actor.id, **d)
+    log_admin(actor, "development_add", uid, title=item.title, hours=item.hours)
+    return item
 
 
 def record_change(actor: User, action: str, user_id: int, op: str, **detail) -> None:

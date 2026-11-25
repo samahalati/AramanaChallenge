@@ -19,6 +19,7 @@ Generator: `backend/seed/generate.py` (`python manage.py seed_demo [--seed-value
 | Admin / access | 1,630 access events, 115 admin activities | HR admin 0–3 edits per working day; 2–4 logins per user-week; isolated typos and isolated denials as noise |
 | Supervision | 24+1 assignments (1 historical reassignment), 288 meetings (≈85 % attended), 6 quality issues, corrective actions | |
 | Credentials/contracts/lifecycle | 2 credentials + 1 contract + onboarding per practitioner; one expiring, one expired, one suspend→reactivate | |
+| Professional development | 2–4 activities per practitioner (training, course, conference, workshop, supervision hours) from a separate random stream, so they never shift the evaluated anomalies | |
 
 ## 2. Feature definitions (used by ML / statistics)
 

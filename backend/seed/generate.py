@@ -39,7 +39,7 @@ from clinical.models import Client, Referral, Session
 from core.audit import audit
 from core.constants import SPECIALIZATIONS, Role, UserStatus
 from core.models import AccessEvent, AdminActivity
-from hr.models import Contract, Credential, LifecycleEvent, OrgUnit, PractitionerProfile, SupervisionAssignment
+from hr.models import Contract, Credential, LifecycleEvent, OrgUnit, PractitionerProfile, ProfessionalDevelopment, SupervisionAssignment
 from supervision.models import CorrectiveAction, QualityIssue, Review, SupervisionMeeting
 
 warnings.filterwarnings("ignore", message=".*received a naive datetime.*")   # the generator reasons in naive UTC
@@ -79,6 +79,8 @@ TEXT = {
     "en": {"north": "ARAMANA North", "south": "ARAMANA South", "teams": ["Team Alpha", "Team Beta", "Team Gamma", "Team Delta", "Trauma Unit"],
            "admin1": "Platform Admin One", "admin2": "Platform Admin Two", "hr1": "Hana HR", "hr2": "Hugo HR-Two", "comp1": "Corin Compliance", "comp2": "Cleo Compliance",
            "temp": "Temp Account {}", "initial": "Initial assignment", "rebalance": "Caseload rebalancing", "license": "Professional practice license",
+           "pd": [("training", "Trauma-informed care workshop", "Regional Health Authority"), ("course", "Ethics and confidentiality refresher", "Professional Counselling Association"),
+                  ("conference", "Annual mental-health practice conference", "National Clinical Forum"), ("supervision_hours", "Peer supervision circle", "ARAMANA"), ("workshop", "Risk assessment in practice", "Regional Health Authority")],
            "cert": "Clinical supervision / counselling cert.", "issuer1": "Regional Health Authority", "issuer2": "Professional Counselling Board", "onboarded": "Onboarding completed",
            "susp": "Pending licence renewal", "react": "Licence renewed", "notes": "Reviewed case documentation.", "good": "Good practice; maintain documentation standards.",
            "fix": "Please complete the missing treatment-plan updates.", "action": "Update treatment plan and resubmit documentation.",
@@ -87,6 +89,8 @@ TEXT = {
     "fa": {"north": "آرامانا – شمال", "south": "آرامانا – جنوب", "teams": ["تیم آلفا", "تیم بتا", "تیم گاما", "تیم دلتا", "واحد تروما"],
            "admin1": "مدیر پلتفرم ۱", "admin2": "مدیر پلتفرم ۲", "hr1": "هانیه رحیمی", "hr2": "هومن کاظمی", "comp1": "کامران صادقی", "comp2": "کیانا سلطانی",
            "temp": "حساب موقت {}", "initial": "انتساب اولیه", "rebalance": "توازن‌بخشی مجدد پرونده‌ها", "license": "پروانه‌ی فعالیت حرفه‌ای",
+           "pd": [("training", "کارگاه مراقبت مبتنی بر آگاهی از تروما", "سازمان نظام سلامت منطقه‌ای"), ("course", "دوره‌ی بازآموزی اخلاق و رازداری", "انجمن مشاوره‌ی حرفه‌ای"),
+                  ("conference", "همایش سالانه‌ی عملکرد سلامت روان", "مجمع ملی بالینی"), ("supervision_hours", "حلقه‌ی نظارت همتا", "آرامانا"), ("workshop", "ارزیابی ریسک در عمل", "سازمان نظام سلامت منطقه‌ای")],
            "cert": "گواهی نظارت بالینی / مشاوره", "issuer1": "سازمان نظام سلامت منطقه‌ای", "issuer2": "هیئت حرفه‌ای مشاوره", "onboarded": "فرایند جذب کامل شد",
            "susp": "در انتظار تمدید پروانه", "react": "پروانه تمدید شد", "notes": "مستندات پرونده بررسی شد.", "good": "عملکرد خوب؛ رعایت استانداردهای مستندسازی ادامه یابد.",
            "fix": "لطفاً به‌روزرسانی‌های ناقصِ طرح درمان را تکمیل کنید.", "action": "طرح درمان را به‌روزرسانی و مستندات را دوباره ارسال کنید.",
@@ -211,7 +215,11 @@ def generate(seed: int = 42, ground_truth_path: str | None = None, lang: str = "
     # credentials, contracts, lifecycle ---------------------------------------
     today_ref = date(2026, 11, 20)
     all_staff = ths + sups + cns
+    pd_rng = random.Random(seed + 7)       # own stream: adding development records must not shift the main random sequence (and thus the evaluated anomalies)
     for u in all_staff:
+        for kind, title, provider in pd_rng.sample(X["pd"], pd_rng.randint(2, 4)):
+            db.add(ProfessionalDevelopment(user_id=u.id, kind=kind, title=title, provider=provider, hours=float(pd_rng.choice([4, 6, 8, 12, 16, 24])),
+                                           completed_on=today_ref - timedelta(days=pd_rng.randint(10, 330)), recorded_by=hr1.id))
         exp1 = today_ref + timedelta(days=rng.randint(120, 900))
         db.add(Credential(user_id=u.id, kind="license", title=X["license"],
                           number=f"LIC-{u.id:04d}-{rng.randint(1000, 9999)}", issuer=X["issuer1"],

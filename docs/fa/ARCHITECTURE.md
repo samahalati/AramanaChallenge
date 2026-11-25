@@ -86,6 +86,7 @@ erDiagram
   accounts_user ||--o{ hr_credential : holds
   accounts_user ||--o{ hr_contract : signs
   accounts_user ||--o{ hr_lifecycleevent : history
+  accounts_user ||--o{ hr_professionaldevelopment : "trainings / courses / supervision hours"
   accounts_user ||--o{ hr_supervisionassignment : "supervisor / supervisee (effective-dated)"
   clinical_client ||--o{ clinical_session : attends
   clinical_client ||--o{ clinical_referral : subject
@@ -111,6 +112,7 @@ erDiagram
 |---|---|
 | `accounts_user` | نقش، وضعیت (`pending_onboarding/active/suspended/terminated`)، شمارنده‌های قفل حساب؛ هش PBKDF2 |
 | `hr_supervisionassignment` | `effective_from/effective_to` – **تاریخچه هرگز بازنویسی نمی‌شود**؛ ایندکس `(supervisee_id, effective_to)` انتساب فعلی را پیدا می‌کند |
+| `hr_professionaldevelopment` | فعالیت‌های توسعه‌ی حرفه‌ای (نوع، عنوان، ارائه‌دهنده، ساعت، تاریخ) – ورودی نمای فعالیت و عملکرد منابع انسانی (`hr/activity.py`، بند ۳٫۳ سند) |
 | `hr_lifecycleevent` | «تاریخچه‌ی کامل فعالیت و وضعیت» (جذب، تعلیق، تغییر انتساب، خلاصه‌ی نتیجه‌ی بازبینی) |
 | `clinical_session` | زمان‌بندی‌شده در برابر گزارش‌شده در برابر راستی‌آزمایی‌شده (`checkin_at/checkout_at`)، `modification_count`، `group_id` (جلسات گروهیِ مشروع)، `mode/location_code` |
 | `supervision_review` | `decision_minutes`، `has_documentation` (ویژگی‌های رفتار تأیید)، `closed_at` |

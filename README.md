@@ -73,6 +73,14 @@ Plus a graph-only scenario (exclusive referral/approval cluster), HR edit burst,
 
 ---
 
+## Screenshots (Persian UI, "Earth & Olive" design)
+| | |
+|---|---|
+| ![Login](docs/screenshots/login.png) | ![Monitoring overview](docs/screenshots/monitoring-overview.png) |
+| ![HR dashboard](docs/screenshots/hr-dashboard.png) | ![Practitioner activity and performance](docs/screenshots/hr-practitioner-activity.png) |
+
+Full alert page with the investigation workflow, evidence and AI assistant: [docs/screenshots/alert-detail.png](docs/screenshots/alert-detail.png).
+
 ## Language
 The UI, alert text, API errors, demo data and LLM assistant are **Persian by default (RTL, Jalali dates)** with an **EN/فا switch** in the header. The official brief is in English and sets no language requirement, so both are supported. English dataset: `python manage.py seed_demo --reset --detect --lang en`. Details and limits: [docs/I18N.md](docs/I18N.md).
 
@@ -103,7 +111,7 @@ backend/                         Django project
   monitoring/                    Module C: alerts, investigation workflow, runs, evaluation, visibility policy
   detection/                     PURE PYTHON engine: Strategy detectors, scoring, explain, config.yaml, llm.py (transport) + assistant/ (guarded LLM)
   seed/                          synthetic data + injected anomalies + ground truth
-  tests/                         pytest-django (72 tests)
+  tests/                         pytest-django (87 tests)
 frontend/                        React + Vite (TanStack Query, React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
 docs/                            UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
@@ -120,7 +128,7 @@ python manage.py run_detection                   # idempotent; de-duplicates aga
 python manage.py evaluate                        # precision/recall/F1 + ablation vs synthetic ground truth
 python manage.py export_docs                     # regenerate docs/RBAC_MATRIX.md + docs/openapi.yaml from code
 python manage.py evaluate_llm [--live]           # red-team the LLM guardrails (scripted model, no network; --live uses your key)
-python -m pytest -q                              # 72 tests
+python -m pytest -q                              # 87 tests
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # robustness across synthetic worlds
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # browser smoke test (needs Playwright)
 ```
@@ -132,7 +140,9 @@ Configuration: `backend/.env.example` (DATABASE_URL — SQLite default, PostgreS
 | Deliverable | File |
 |---|---|
 | **Complete guide: install, run, configure, how everything works, troubleshooting** | [docs/GUIDE.md](docs/GUIDE.md) |
+| **Requirements traceability: every clause of the original brief → code, UI, test** | [docs/REQUIREMENTS_TRACEABILITY.md](docs/REQUIREMENTS_TRACEABILITY.md) |
 | Understanding, patterns, SOLID/DRY, extension guide | [docs/UNDERSTANDING.md](docs/UNDERSTANDING.md) |
+| Visual design (palette, fonts, logo) | [docs/DESIGN.md](docs/DESIGN.md) |
 | Engineering rules and how-to playbooks (add a detector, change RBAC, evaluate…) | [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) · [docs/HOWTO.md](docs/HOWTO.md) |
 | Persian/English support (design, limits) | [docs/I18N.md](docs/I18N.md) |
 | A. Architecture (system, modules, ERD, data flow, fraud architecture, security, scalability) | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [RBAC matrix](docs/RBAC_MATRIX.md) · [OpenAPI](docs/openapi.yaml) |

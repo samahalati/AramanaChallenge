@@ -34,6 +34,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "core.middleware.ApiNoStoreMiddleware",
+    "core.middleware.SecurityHeadersMiddleware",
     "core.middleware.LanguageMiddleware",
 ]
 ROOT_URLCONF = "config.urls"
@@ -44,6 +45,18 @@ DATABASES = {"default": dj_database_url.parse(env("DATABASE_URL", f"sqlite:///{R
 LANGUAGE_CODE, TIME_ZONE, USE_TZ = "en-us", "UTC", True
 STATIC_URL = "/static/"
 SECURE_REFERRER_POLICY = "no-referrer"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+if not DEBUG:                                  # production: HTTPS only (TLS is terminated by the reverse proxy in front of the app)
+    SECURE_HSTS_SECONDS, SECURE_HSTS_INCLUDE_SUBDOMAINS = 31_536_000, True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+LOGGING = {   # application log: one line per event on stdout (collected by the container runtime); security events have their own logger
+    "version": 1, "disable_existing_loggers": False,
+    "formatters": {"std": {"format": "%(asctime)s %(levelname)s %(name)s %(message)s"}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "std"}},
+    "loggers": {"aramana": {"handlers": ["console"], "level": "INFO", "propagate": False}, "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False}},
+}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["core.auth.JWTAuthentication"],

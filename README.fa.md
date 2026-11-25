@@ -73,6 +73,14 @@ npm run dev                                                # ← http://localhos
 
 ---
 
+## تصاویر (رابط فارسی، طراحی «خاک و زیتون»)
+| | |
+|---|---|
+| ![ورود](docs/screenshots/login.png) | ![نمای کلی پایش](docs/screenshots/monitoring-overview.png) |
+| ![داشبورد منابع انسانی](docs/screenshots/hr-dashboard.png) | ![فعالیت و عملکرد متخصص](docs/screenshots/hr-practitioner-activity.png) |
+
+صفحه‌ی کامل هشدار با گردش‌کار تحقیق، شواهد و دستیار هوش مصنوعی: [docs/screenshots/alert-detail.png](docs/screenshots/alert-detail.png).
+
 ## زبان
 رابط کاربری، متن هشدارها، خطاهای API، داده‌ی دمو و دستیار LLM **به‌طور پیش‌فرض فارسی‌اند (راست‌به‌چپ، تاریخ جلالی)** و در سربرگ یک **کلید EN/فا** وجود دارد. سند رسمی چالش انگلیسی است و الزامی برای زبان ندارد؛ به همین دلیل هر دو پشتیبانی می‌شوند. داده‌ی انگلیسی: `python manage.py seed_demo --reset --detect --lang en`. جزئیات و محدودیت‌ها: [docs/fa/I18N.md](docs/fa/I18N.md).
 
@@ -103,7 +111,7 @@ backend/                         پروژه‌ی Django
   monitoring/                    ماژول ج: هشدارها، گردش‌کار تحقیق، اجراها، ارزیابی، سیاست دید (visibility)
   detection/                     موتور پایتون خالص: آشکارسازهای Strategy، امتیازدهی، توضیح، آداپتور LLM، config.yaml
   seed/                          داده‌ی مصنوعی + ناهنجاری‌های تزریقی + ground truth
-  tests/                         pytest-django (۷۲ تست)
+  tests/                         pytest-django (۸۷ تست)
 frontend/                        React + Vite (TanStack Query، React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
 docs/                            UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
@@ -120,7 +128,7 @@ python manage.py run_detection                   # idempotent؛ با هشدار�
 python manage.py evaluate                        # precision/recall/F1 + ablation نسبت به ground truth مصنوعی
 python manage.py export_docs                     # بازتولید docs/RBAC_MATRIX.md و docs/openapi.yaml از روی کد
 python manage.py evaluate_llm [--live]           # red-team محافظ‌های LLM (مدل اسکریپت‌شده، بدون شبکه؛ --live با کلید شما)
-python -m pytest -q                              # ۷۲ تست
+python -m pytest -q                              # ۸۷ تست
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # پایداری در دنیاهای مصنوعی مختلف
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دود مرورگر (به Playwright نیاز دارد)
 ```
@@ -132,7 +140,9 @@ cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دو�
 | خروجی | فایل |
 |---|---|
 | **راهنمای کامل: نصب، اجرا، پیکربندی، کارکرد همه‌چیز، عیب‌یابی** | [docs/fa/GUIDE.md](docs/fa/GUIDE.md) |
+| **ردیابی الزام‌ها: هر بند سند اصلی ← کد، رابط، آزمون** | [docs/fa/REQUIREMENTS_TRACEABILITY.md](docs/fa/REQUIREMENTS_TRACEABILITY.md) |
 | فهم پروژه، الگوهای طراحی، SOLID/DRY، راهنمای توسعه | [docs/fa/UNDERSTANDING.md](docs/fa/UNDERSTANDING.md) |
+| طراحی بصری (پالت، فونت، نشانک) | [docs/fa/DESIGN.md](docs/fa/DESIGN.md) |
 | قواعد مهندسی و راهنمای گام‌به‌گام (افزودن آشکارساز، تغییر RBAC، ارزیابی…) | [docs/fa/ENGINEERING_RULES.md](docs/fa/ENGINEERING_RULES.md) · [docs/fa/HOWTO.md](docs/fa/HOWTO.md) |
 | الف. معماری (سیستم، ماژول‌ها، ERD، جریان داده، معماری تشخیص تقلب، امنیت، مقیاس‌پذیری) | [docs/fa/ARCHITECTURE.md](docs/fa/ARCHITECTURE.md) · [ماتریس RBAC](docs/RBAC_MATRIX.md) · [OpenAPI](docs/openapi.yaml) |
 | د. گزارش فنی (تصمیم‌ها، روش‌شناسی، نتایج اندازه‌گیری‌شده، محدودیت‌ها، هزینه، نقشه‌راه) | [docs/fa/TECHNICAL_REPORT.md](docs/fa/TECHNICAL_REPORT.md) |

@@ -56,6 +56,7 @@ const nav = async (page, text) => { await page.getByRole("link", { name: T(text)
       await p.locator("button.chip").first().click(); await p.waitForSelector(".source");
       await p.getByText(T("Use as draft note")).first().click(); await p.waitForSelector(`text=${T("Add comment (AI-assisted draft – edit before submitting)")}`);
       await p.getByRole("button", { name: T("Cancel") }).click();
+      await p.waitForSelector(`text=${T("Activity history of this person")}`);                      // spec 5.4: relevant activity history
       await shot(p, "03b-assistant");
       await shot(p, "03-alert-detail");
       await nav(p, "Scoring & evaluation"); await p.waitForSelector(`text=${T("Measured performance on the synthetic dataset")}`); await shot(p, "04-evaluation");
@@ -66,6 +67,7 @@ const nav = async (page, text) => { await page.getByRole("link", { name: T(text)
       await nav(p, "Practitioners"); await p.waitForSelector("tbody tr");
       await p.fill(`input[placeholder^="${T("Search name or e-mail…").slice(0, 8)}"]`, "therapist1@"); await p.waitForTimeout(600);
       await p.locator("tbody tr").first().click(); await p.waitForSelector(`text=${T("Credentials & licences")}`);
+      await p.waitForSelector(`text=${T("Activity & performance")}`); await p.waitForSelector(`text=${T("Professional development")}`);   // spec 3.3
       await p.getByRole("button", { name: term("suspend"), exact: true }).click(); await p.waitForSelector(`text=${T("A human HR decision. It is audited and never triggered by an AI risk score.")}`); await shot(p, "07-hr-suspend-dialog");
       await p.getByRole("button", { name: T("Cancel") }).click();
       await nav(p, "Supervision assignments"); await p.waitForSelector(`text=${T("Current supervisor–supervisee relationships")}`); await shot(p, "08-assignments");

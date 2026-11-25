@@ -86,6 +86,7 @@ erDiagram
   accounts_user ||--o{ hr_credential : holds
   accounts_user ||--o{ hr_contract : signs
   accounts_user ||--o{ hr_lifecycleevent : history
+  accounts_user ||--o{ hr_professionaldevelopment : "trainings / courses / supervision hours"
   accounts_user ||--o{ hr_supervisionassignment : "supervisor / supervisee (effective-dated)"
   clinical_client ||--o{ clinical_session : attends
   clinical_client ||--o{ clinical_referral : subject
@@ -111,6 +112,7 @@ Key columns (full definitions: each app's `models.py`; migrations: each app's `m
 |---|---|
 | `accounts_user` | role, status (`pending_onboarding/active/suspended/terminated`), lockout counters; PBKDF2 hash |
 | `hr_supervisionassignment` | `effective_from/effective_to` – **history is never overwritten**; index `(supervisee_id, effective_to)` finds the current one |
+| `hr_professionaldevelopment` | professional development activities (kind, title, provider, hours, date) – feeds the HR activity & performance view (`hr/activity.py`, spec §3.3) |
 | `hr_lifecycleevent` | the "complete activity & status history" (onboarding, suspension, reassignment, review outcome summaries) |
 | `clinical_session` | scheduled vs reported vs verified (`checkin_at/checkout_at`), `modification_count`, `group_id` (legit group sessions), `mode/location_code` |
 | `supervision_review` | `decision_minutes`, `has_documentation` (the approval-behaviour features), `closed_at` |

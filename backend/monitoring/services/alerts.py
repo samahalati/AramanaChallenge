@@ -165,5 +165,5 @@ def monitoring_summary(user) -> dict:
 def user_history(user, uid: int) -> dict:
     rows = [(a, us) for a, us in visible_alerts(user) if uid in us]
     return {"user": briefs([uid]).get(uid), "by_status": dict(Counter(a.status for a, _ in rows)),
-            "alerts": [{"alert_uid": a.alert_uid, "title": a.title, "risk_level": a.risk_level, "status": a.status, "detected_at": a.detected_at, "scenario": a.scenario} for a, _ in rows],
+            "alerts": [{"id": a.id, "alert_uid": a.alert_uid, "title": a.title, "risk_level": a.risk_level, "status": a.status, "detected_at": a.detected_at, "scenario": a.scenario} for a, _ in rows],
             "note": i18n.t("Longitudinal monitoring context only: alerts are not findings; false positives and closed-no-action outcomes are part of this record.")}

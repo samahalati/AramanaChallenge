@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { post } from "../../api/client";
-import { useAct } from "../../api/hooks";
+import { useAct, useGet } from "../../api/hooks";
 import { useAuth } from "../../auth/AuthContext";
 import { DataTable } from "../../components/DataTable";
 import { useForm } from "../../components/FormModal";
@@ -28,6 +28,20 @@ function Breakdown({ rows }) {
   return (
     <DataTable rows={rows.map((b, i) => ({ ...b, id: i }))} columns={[{ h: t("Indicator"), f: (b) => <div>{b.label}<div className="small muted">{b.note}</div></div> }, { h: t("Method"), f: (b) => b.method_label ?? pretty(b.method) },
       { h: t("Value"), f: (b) => String(b.value) }, { h: t("Ref"), f: (b) => String(b.threshold) }, { h: t("Points"), f: (b) => <div><b>{num(b.points.toFixed(1))}</b><div className="bar"><i style={{ width: `${(100 * b.points) / max}%` }} /></div></div> }]} />
+  );
+}
+
+/** Spec §5.4 "view relevant activity history": every alert (of the visible ones) about the same person, outcomes included. */
+function SubjectHistory({ userId, currentId }) {
+  const { data: h } = useGet(`/monitoring/users/${userId}/history`);
+  if (!h) return null;
+  const others = h.alerts.filter((x) => x.id !== currentId);
+  return (
+    <Card title={t("Activity history of this person")}>
+      <DataTable rows={others} empty={t("No other alerts about this person.")} columns={[{ h: t("Alert"), f: (r) => <Link to={`/monitoring/alerts/${r.id}`}>{r.title}</Link> }, { h: t("Risk"), f: (r) => <Level level={r.risk_level} /> },
+        { h: t("Status"), f: (r) => <Status status={r.status} /> }, { h: t("Detected"), f: (r) => dt(r.detected_at) }]} />
+      <Muted>{h.note}</Muted>
+    </Card>
   );
 }
 
@@ -74,6 +88,7 @@ export default function AlertDetail() {
           </Grid>
           {can("alerts:investigate") && <div style={{ marginTop: 14 }}><AssistantPanel alertId={id} onDraft={draft} /></div>}
           <Card title={t("Explanation")} className="spaced"><pre className="expl">{a.explanation}</pre></Card>
+          {a.subject_user_id && <div style={{ marginTop: 14 }}><SubjectHistory userId={a.subject_user_id} currentId={a.id} /></div>}
           <Grid style={{ marginTop: 14 }}>
             <Card title={t("Supporting evidence")}><Evidence items={a.evidence} /></Card>
             <Card title={t("Investigation history")}>

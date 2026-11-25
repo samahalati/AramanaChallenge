@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { LangSwitch } from "../../components/Layout";
+import Logo from "../../components/Logo";
 import { useToast } from "../../components/Toast";
 import { isFa, t } from "../../lib/i18n";
 
@@ -16,7 +17,8 @@ export default function Login() {
   const submit = async (e, as = email) => { e?.preventDefault(); try { await login(as, password); } catch (err) { toast(err.message, true); } };
   return (
     <div className="login card">
-      <div className="row between"><h1>{isFa ? "پلتفرم حاکمیت و نظارت آرامنا" : "ARAMANA governance platform"}</h1><LangSwitch /></div>
+      <div className="row between"><Logo /><LangSwitch /></div>
+      <h1 style={{ marginTop: 14 }}>{isFa ? "پلتفرم حاکمیت و نظارت آرامانا" : "Aramana governance platform"}</h1>
       <p className="sub">{t("HR administration · clinical supervision · AI-assisted fraud & anomaly detection. Prototype with synthetic data only.")}</p>
       <form onSubmit={submit}>
         <label>{t("E-mail")}</label><input type="email" dir="ltr" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />

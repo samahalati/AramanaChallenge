@@ -14,6 +14,7 @@ let terms = {};
 export async function loadLabels() {
   document.documentElement.lang = lang;
   document.documentElement.dir = isFa ? "rtl" : "ltr";
+  document.title = isFa ? "آرامانا – پلتفرم حاکمیت و نظارت" : "Aramana – Governance & Supervision Platform";
   if (!isFa) return;
   try { terms = (await (await fetch("/api/meta/labels", { headers: { "Accept-Language": lang } })).json()).terms ?? {}; } catch { /* UI still works with English tokens */ }
 }
