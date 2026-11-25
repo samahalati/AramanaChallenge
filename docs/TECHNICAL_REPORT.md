@@ -90,6 +90,7 @@ Reading: rules carry the logical/policy scenarios; statistics are needed for ref
 | Concurrency | Audit chain append is serial (reads last hash) | Per-tenant chain / DB sequence / advisory lock in Postgres |
 | Policy | Approvals without documentation are accepted and flagged, not blocked | Make blocking configurable per policy |
 | Scheduling | Detection is on-demand/batch | CronJob/worker; incremental features |
+| Deployment paths | Verified: SQLite (default), PostgreSQL 16 (migrate, seed, all tests and the evaluation give identical results) and the Docker image (build, start, login, API, SPA, security headers). Not verified: load/soak behaviour, PostgreSQL row-level security, HA, a CI pipeline | PostgreSQL needs `pip install "psycopg[binary]"`; load tests and a CI job are roadmap phase 1 |
 | Fairness | Peer comparison can penalise legitimately different roles (part-time, new starters) | Cohort by role/FTE/tenure; fairness monitoring |
 | Human oversight | System cannot prevent misuse of alerts by reviewers | No auto-action path; documented process required; audit of who viewed what; reviewer ≠ subject |
 
