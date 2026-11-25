@@ -76,7 +76,7 @@ flowchart TB
 
 ## ۳. طراحی پایگاه‌داده
 
-۲۱ جدول؛ **مرزها همان اپ‌های Django هستند** (`accounts`+`hr` هویت/نیروی کار، `clinical`+`supervision` عملیات مراقبت، `core` امنیت، `monitoring` خروجی هوش مصنوعی). ارجاع‌های بین‌مرزی به افراد **شناسه‌ی صرفِ عددی (نه کلید خارجی)** هستند (مراجعان شبه‌ناشناس‌اند)؛ همین کار امکان انتقال جداول بالینی به پایگاه‌داده/خوشه‌ی جدا با اعتبارنامه‌ی جدا را می‌دهد (ر.ک. §۹).
+۲۳ جدول؛ **مرزها همان اپ‌های Django هستند** (`accounts`+`hr` هویت/نیروی کار، `clinical`+`supervision` عملیات مراقبت، `core` امنیت، `monitoring` خروجی هوش مصنوعی). ارجاع‌های بین‌مرزی به افراد **شناسه‌ی صرفِ عددی (نه کلید خارجی)** هستند (مراجعان شبه‌ناشناس‌اند)؛ همین کار امکان انتقال جداول بالینی به پایگاه‌داده/خوشه‌ی جدا با اعتبارنامه‌ی جدا را می‌دهد (ر.ک. §۹).
 
 ```mermaid
 erDiagram
@@ -103,7 +103,9 @@ erDiagram
   monitoring_detectionrun ||--o{ monitoring_alert : produced
   monitoring_alert ||--o{ monitoring_alertuser : involves
   monitoring_alert ||--o{ monitoring_investigationevent : timeline
+  monitoring_alert ||--o{ monitoring_assistantexchange : "assistant Q&A (append-only)"
   accounts_user ||..o{ monitoring_alertuser : "user_id (ID only)"
+  accounts_user ||..o{ monitoring_assistantexchange : "actor_id (ID only)"
 ```
 
 ستون‌های کلیدی (تعریف کامل: `models.py` هر اپ؛ مهاجرت‌ها: پوشه‌ی `migrations/` هر اپ):
@@ -119,6 +121,7 @@ erDiagram
 | `core_auditlog` | زنجیره‌ی `prev_hash`/`hash`؛ `GET /api/audit/verify` آن را دوباره محاسبه می‌کند |
 | `core_accessevent` | ورود موفق/ناموفق، دسترسی مجاز/ردشده با permission + path + IP |
 | `monitoring_alert` | امتیاز، سطح، `methods[]`، `score_breakdown` (JSON، مجموع امتیازها = امتیاز)، `evidence`، `record_refs`، `ruleset_version`، `model_version`، `dedup_key` |
+| `monitoring_assistantexchange` | هر خلاصه/پرسش دستیار: پرسش، ارائه‌دهنده، محتوای نمایش‌داده‌شده، ارجاع‌ها، گزارش حفاظ‌ها؛ فقط‌افزودنی (ر.ک. `LLM_ASSISTANT.md`) |
 
 **ایندکس‌گذاری** (همه روی مسیرهای پرتردد): `clinical_session(practitioner_id, scheduled_start)`، `clinical_referral(from_user_id)`، `clinical_referral(to_practitioner_id)`، `supervision_review(supervisor_id|supervisee_id|decided_at)`، `core_accessevent(ts,user_id)`، `core_auditlog(ts,actor_id)`، `monitoring_alert(status, risk_level, category, domain, subject_user_id, dedup_key, detected_at)`.
 

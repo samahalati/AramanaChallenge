@@ -76,7 +76,7 @@ flowchart TB
 
 ## 3. Database design
 
-21 tables; **boundaries are Django apps** (`accounts`+`hr` identity/workforce, `clinical`+`supervision` care operations, `core` security, `monitoring` AI output). Cross-boundary references to people are **plain integer IDs, not foreign keys** (clients are pseudonyms), which is what lets the clinical tables be moved to their own database/cluster with separate credentials (see §9).
+23 tables; **boundaries are Django apps** (`accounts`+`hr` identity/workforce, `clinical`+`supervision` care operations, `core` security, `monitoring` AI output). Cross-boundary references to people are **plain integer IDs, not foreign keys** (clients are pseudonyms), which is what lets the clinical tables be moved to their own database/cluster with separate credentials (see §9).
 
 ```mermaid
 erDiagram
@@ -103,7 +103,9 @@ erDiagram
   monitoring_detectionrun ||--o{ monitoring_alert : produced
   monitoring_alert ||--o{ monitoring_alertuser : involves
   monitoring_alert ||--o{ monitoring_investigationevent : timeline
+  monitoring_alert ||--o{ monitoring_assistantexchange : "assistant Q&A (append-only)"
   accounts_user ||..o{ monitoring_alertuser : "user_id (ID only)"
+  accounts_user ||..o{ monitoring_assistantexchange : "actor_id (ID only)"
 ```
 
 Key columns (full definitions: each app's `models.py`; migrations: each app's `migrations/`):
@@ -119,6 +121,7 @@ Key columns (full definitions: each app's `models.py`; migrations: each app's `m
 | `core_auditlog` | `prev_hash`/`hash` chain; `GET /api/audit/verify` re-computes it |
 | `core_accessevent` | login ok/failed, access allowed/denied with permission + path + IP |
 | `monitoring_alert` | score, level, `methods[]`, `score_breakdown` (JSON, points sum to score), `evidence`, `record_refs`, `ruleset_version`, `model_version`, `dedup_key` |
+| `monitoring_assistantexchange` | every assistant briefing/question: question, provider, shown content, citations, guardrail report; append-only (see `LLM_ASSISTANT.md`) |
 
 **Indexing** (all on hot paths): `clinical_session(practitioner_id, scheduled_start)`, `clinical_referral(from_user_id)`, `clinical_referral(to_practitioner_id)`, `supervision_review(supervisor_id|supervisee_id|decided_at)`, `core_accessevent(ts,user_id)`, `core_auditlog(ts,actor_id)`, `monitoring_alert(status, risk_level, category, domain, subject_user_id, dedup_key, detected_at)`.
 
