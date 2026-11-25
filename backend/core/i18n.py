@@ -131,6 +131,7 @@ MESSAGES = {
     "Client is not in your caseload": "این مراجع در پرونده‌های شما نیست", "E-mail already registered": "این ایمیل قبلاً ثبت شده است", "Invalid credentials": "ایمیل یا رمز عبور نادرست است",
     "Invalid or expired token": "توکن نامعتبر یا منقضی است", "Issue not found": "مسئله یافت نشد", "Meeting not found": "جلسه‌ی نظارت یافت نشد", "No check-in recorded": "ورودی ثبت نشده است",
     "Approved without supporting documentation. This is recorded and visible to compliance monitoring.": "بدون مستندات پشتیبان تأیید شد. این مورد ثبت شده و برای پایش انطباق قابل مشاهده است.",
+    "Completion date cannot be in the future": "تاریخ انجام نمی‌تواند در آینده باشد",
     "Not allowed to route this alert": "اجازه‌ی ارجاع این هشدار را ندارید", "Only investigating reviewers may see the AI assistant history": "فقط بازبین‌های تحقیق‌کننده می‌توانند تاریخچه‌ی دستیار هوش مصنوعی را ببینند",
     "Only operational/clinical concerns are routed to supervisors; potential misconduct stays with compliance/HR": "فقط نگرانی‌های عملیاتی/بالینی به سوپروایزرها ارجاع می‌شود؛ تخلف بالقوه نزد انطباق/منابع انسانی می‌ماند",
     "Only reviewers authorised to investigate this alert may use the AI assistant": "فقط بازبین‌های مجاز به تحقیقِ این هشدار می‌توانند از دستیار هوش مصنوعی استفاده کنند",
@@ -158,7 +159,20 @@ MESSAGES = {
     "Alert created from supervisor escalation": "هشدار از ارجاع سوپروایزر ایجاد شد", "Created from supervisor escalation": "از ارجاع سوپروایزر ایجاد شد", "Evidence viewed": "شواهد مشاهده شد",
     "AI question refused by input guardrail": "پرسش از دستیار هوش مصنوعی توسط محافظ ورودی رد شد",
 }
+FIELDS = {   # labels of request fields shown in validation errors ("field:<name>" in the vocabulary served to the UI)
+    "email": "ایمیل", "full_name": "نام کامل", "role": "نقش", "password": "گذرواژه", "initial_password": "گذرواژه‌ی اولیه", "action": "اقدام", "reason": "دلیل", "kind": "نوع",
+    "title": "عنوان", "number": "شماره", "expires_on": "تاریخ انقضا", "issued_on": "تاریخ صدور", "start_date": "تاریخ شروع", "end_date": "تاریخ پایان", "hours": "ساعت",
+    "completed_on": "تاریخ انجام", "provider": "ارائه‌دهنده", "capacity_weekly_sessions": "ظرفیت هفتگی", "specialization": "تخصص", "employment_type": "نوع همکاری",
+    "org_unit_id": "واحد سازمانی", "hire_date": "تاریخ استخدام", "bio": "توضیح", "supervisor_id": "سوپروایزر", "supervisee_id": "زیردست", "effective_from": "از تاریخ",
+    "status": "وضعیت", "scheduled_at": "زمان", "due_date": "سررسید", "practitioner_id": "متخصص", "category": "دسته", "severity": "شدت", "detail": "جزئیات",
+    "client_ref": "شناسه‌ی مراجع", "scheduled_start": "زمان شروع", "duration_min": "مدت (دقیقه)", "mode": "شیوه", "location_code": "مکان", "to_practitioner_id": "متخصص مقصد",
+    "need": "نیاز", "question": "پرسش", "note": "یادداشت", "assign_to": "مسئول", "outcome": "نتیجه", "notes": "یادداشت‌ها", "feedback": "بازخورد",
+    "performance_score": "امتیاز عملکرد", "minutes_spent": "دقایق صرف‌شده", "has_documentation": "مستندات", "description": "شرح", "monitoring_plan": "برنامه‌ی پایش"}
+TERMS.update({f"field:{k}": v for k, v in FIELDS.items()})
+
 MESSAGE_TEMPLATES = [
+    (r"Ensure this value is greater than or equal to ([\d.]+)\.", lambda m: f"مقدار باید حداقل {det.fa_digits(m.group(1))} باشد."),
+    (r"Ensure this value is less than or equal to ([\d.]+)\.", lambda m: f"مقدار باید حداکثر {det.fa_digits(m.group(1))} باشد."),
     (r"Cannot '(.+)' from state '(.+)'", lambda m: f"انجام «{TERMS.get(m.group(1), m.group(1))}» از وضعیت «{TERMS.get(m.group(2), m.group(2))}» ممکن نیست"),
     (r"A documented note of at least (\d+) characters is required for '(.+)'", lambda m: f"برای «{TERMS.get(m.group(2), m.group(2))}» یادداشتِ مستند حداقل {det.fa_digits(m.group(1))} نویسه لازم است"),
     (r"Action '(.+)' is not allowed for your role or the alert's current status", lambda m: f"اقدام «{TERMS.get(m.group(1), m.group(1))}» برای نقش شما یا وضعیت فعلی هشدار مجاز نیست"),

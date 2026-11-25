@@ -81,4 +81,5 @@ pre.expl{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);
 .source{margin-top:6px;padding:6px 8px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);word-break:break-word}
 code,input[type=email],input[type=password],.ltr{direction:ltr;text-align:start;unicode-bidi:plaintext}
 :root[lang=fa] .kpi .l,:root[lang=fa] th{letter-spacing:0}
-@media (max-width:640px){main{padding:12px}.demo{grid-template-columns:1fr}header.top{padding:10px 12px}}
+@media (max-width:640px){main{padding:12px}.demo{grid-template-columns:1fr}header.top{padding:10px 12px;gap:10px}
+header.top nav{order:5;flex:1 0 100%;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}header.top .who{order:3;margin-inline-start:auto}h1{font-size:22px}}

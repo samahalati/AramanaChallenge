@@ -34,6 +34,7 @@ export const num = (x) => {
 };
 export const pretty = (s) => terms[s] ?? String(s ?? "").replaceAll("_", " ");
 export const term = (s) => terms[s] ?? s;
+export const fieldLabel = (k) => terms[`field:${k}`] ?? String(k).replaceAll("_", " ");
 export const pct = (x) => (x == null ? "–" : isFa ? `${num(Math.round(x * 100))}٪` : `${Math.round(x * 100)}%`);
 
 const JALALI = "fa-IR-u-ca-persian";
