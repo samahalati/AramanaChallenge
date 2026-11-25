@@ -1,3 +1,4 @@
+from django.db import DatabaseError, connection
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +15,13 @@ class Health(APIView):
     permission_classes, authentication_classes = [AllowAny], []
 
     def get(self, request):
+        """Readiness probe for load balancers: 200 only when the database answers, so a replica without a database is taken out of rotation."""
+        try:
+            connection.ensure_connection()
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT 1")
+        except DatabaseError:
+            return Response({"status": "database unavailable"}, status=503)
         return Response({"status": "ok"})
 
 

@@ -127,3 +127,15 @@ def test_security_headers_and_no_cache(api):
 
 def test_api_docs_and_schema_are_served(api):
     assert api.get("/docs/").status_code == 200 and api.get("/schema/").status_code == 200
+
+
+def test_audit_append_survives_a_lost_race(api, monkeypatch):
+    """Two workers read the same tail: the loser must retry on the new tail instead of forking the chain (needed for several replicas)."""
+    import core.audit as audit_mod
+    audit_mod.audit(None, "first", "test")
+    tail = audit_mod._tail()
+    stale = iter([audit_mod.AuditLog.objects.order_by("-id").values_list("prev_hash", flat=True).first()])   # a tail someone else already extended
+    monkeypatch.setattr(audit_mod, "_tail", lambda: next(stale, None) or tail)
+    row = audit_mod.audit(None, "second", "test")
+    assert row.prev_hash == tail and verify_chain()["ok"]
+    assert AuditLog.objects.filter(prev_hash=tail).count() == 1

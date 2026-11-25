@@ -93,6 +93,7 @@ cd frontend && npm run dev                 # باز کنید: http://localhost:5
 ```
 **گزینه‌ی ب – یک پردازه:** `cd frontend && npm run build` و سپس فقط بک‌اند را اجرا کنید؛ Django برنامه‌ی ساخته‌شده را در **http://localhost:8000** سرو می‌کند.
 **گزینه‌ی ج – Docker:** `docker build -t aramana . && docker run -p 8000:8000 aramana` ← http://localhost:8000 (داده هنگام ساخت image ساخته می‌شود).
+**گزینه‌ی ه – پشته‌ی تکثیرشده (PostgreSQL + ۲ replica + load balancer):** `SECRET_KEY` و `POSTGRES_PASSWORD` را export کنید و `docker compose up -d --build` بزنید ← http://localhost:8080. جزئیات، رفتار دسترس‌پذیری بالا، CI و تست بار اندازه‌گیری‌شده: [DEPLOYMENT.md](DEPLOYMENT.md).
 **گزینه‌ی د – Make:** `make install seed backend` و `make frontend`.
 
 ## ۶. نگاه اول: حساب‌ها و صفحه‌ها
@@ -171,7 +172,7 @@ LLM_API_KEY=کلید-رایگان-شما            # https://aistudio.google.co
 | `python manage.py evaluate [--write file.json]` | precision/recall/F1 نسبت به ground truth |
 | `python manage.py evaluate_llm [--live] [--alerts N]` | red-team محافظ‌های LLM (`--live` با کلید شما) |
 | `python manage.py export_docs` | بازتولید `docs/RBAC_MATRIX.md` و `docs/openapi.yaml` از روی کد |
-| `python -m pytest -q` | اجرای ۹۴ تست |
+| `python -m pytest -q` | اجرای ۹۵ تست |
 | `python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8` | پایداری در دنیاهای مصنوعی مختلف |
 
 فرانت‌اند (از `frontend/`): `npm run dev` · `npm run build` · `npm run check:i18n` · `BASE=http://localhost:5173 node e2e/smoke.cjs` (تست دود مرورگر؛ نیاز به Playwright).
@@ -194,4 +195,4 @@ LLM_API_KEY=کلید-رایگان-شما            # https://aistudio.google.co
 | `npm run check:i18n` شکست می‌خورد | یک متنِ `t("…")` ترجمه‌ی فارسی در `frontend/src/lib/fa.js` ندارد |
 
 ## نکات تولید
-`DEBUG=0`، یک `SECRET_KEY` طولانی و تصادفی، `ALLOWED_HOSTS` واقعی، PostgreSQL، پایان‌دادن TLS در یک reverse proxy، و اجرای `gunicorn config.wsgi -b 0.0.0.0:8000` (Dockerfile همین کار را می‌کند). احراز هویت اینجا در حد دمو است (رمز محلی، بدون MFA/SSO)؛ فهرست کامل محدودیت‌ها در گزارش فنی است.
+`DEBUG=0`، یک `SECRET_KEY` طولانی و تصادفی، `ALLOWED_HOSTS` واقعی، PostgreSQL، پایان‌دادن TLS در یک reverse proxy، و اجرای `gunicorn config.wsgi -b 0.0.0.0:8000` (Dockerfile همین کار را می‌کند؛ `docker-compose.yml` PostgreSQL، replicaها و load balancer را هم اضافه می‌کند). احراز هویت اینجا در حد دمو است (رمز محلی، بدون MFA/SSO)؛ فهرست کامل محدودیت‌ها در گزارش فنی است.

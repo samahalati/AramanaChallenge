@@ -1,0 +1,48 @@
+# Production-shaped topology: PostgreSQL + N identical stateless app replicas + a load balancer.
+#   docker compose up -d --build            # first start: creates the schema and the demo data once
+#   docker compose up -d --scale app=3      # more replicas
+#   open http://localhost:8080              # (login: compliance@aramana.test / Demo!2345)
+# Set SECRET_KEY (shared by all replicas: JWTs are verified by whichever replica receives the request) and POSTGRES_PASSWORD in .env or the shell.
+x-app: &app
+  build: .
+  image: aramana
+  environment:
+    DEBUG: "0"
+    SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY to a long random string}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
+    DATABASE_URL: postgres://aramana:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/aramana
+    GROUND_TRUTH_PATH: /app/data/ground_truth.json
+  depends_on:
+    db: {condition: service_healthy}
+
+services:
+  db:
+    image: postgres:16
+    environment: {POSTGRES_USER: aramana, POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}", POSTGRES_DB: aramana}
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U aramana -d aramana"], interval: 3s, timeout: 3s, retries: 20}
+
+  init:                                   # one-shot: migrations + demo data (skipped when the schema/data already exist)
+    <<: *app
+    command: ["sh", "-c", "python manage.py migrate -v0 && python manage.py shell -c \"from accounts.models import User; import sys; sys.exit(0 if User.objects.exists() else 1)\" || python manage.py seed_demo --detect"]
+    restart: "no"
+
+  app:
+    <<: *app
+    command: ["gunicorn", "config.wsgi", "-b", "0.0.0.0:8000", "--workers", "2", "--access-logfile", "-"]
+    depends_on:
+      db: {condition: service_healthy}
+      init: {condition: service_completed_successfully}
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/api/health', timeout=3)"], interval: 5s, timeout: 4s, retries: 5}
+    restart: unless-stopped
+    deploy: {replicas: 2}
+
+  lb:
+    image: nginx:1.27-alpine
+    volumes: ["./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro"]
+    ports: ["8080:8080"]
+    depends_on: [app]
+    restart: unless-stopped
+
+volumes:
+  pgdata:

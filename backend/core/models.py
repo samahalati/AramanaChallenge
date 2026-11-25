@@ -12,7 +12,7 @@ class AuditLog(models.Model):
     resource_id = models.CharField(max_length=60, null=True)
     outcome = models.CharField(max_length=20, default="ok")
     detail = models.JSONField(null=True)
-    prev_hash = models.CharField(max_length=64)
+    prev_hash = models.CharField(max_length=64, unique=True)   # one successor per row: concurrent writers cannot fork the chain
     hash = models.CharField(max_length=64)
 
 

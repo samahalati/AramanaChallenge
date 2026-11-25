@@ -1,0 +1,15 @@
+# keep secrets, local state and build output out of the image (and the build context small)
+.git
+.github
+.venv
+**/__pycache__
+**/.pytest_cache
+.ruff_cache
+**/.env
+!**/.env.example
+node_modules
+frontend/dist
+data/*.sqlite3
+data/*.db
+docs
+*.md

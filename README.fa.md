@@ -40,6 +40,8 @@ npm install
 npm run dev                                                # ← http://localhost:5173  (درخواست‌های /api را به :8000 پراکسی می‌کند)
 ```
 
+**پشته‌ی تکثیرشده (PostgreSQL + ۲ replica + load balancer):** پس از export کردن `SECRET_KEY` و `POSTGRES_PASSWORD` دستور `docker compose up -d --build` – ر.ک. [docs/fa/DEPLOYMENT.md](docs/fa/DEPLOYMENT.md) (HA، CI، تست بار اندازه‌گیری‌شده).
+
 **روش تک‌فرایندی:** `cd frontend && npm run build` – سپس Django خودش اپ ساخته‌شده‌ی React را روی **http://localhost:8000** سرو می‌کند.
 میان‌بُرها: `make install seed backend frontend build test eval reset`. Docker: `docker build -t aramana . && docker run -p 8000:8000 aramana`.
 
@@ -111,10 +113,13 @@ backend/                         پروژه‌ی Django
   monitoring/                    ماژول ج: هشدارها، گردش‌کار تحقیق، اجراها، ارزیابی، سیاست دید (visibility)
   detection/                     موتور پایتون خالص: آشکارسازهای Strategy، امتیازدهی، توضیح، آداپتور LLM، config.yaml
   seed/                          داده‌ی مصنوعی + ناهنجاری‌های تزریقی + ground truth
-  tests/                         pytest-django (۹۴ تست)
+  tests/                         pytest-django (۹۵ تست)
 frontend/                        React + Vite (TanStack Query، React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
-docs/                            UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
+Dockerfile · docker-compose.yml · deploy/nginx.conf     ایمیج تکی · پشته‌ی تکثیرشده (PostgreSQL + ۲ replica + load balancer)
+.github/workflows/ci.yml         CI: تست‌ها (پایتون ۳٫۱۱–۳٫۱۳)، PostgreSQL، فرانت‌اند، Docker
+backend/scripts/loadtest.py      تست بار (+ بررسی زنجیره‌ی حسابرسی)
+docs/                            DEPLOYMENT · UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
 docs/fa/                         نسخه‌ی فارسی مستندات
 ```
 
@@ -128,7 +133,7 @@ python manage.py run_detection                   # idempotent؛ با هشدار�
 python manage.py evaluate                        # precision/recall/F1 + ablation نسبت به ground truth مصنوعی
 python manage.py export_docs                     # بازتولید docs/RBAC_MATRIX.md و docs/openapi.yaml از روی کد
 python manage.py evaluate_llm [--live]           # red-team محافظ‌های LLM (مدل اسکریپت‌شده، بدون شبکه؛ --live با کلید شما)
-python -m pytest -q                              # ۹۴ تست
+python -m pytest -q                              # ۹۵ تست
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # پایداری در دنیاهای مصنوعی مختلف
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دود مرورگر (به Playwright نیاز دارد)
 ```
@@ -145,6 +150,7 @@ cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دو�
 | طراحی بصری (پالت، فونت، نشانک) | [docs/fa/DESIGN.md](docs/fa/DESIGN.md) |
 | قواعد مهندسی و راهنمای گام‌به‌گام (افزودن آشکارساز، تغییر RBAC، ارزیابی…) | [docs/fa/ENGINEERING_RULES.md](docs/fa/ENGINEERING_RULES.md) · [docs/fa/HOWTO.md](docs/fa/HOWTO.md) |
 | الف. معماری (سیستم، ماژول‌ها، ERD، جریان داده، معماری تشخیص تقلب، امنیت، مقیاس‌پذیری) | [docs/fa/ARCHITECTURE.md](docs/fa/ARCHITECTURE.md) · [ماتریس RBAC](docs/RBAC_MATRIX.md) · [OpenAPI](docs/openapi.yaml) |
+| استقرار: پشته‌ی تکثیرشده، دسترس‌پذیری بالا، CI، تست بار (اندازه‌گیری‌شده) | [docs/fa/DEPLOYMENT.md](docs/fa/DEPLOYMENT.md) |
 | د. گزارش فنی (تصمیم‌ها، روش‌شناسی، نتایج اندازه‌گیری‌شده، محدودیت‌ها، هزینه، نقشه‌راه) | [docs/fa/TECHNICAL_REPORT.md](docs/fa/TECHNICAL_REPORT.md) |
 | ه. ارائه (سازگار با Marp) | [docs/fa/PRESENTATION.md](docs/fa/PRESENTATION.md) |
 | داده، فرضیات، محدودیت‌ها | [docs/fa/DATASET.md](docs/fa/DATASET.md) |

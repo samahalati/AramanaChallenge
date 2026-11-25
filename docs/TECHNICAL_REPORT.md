@@ -87,10 +87,10 @@ Reading: rules carry the logical/policy scenarios; statistics are needed for ref
 | Weights | Hand-set expert weights (configurable) | Calibrate on investigator outcomes; keep rules for impossibilities |
 | Security | Demo auth: no MFA/SSO/refresh/rotation; JWT in `sessionStorage`; lockout is the only brute-force control; CSP allows inline styles | OIDC, httpOnly cookies, rate limiting (reverse proxy/WAF), TLS at proxy |
 | Audit | Hash chain is tamper-*evident*, not tamper-proof (DB admin can rewrite the whole chain) | Periodically anchor the head hash externally |
-| Concurrency | Audit chain append is serial (reads last hash) | Per-tenant chain / DB sequence / advisory lock in Postgres |
+| Concurrency | One global audit chain: appends are optimistic (unique `prev_hash`, retry on a lost race), so heavy write bursts retry; verified with 4 concurrent workers (no fork) | Per-tenant chains / sequence-based ordering if write volume grows |
 | Policy | Approvals without documentation are accepted and flagged, not blocked | Make blocking configurable per policy |
 | Scheduling | Detection is on-demand/batch | CronJob/worker; incremental features |
-| Deployment paths | Verified: SQLite (default), PostgreSQL 16 (migrate, seed, all tests and the evaluation give identical results) and the Docker image (build, start, login, API, SPA, security headers). Not verified: load/soak behaviour, PostgreSQL row-level security, HA, a CI pipeline | PostgreSQL needs `pip install "psycopg[binary]"`; load tests and a CI job are roadmap phase 1 |
+| Deployment / HA | Verified: SQLite, PostgreSQL 16 (all tests + evaluation identical), the Docker image, and a replicated stack (PostgreSQL + 2 app replicas + nginx): 130 req/s, 0 errors, audit chain intact; killing one replica mid-run cost 1 in-flight request (see [DEPLOYMENT.md](DEPLOYMENT.md)). Not verified: long soak, multi-machine load, PostgreSQL row-level security, database failover, disaster recovery; the CI workflow has been validated step by step locally but has not yet run on a hosted runner | The database and the load balancer are single instances in the compose stack – production needs a managed PostgreSQL with standby and a managed LB; see DEPLOYMENT.md §4 |
 | Fairness | Peer comparison can penalise legitimately different roles (part-time, new starters) | Cohort by role/FTE/tenure; fairness monitoring |
 | Human oversight | System cannot prevent misuse of alerts by reviewers | No auto-action path; documented process required; audit of who viewed what; reviewer ≠ subject |
 
@@ -100,7 +100,7 @@ See [ARCHITECTURE §7](ARCHITECTURE.md). Highlights: PBKDF2 + lockout + uniform 
 
 ## 7. Scalability strategy
 
-Current: 47 users / 5.1k sessions / 0.4k referrals / 0.9k reviews → a full detection run takes **≈ 1 s** (single process), 94 tests ≈ 11 s. Strategy: (1) PostgreSQL + indexes already placed on hot predicates; (2) incremental weekly aggregates (materialised views) instead of full-frame reloads; (3) run detectors per cohort in parallel workers on a schedule; Monte-Carlo test cost ∝ `sims × referrals × therapists`, bounded by the ≥20-referral gate; (4) SQL-level alert visibility (RLS) and keyset pagination; (5) split detection into its own deployment while keeping the same DB contract; (6) optional LLM calls are asynchronous and cacheable.
+Current: 47 users / 5.1k sessions / 0.4k referrals / 0.9k reviews → a full detection run takes **≈ 1 s** (single process), 95 tests ≈ 14 s. Measured on the replicated stack (PostgreSQL + 2 replicas × 2 workers, one machine): **130 req/s, p95 ≈ 200–230 ms, 0 errors**, and one replica can die without an outage ([DEPLOYMENT.md](DEPLOYMENT.md)). Strategy: (1) PostgreSQL + indexes already placed on hot predicates; (2) incremental weekly aggregates (materialised views) instead of full-frame reloads; (3) run detectors per cohort in parallel workers on a schedule; Monte-Carlo test cost ∝ `sims × referrals × therapists`, bounded by the ≥20-referral gate; (4) SQL-level alert visibility (RLS) and keyset pagination; (5) split detection into its own deployment while keeping the same DB contract; (6) optional LLM calls are asynchronous and cacheable.
 
 ## 8. Estimated infrastructure & operational cost (order-of-magnitude, to be validated)
 
@@ -121,7 +121,7 @@ Assumptions: ~2,000 practitioners, ~50k sessions/month, one region, 24/7.
 | Phase | Items |
 |---|---|
 | **0 – Governance (before any real data)** | DPIA, lawful basis, clinical-governance & HR sign-off, staff notice, appeals process, reviewer training, retention policy |
-| **1 – Hardening (4–6 wks)** | OIDC/SSO + MFA, httpOnly cookies/CSRF, rate limiting, secrets manager, TLS/HSTS, SAST/DAST/dependency scanning, Postgres + RLS, external audit anchoring, backup/restore drills, load tests |
+| **1 – Hardening (4–6 wks)** | OIDC/SSO + MFA, httpOnly cookies/CSRF, per-IP rate limiting, secrets manager, TLS/HSTS, SAST/DAST/dependency scanning, Postgres RLS + managed HA database, external audit anchoring, backup/restore drills, long soak and multi-machine load tests (CI, replicated stack and a first load test already exist) |
 | **2 – Integration (4–6 wks)** | Contract with Go core (OpenAPI + events/outbox), identity projection, event ingestion, scheduler/worker split, observability (traces, metrics, SLOs) |
 | **3 – Model quality (6–10 wks)** | Shadow mode, threshold calibration on outcomes, supervised calibration layer on indicator strengths, drift/fairness dashboards, richer policy model (language/geo/availability), Bayesian tests for small-sample rates |
 | **4 – Operations** | Reviewer workload tooling (queues, SLAs, bulk actions), case management exports, periodic model/rule review board, red-team exercises for the detectors |

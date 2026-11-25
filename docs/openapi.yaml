@@ -625,6 +625,8 @@ paths:
   /api/health:
     get:
       operationId: health_retrieve
+      description: 'Readiness probe for load balancers: 200 only when the database
+        answers, so a replica without a database is taken out of rotation.'
       tags:
       - health
       security:

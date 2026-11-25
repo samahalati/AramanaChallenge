@@ -40,6 +40,8 @@ npm install
 npm run dev                                                # → http://localhost:5173  (proxies /api to :8000)
 ```
 
+**Replicated stack (PostgreSQL + 2 app replicas + load balancer):** `docker compose up -d --build` after exporting `SECRET_KEY` and `POSTGRES_PASSWORD` – see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (HA, CI, measured load test).
+
 **Single-process alternative:** `cd frontend && npm run build` – Django then serves the built React app itself at **http://localhost:8000**.
 Shortcuts: `make install seed backend frontend build test eval reset`. Docker: `docker build -t aramana . && docker run -p 8000:8000 aramana`.
 
@@ -111,10 +113,13 @@ backend/                         Django project
   monitoring/                    Module C: alerts, investigation workflow, runs, evaluation, visibility policy
   detection/                     PURE PYTHON engine: Strategy detectors, scoring, explain, config.yaml, llm.py (transport) + assistant/ (guarded LLM)
   seed/                          synthetic data + injected anomalies + ground truth
-  tests/                         pytest-django (94 tests)
+  tests/                         pytest-django (95 tests)
 frontend/                        React + Vite (TanStack Query, React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
-docs/                            UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
+Dockerfile · docker-compose.yml · deploy/nginx.conf     single image · replicated stack (PostgreSQL + 2 replicas + load balancer)
+.github/workflows/ci.yml         CI: tests (py 3.11–3.13), PostgreSQL, frontend, Docker
+backend/scripts/loadtest.py      load test (+ audit-chain check)
+docs/                            DEPLOYMENT · UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
 docs/fa/                         Persian versions of the documents
 ```
 
@@ -128,7 +133,7 @@ python manage.py run_detection                   # idempotent; de-duplicates aga
 python manage.py evaluate                        # precision/recall/F1 + ablation vs synthetic ground truth
 python manage.py export_docs                     # regenerate docs/RBAC_MATRIX.md + docs/openapi.yaml from code
 python manage.py evaluate_llm [--live]           # red-team the LLM guardrails (scripted model, no network; --live uses your key)
-python -m pytest -q                              # 94 tests
+python -m pytest -q                              # 95 tests
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # robustness across synthetic worlds
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # browser smoke test (needs Playwright)
 ```
@@ -146,6 +151,7 @@ Configuration: `backend/.env.example` (DATABASE_URL — SQLite default, PostgreS
 | Engineering rules and how-to playbooks (add a detector, change RBAC, evaluate…) | [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) · [docs/HOWTO.md](docs/HOWTO.md) |
 | Persian/English support (design, limits) | [docs/I18N.md](docs/I18N.md) |
 | A. Architecture (system, modules, ERD, data flow, fraud architecture, security, scalability) | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [RBAC matrix](docs/RBAC_MATRIX.md) · [OpenAPI](docs/openapi.yaml) |
+| Deployment: replicated stack, high availability, CI, load test (measured) | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
 | D. Technical report (decisions, methodology, measured results, limitations, cost, roadmap) | [docs/TECHNICAL_REPORT.md](docs/TECHNICAL_REPORT.md) |
 | E. Presentation (Marp-compatible) | [docs/PRESENTATION.md](docs/PRESENTATION.md) |
 | Dataset, assumptions, limitations | [docs/DATASET.md](docs/DATASET.md) |

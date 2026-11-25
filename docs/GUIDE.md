@@ -93,6 +93,8 @@ cd frontend && npm run dev                 # open http://localhost:5173
 ```
 **Option B – one process**: `cd frontend && npm run build`, then run only the backend; Django serves the built app at **http://localhost:8000**.
 **Option C – Docker**: `docker build -t aramana . && docker run -p 8000:8000 aramana` → http://localhost:8000 (data is seeded during the build).
+
+**Option D – replicated stack (PostgreSQL + 2 replicas + load balancer):** export `SECRET_KEY` and `POSTGRES_PASSWORD`, then `docker compose up -d --build` → http://localhost:8080. Details, high-availability behaviour, CI and the measured load test: [DEPLOYMENT.md](DEPLOYMENT.md).
 **Option D – Make**: `make install seed backend` and `make frontend`.
 
 ## 6. First look: accounts and pages
@@ -171,7 +173,7 @@ Safety model in one paragraph: the model only sees pseudonymised evidence with c
 | `python manage.py evaluate [--write file.json]` | precision/recall/F1 vs ground truth |
 | `python manage.py evaluate_llm [--live] [--alerts N]` | red-team the LLM guardrails (`--live` uses your key) |
 | `python manage.py export_docs` | regenerate `docs/RBAC_MATRIX.md` and `docs/openapi.yaml` from the code |
-| `python -m pytest -q` | run the 94 tests |
+| `python -m pytest -q` | run the 95 tests |
 | `python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8` | robustness across synthetic worlds |
 
 Frontend (from `frontend/`): `npm run dev` · `npm run build` · `npm run check:i18n` · `BASE=http://localhost:5173 node e2e/smoke.cjs` (browser smoke test; needs Playwright).
@@ -194,4 +196,4 @@ Frontend (from `frontend/`): `npm run dev` · `npm run build` · `npm run check:
 | `npm run check:i18n` fails | a `t("…")` text has no Persian entry in `frontend/src/lib/fa.js` |
 
 ## Production notes
-Set `DEBUG=0`, a long random `SECRET_KEY`, real `ALLOWED_HOSTS`, use PostgreSQL, terminate TLS in a reverse proxy, and run `gunicorn config.wsgi -b 0.0.0.0:8000` (the Dockerfile does). Authentication here is demo-grade (local passwords, no MFA/SSO); see the technical report for the full list of limitations.
+Set `DEBUG=0`, a long random `SECRET_KEY`, real `ALLOWED_HOSTS`, use PostgreSQL, terminate TLS in a reverse proxy, and run `gunicorn config.wsgi -b 0.0.0.0:8000` (the Dockerfile does; `docker-compose.yml` adds PostgreSQL, replicas and a load balancer). Authentication here is demo-grade (local passwords, no MFA/SSO); see the technical report for the full list of limitations.
