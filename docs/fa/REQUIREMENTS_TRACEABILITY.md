@@ -81,7 +81,7 @@
 |---|---|
 | **الف. معماری و طراحی** (نمودار سیستم، معماری ماژول/سرویس، ERD، ماتریس نقش و مجوز، مستندات API، نمودار جریان داده، معماری تشخیص تقلب، طراحی امنیت و حریم خصوصی) | [ARCHITECTURE.md](ARCHITECTURE.md)، [RBAC_MATRIX.md](../RBAC_MATRIX.md)، [openapi.yaml](../openapi.yaml)، `/api/docs/` |
 | **ب. نمونه‌ی اجرایی** (پنل‌های منابع انسانی، سوپروایزر و پایش، موتور یکپارچه، ≥ ۴ سناریو، گردش‌کار تحقیق، داده‌ی مصنوعی) | `backend/` و `frontend/`؛ [GUIDE.md](GUIDE.md) |
-| **ج. کد و مستندات مهندسی** (کد، ساختار، README/نصب، نمونه‌ی محیط، تست‌ها، مستندات API، راه‌اندازی پایگاه‌داده/مهاجرت، فرض‌ها و محدودیت‌ها) | مخزن؛ [README.fa.md](../../README.fa.md)؛ `backend/.env.example`؛ `backend/tests/`؛ مهاجرت‌ها در `backend/*/migrations/`؛ [GUIDE.md](GUIDE.md)؛ [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
+| **ج. کد و مستندات مهندسی** (کد، ساختار، README/نصب، نمونه‌ی محیط، تست‌ها، مستندات API، راه‌اندازی پایگاه‌داده/مهاجرت، فرض‌ها و محدودیت‌ها) | مخزن؛ [README.fa.md](../../README.fa.md)؛ `backend/.env.example`؛ `backend/tests/`؛ مهاجرت‌ها در `backend/*/migrations/`؛ مستندات API: [openapi.yaml](../openapi.yaml) + Swagger در `/api/docs/` (با `test_6_api_documentation_lists_request_bodies` بررسی می‌شود)؛ [GUIDE.md](GUIDE.md)؛ [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
 | **د. گزارش فنی** (تصمیم‌ها، فناوری، روش‌شناسی، عملکرد تشخیص، محدودیت‌ها/مثبت کاذب، امنیت، مقیاس‌پذیری، هزینه‌ها، نقشه‌ی راه) | [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
 | **ه. ارائه‌ی فنی** | [PRESENTATION.md](PRESENTATION.md) (سازگار با Marp) |
 

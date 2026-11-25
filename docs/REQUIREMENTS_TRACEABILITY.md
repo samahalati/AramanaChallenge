@@ -81,7 +81,7 @@ Synthetic dataset (users/roles, profiles, supervisors and supervisees, sessions,
 |---|---|
 | **A. Architecture & design** (system diagram, module/service architecture, ERD, role & permission matrix, API documentation, data-flow diagram, fraud-detection architecture, security & privacy design) | [ARCHITECTURE.md](ARCHITECTURE.md), [RBAC_MATRIX.md](RBAC_MATRIX.md), [openapi.yaml](openapi.yaml), `/api/docs/` |
 | **B. Executable prototype** (HR, supervisor and monitoring panels, integrated engine, ≥ 4 scenarios, investigation workflow, synthetic data) | `backend/` + `frontend/`; [GUIDE.md](GUIDE.md) |
-| **C. Source & engineering docs** (code, structure, README/installation, environment example, tests, API docs, database initialisation/migrations, assumptions & limitations) | repository; [README.md](../README.md); `backend/.env.example`; `backend/tests/`; migrations in `backend/*/migrations/`; [GUIDE.md](GUIDE.md); [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
+| **C. Source & engineering docs** (code, structure, README/installation, environment example, tests, API docs, database initialisation/migrations, assumptions & limitations) | repository; [README.md](../README.md); `backend/.env.example`; `backend/tests/`; migrations in `backend/*/migrations/`; API docs: [openapi.yaml](openapi.yaml) + Swagger at `/api/docs/` (checked by `test_6_api_documentation_lists_request_bodies`); [GUIDE.md](GUIDE.md); [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
 | **D. Technical report** (decisions, technology, methodology, detection performance, limitations/false positives, security, scalability, costs, roadmap) | [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) |
 | **E. Technical presentation** | [PRESENTATION.md](PRESENTATION.md) (Marp-compatible) |
 

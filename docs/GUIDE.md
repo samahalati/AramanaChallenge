@@ -171,7 +171,7 @@ Safety model in one paragraph: the model only sees pseudonymised evidence with c
 | `python manage.py evaluate [--write file.json]` | precision/recall/F1 vs ground truth |
 | `python manage.py evaluate_llm [--live] [--alerts N]` | red-team the LLM guardrails (`--live` uses your key) |
 | `python manage.py export_docs` | regenerate `docs/RBAC_MATRIX.md` and `docs/openapi.yaml` from the code |
-| `python -m pytest -q` | run the 93 tests |
+| `python -m pytest -q` | run the 94 tests |
 | `python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8` | robustness across synthetic worlds |
 
 Frontend (from `frontend/`): `npm run dev` · `npm run build` · `npm run check:i18n` · `BASE=http://localhost:5173 node e2e/smoke.cjs` (browser smoke test; needs Playwright).
