@@ -15,7 +15,7 @@ Legend: **Code** = implementation · **UI** = where a person sees it · **Proof*
 ## 3. Module A – HR & platform administration
 | Clause | Code | UI | Proof |
 |---|---|---|---|
-| 3.1 Professional profiles, user categories, specialisation | `hr/models.py` (`PractitionerProfile`), `accounts/models.py` (roles) | HR → Practitioners | `test_workflows.py` |
+| 3.1 Professional profiles, user categories, specialisation | `hr/models.py` (`PractitionerProfile`), `accounts/models.py` (roles) | HR → Practitioners; **Edit profile** dialog (specialisation, unit, employment, capacity, bio) | `test_workflows.py`, `test_3_1_profile_can_be_managed_and_supervision_schedule_defined` |
 | Credentials, licence & certification tracking, expiry | `Credential`, `hr/services.dashboard` | HR dashboard (expiring ≤ 60 days) | `test_credentials_contracts_and_dashboard` |
 | Employment/collaboration status, contracts | `PractitionerProfile.employment_type`, `Contract` | Practitioner page | same |
 | Onboarding / offboarding; suspension, reactivation, termination | `hr/services.change_lifecycle` + `StateMachine`; reason required | Practitioner page buttons | `test_practitioner_lifecycle_state_machine`, `test_terminate_closes_assignments_and_contracts` |
@@ -30,8 +30,8 @@ Legend: **Code** = implementation · **UI** = where a person sees it · **Proof*
 | Clause | Code | UI | Proof |
 |---|---|---|---|
 | 4.1 Dashboard: assigned/active/inactive supervisees, pending & overdue reviews, open quality issues, escalation cases, recent activity, trends | `supervision/services.dashboard` | Supervision → Dashboard | `test_4_1_supervisor_dashboard_has_every_required_indicator` |
-| 4.2 Assign practitioners, relationships, schedules, participation, history, unresolved issues, assignment changes | `SupervisionAssignment.schedule_every_days`, `SupervisionMeeting`, supervisees list (attendance), HR assignment endpoints | Supervision → Supervisees; HR → assignments | `test_supervisor_dashboard_and_supervisees` |
-| 4.3 Review workflow: authorised case info, notes, evaluation, feedback, corrective actions, monitoring plans, closing | `supervision/services` (`start/decide/add_corrective_action/close_review`) | Supervision → Reviews | `test_review_workflow_end_to_end` |
+| 4.2 Assign practitioners, relationships, schedules, participation, history, unresolved issues, assignment changes | `SupervisionAssignment.schedule_every_days` (set in the HR assignment form: "Supervision every (days)"), `SupervisionMeeting`, supervisees list (attendance), HR assignment endpoints | Supervision → Supervisees; HR → assignments | `test_supervisor_dashboard_and_supervisees`, `test_3_1_profile_can_be_managed_and_supervision_schedule_defined` |
+| 4.3 Review workflow: authorised case info, notes, evaluation, feedback, corrective actions, monitoring plans, closing | `supervision/services` (`start/decide/add_corrective_action/close_review`); `case_info` returns the reviewed session (pseudonymous client, times, mode, durations, check-in/out) | Supervision → Reviews → "Case information" | `test_review_workflow_end_to_end`, `test_4_3_review_shows_the_authorised_case_information` |
 | 4.4 Risk escalation; operational vs clinical vs potential-misconduct distinguished; clinical decisions stay human | `QualityIssue.category`, `escalate_issue` → alert, domains in `core/constants.py` | Supervision → Quality issues | `test_flow5_quality_concern_routed_to_supervisor_and_escalation_back` |
 | 4.5 Auditability: who, when, what accessed, decision, corrective actions, completion | `core/audit.py` (hash-chained), review `viewed`/decision events | Audit page, review page | `test_4_5_*`, `test_audit_chain_verifies_and_detects_tampering` |
 

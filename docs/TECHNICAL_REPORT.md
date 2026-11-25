@@ -99,7 +99,7 @@ See [ARCHITECTURE §7](ARCHITECTURE.md). Highlights: PBKDF2 + lockout + uniform 
 
 ## 7. Scalability strategy
 
-Current: 47 users / 5.1k sessions / 0.4k referrals / 0.9k reviews → a full detection run takes **≈ 1 s** (single process), 91 tests ≈ 11 s. Strategy: (1) PostgreSQL + indexes already placed on hot predicates; (2) incremental weekly aggregates (materialised views) instead of full-frame reloads; (3) run detectors per cohort in parallel workers on a schedule; Monte-Carlo test cost ∝ `sims × referrals × therapists`, bounded by the ≥20-referral gate; (4) SQL-level alert visibility (RLS) and keyset pagination; (5) split detection into its own deployment while keeping the same DB contract; (6) optional LLM calls are asynchronous and cacheable.
+Current: 47 users / 5.1k sessions / 0.4k referrals / 0.9k reviews → a full detection run takes **≈ 1 s** (single process), 93 tests ≈ 11 s. Strategy: (1) PostgreSQL + indexes already placed on hot predicates; (2) incremental weekly aggregates (materialised views) instead of full-frame reloads; (3) run detectors per cohort in parallel workers on a schedule; Monte-Carlo test cost ∝ `sims × referrals × therapists`, bounded by the ≥20-referral gate; (4) SQL-level alert visibility (RLS) and keyset pagination; (5) split detection into its own deployment while keeping the same DB contract; (6) optional LLM calls are asynchronous and cacheable.
 
 ## 8. Estimated infrastructure & operational cost (order-of-magnitude, to be validated)
 

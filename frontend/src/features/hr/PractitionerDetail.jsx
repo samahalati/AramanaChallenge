@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { patch, post } from "../../api/client";
+import { get, patch, post } from "../../api/client";
 import { useAct } from "../../api/hooks";
 import { useAuth } from "../../auth/AuthContext";
 import { DataTable } from "../../components/DataTable";
@@ -7,6 +7,7 @@ import { useForm } from "../../components/FormModal";
 import { Query } from "../../components/Query";
 import { Badge, Card, Grid, Muted, Status } from "../../components/ui";
 import Activity from "./Activity";
+import { SPECS } from "./Practitioners";
 import { d10, isFa, num, pretty, t } from "../../lib/i18n";
 
 // which lifecycle actions are offered from each status (the server's state machine is the authority)
@@ -25,6 +26,18 @@ export default function PractitionerDetail() {
         fields: [{ name: "reason", label: t("Documented reason (required)"), type: "textarea" }],
         onSubmit: (v) => act(() => post(`/hr/practitioners/${id}/lifecycle`, { action, reason: v.reason }), t("{0} recorded", pretty(action))),
       });
+      const editProfile = async () => {
+        const units = await get("/hr/org-units");
+        ask({
+          title: t("Edit profile"), submit: t("Save"),
+          fields: [{ name: "specialization", label: t("Specialisation"), type: "select", value: d.profile.specialization ?? "", options: [["", "–"], ...SPECS.map((s) => [s, pretty(s)])] },
+            { name: "org_unit_id", label: t("Organisation unit"), type: "select", value: d.profile.org_unit_id ?? "", options: [["", "–"], ...units.map((x) => [x.id, x.name])] },
+            { name: "employment_type", label: t("Employment"), type: "select", value: d.profile.employment_type, options: ["employee", "contractor", "volunteer"].map((x) => [x, pretty(x)]) },
+            { name: "capacity_weekly_sessions", label: t("Weekly capacity"), type: "number", value: d.profile.capacity_weekly_sessions }, { name: "bio", label: t("Biography"), type: "textarea", value: d.profile.bio ?? "" }],
+          onSubmit: (v) => act(() => patch(`/hr/practitioners/${id}/profile`, { specialization: v.specialization || null, org_unit_id: v.org_unit_id ? +v.org_unit_id : null,
+            employment_type: v.employment_type, capacity_weekly_sessions: v.capacity_weekly_sessions ?? 0, bio: v.bio }), t("Profile updated")),
+        });
+      };
       const addCredential = () => ask({
         title: t("Add credential"), submit: t("Add"),
         fields: [{ name: "kind", label: t("Kind"), type: "select", options: ["license", "certification", "degree"].map((x) => [x, pretty(x)]) }, { name: "title", label: t("Title") }, { name: "number", label: t("Number") }, { name: "expires_on", label: t("Expires"), type: "date" }],
@@ -50,7 +63,7 @@ export default function PractitionerDetail() {
                 <h2>{u.full_name} <Status status={u.status} /></h2>
                 <div className="muted"><span dir="ltr">{u.email}</span> · {pretty(u.role)} · {d.profile.specialization ? pretty(d.profile.specialization) : t("no specialisation")} · {d.profile.org_unit || t("no unit")} · {pretty(d.profile.employment_type)} · {t("capacity {0}/wk", num(d.profile.capacity_weekly_sessions))}</div>
               </div>
-              {write && <div className="row">{ACTIONS[u.status].map(([a, cls]) => <button key={a} className={cls} onClick={() => lifecycle(a)}>{pretty(a)}</button>)}</div>}
+              {write && <div className="row"><button onClick={editProfile}>{t("Edit profile")}</button>{ACTIONS[u.status].map(([a, cls]) => <button key={a} className={cls} onClick={() => lifecycle(a)}>{pretty(a)}</button>)}</div>}
             </div>
           </Card>
           <Grid style={{ marginTop: 14 }}>

@@ -9,7 +9,7 @@ import { Card, Status } from "../../components/ui";
 import { qs } from "../../lib/format";
 import { pretty, t } from "../../lib/i18n";
 
-const SPECS = ["trauma", "anxiety", "depression", "couples", "child", "addiction"];
+export const SPECS = ["trauma", "anxiety", "depression", "couples", "child", "addiction"];
 const ROLES = ["therapist", "assistant_counselor", "clinical_supervisor"].map((r) => [r, pretty(r)]);
 const STATUSES = ["active", "pending_onboarding", "suspended", "terminated"].map((s) => [s, pretty(s)]);
 const withAll = (label, options) => [["", label], ...options];

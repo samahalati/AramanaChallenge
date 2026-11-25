@@ -36,13 +36,23 @@ def own_review(sup: User, rid: int) -> Review:
     return review
 
 
+def case_info(r: Review) -> dict | None:
+    """Spec §4.3 "reviewing authorized case information": the reviewed session as the supervisor is allowed to see it (pseudonymous client, times, mode, durations)."""
+    s = r.session
+    if s is None:
+        return None
+    return {"client_ref": s.client.client_ref, "scheduled_start": s.scheduled_start, "scheduled_end": s.scheduled_end, "status": s.status, "mode": s.mode,
+            "planned_duration_min": round((s.scheduled_end - s.scheduled_start).total_seconds() / 60), "reported_duration_min": s.reported_duration_min,
+            "checkin_at": s.checkin_at, "checkout_at": s.checkout_at, "modification_count": s.modification_count}
+
+
 def review_dict(r: Review, nm: dict, detail: bool = False) -> dict:
     d = {"id": r.id, "case_ref": r.case_ref, "supervisee_id": r.supervisee_id, "supervisee": nm.get(r.supervisee_id), "supervisor_id": r.supervisor_id,
          "status": r.status, "due_date": r.due_date, "decided_at": r.decided_at, "closed_at": r.closed_at, "has_documentation": r.has_documentation,
          "overdue": r.overdue, "performance_score": r.performance_score}
     if detail:
         d |= {"supervision_notes": r.supervision_notes, "feedback": r.feedback, "decision_minutes": r.decision_minutes, "session_id": r.session_id,
-              "opened_at": r.opened_at, "started_at": r.started_at,
+              "opened_at": r.opened_at, "started_at": r.started_at, "case": case_info(r),
               "corrective_actions": list(r.actions.values("id", "description", "due_date", "status", "completed_at"))}
     return d
 
@@ -143,7 +153,7 @@ def create_review(sup: User, d: dict) -> Review:
 
 def review_detail(sup: User, rid: int) -> dict:
     review = own_review(sup, rid)
-    audit(sup, "review_view", "review", rid, fields=["case_ref", "notes", "feedback", "corrective_actions"])
+    audit(sup, "review_view", "review", rid, fields=["case_ref", "case", "notes", "feedback", "corrective_actions"])
     return review_dict(review, names([review.supervisee_id]), detail=True)
 
 

@@ -15,7 +15,7 @@
 ## ۳. ماژول الف – منابع انسانی و مدیریت پلتفرم
 | بند | کد | رابط | اثبات |
 |---|---|---|---|
-| ۳٫۱ پروفایل حرفه‌ای، دسته‌های کاربر، تخصص | `hr/models.py` (`PractitionerProfile`)، `accounts/models.py` (نقش‌ها) | منابع انسانی ← متخصصان | `test_workflows.py` |
+| ۳٫۱ پروفایل حرفه‌ای، دسته‌های کاربر، تخصص | `hr/models.py` (`PractitionerProfile`)، `accounts/models.py` (نقش‌ها) | منابع انسانی ← متخصصان؛ پنجره‌ی **ویرایش پروفایل** (تخصص، واحد، نوع همکاری، ظرفیت، توضیح) | `test_workflows.py`، `test_3_1_profile_can_be_managed_and_supervision_schedule_defined` |
 | مدارک، پیگیری پروانه و گواهی، انقضا | `Credential`، `hr/services.dashboard` | داشبورد منابع انسانی (انقضا ≤ ۶۰ روز) | `test_credentials_contracts_and_dashboard` |
 | وضعیت اشتغال/همکاری، قراردادها | `PractitionerProfile.employment_type`، `Contract` | صفحه‌ی متخصص | همان |
 | جذب/خروج؛ تعلیق، بازگشت، خاتمه | `hr/services.change_lifecycle` + `StateMachine`؛ دلیل الزامی | دکمه‌های صفحه‌ی متخصص | `test_practitioner_lifecycle_state_machine`، `test_terminate_closes_assignments_and_contracts` |
@@ -30,8 +30,8 @@
 | بند | کد | رابط | اثبات |
 |---|---|---|---|
 | ۴٫۱ داشبورد: زیردستان تخصیص‌یافته/فعال/غیرفعال، بازبینی‌های در انتظار و معوق، مسائل کیفیتِ باز، موارد نیازمند ارجاع، فعالیت اخیر، روندها | `supervision/services.dashboard` | نظارت ← داشبورد | `test_4_1_supervisor_dashboard_has_every_required_indicator` |
-| ۴٫۲ تخصیص متخصصان، رابطه‌ها، برنامه‌ها، مشارکت، تاریخچه، مسائل حل‌نشده، تغییر تخصیص | `SupervisionAssignment.schedule_every_days`، `SupervisionMeeting`، فهرست زیردستان (حضور)، endpointهای تخصیص | نظارت ← زیردستان؛ منابع انسانی ← تخصیص‌ها | `test_supervisor_dashboard_and_supervisees` |
-| ۴٫۳ گردش‌کار بازبینی: اطلاعات مجازِ پرونده، یادداشت، ارزیابی، بازخورد، اقدام اصلاحی، برنامه‌ی پایش، بستن | `supervision/services` (`start/decide/add_corrective_action/close_review`) | نظارت ← بازبینی‌ها | `test_review_workflow_end_to_end` |
+| ۴٫۲ تخصیص متخصصان، رابطه‌ها، برنامه‌ها، مشارکت، تاریخچه، مسائل حل‌نشده، تغییر تخصیص | `SupervisionAssignment.schedule_every_days` (در فرم تخصیص منابع انسانی: «نظارت هر چند روز»)، `SupervisionMeeting`، فهرست زیردستان (حضور)، endpointهای تخصیص | نظارت ← زیردستان؛ منابع انسانی ← تخصیص‌ها | `test_supervisor_dashboard_and_supervisees`، `test_3_1_profile_can_be_managed_and_supervision_schedule_defined` |
+| ۴٫۳ گردش‌کار بازبینی: اطلاعات مجازِ پرونده، یادداشت، ارزیابی، بازخورد، اقدام اصلاحی، برنامه‌ی پایش، بستن | `supervision/services` (`start/decide/add_corrective_action/close_review`)؛ `case_info` جلسه‌ی بازبینی‌شده را برمی‌گرداند (مراجع نام‌مستعار، زمان‌ها، شیوه، مدت‌ها، ثبت ورود/خروج) | نظارت ← بازبینی‌ها ← «اطلاعات پرونده» | `test_review_workflow_end_to_end`، `test_4_3_review_shows_the_authorised_case_information` |
 | ۴٫۴ ارجاع ریسک؛ تمایز عملیاتی/بالینی/تخلف بالقوه؛ تصمیم بالینی انسانی می‌ماند | `QualityIssue.category`، `escalate_issue` ← هشدار، دامنه‌ها در `core/constants.py` | نظارت ← مسائل کیفیت | `test_flow5_quality_concern_routed_to_supervisor_and_escalation_back` |
 | ۴٫۵ ردپذیری: چه کسی، کِی، چه چیزی دید، تصمیم، اقدام‌های اصلاحی، تکمیل | `core/audit.py` (زنجیره‌ی درهم‌سازی)، رویدادهای `viewed`/تصمیمِ بازبینی | صفحه‌ی حسابرسی، صفحه‌ی بازبینی | `test_4_5_*`، `test_audit_chain_verifies_and_detects_tampering` |
 

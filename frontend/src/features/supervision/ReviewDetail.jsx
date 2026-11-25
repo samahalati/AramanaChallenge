@@ -8,6 +8,10 @@ import { Badge, Card, Status } from "../../components/ui";
 import { inDays } from "../../lib/format";
 import { d10, dt, isFa, num, pretty, t } from "../../lib/i18n";
 
+const caseRows = (c) => [[t("Client"), <span dir="ltr">{c.client_ref}</span>], [t("Session time"), `${dt(c.scheduled_start)} – ${dt(c.scheduled_end)}`], [t("Status"), pretty(c.status)], [t("Mode"), pretty(c.mode)],
+  [t("Planned duration (min)"), num(c.planned_duration_min)], [t("Reported duration (min)"), num(c.reported_duration_min)], [t("Check-in"), dt(c.checkin_at)], [t("Check-out"), dt(c.checkout_at)],
+  [t("Modifications"), num(c.modification_count)]].map(([k, v], i) => ({ id: i, k, v }));
+
 export default function ReviewDetail() {
   const { id } = useParams();
   const ask = useForm(), act = useAct(), base = `/supervision/reviews/${id}`;
@@ -38,6 +42,7 @@ export default function ReviewDetail() {
               </div>
             </div>
             <p className="muted">{t("Due {0}", d10(r.due_date))} · {t("decided {0}", dt(r.decided_at))} · {t("documentation {0}", r.has_documentation ? t("yes") : t("no"))} · {t("score {0}", num(r.performance_score))} · {t("{0} min", num(r.decision_minutes))}</p>
+            {r.case && <><h3>{t("Case information")}</h3><DataTable rows={caseRows(r.case)} columns={[{ h: t("Item"), f: (x) => x.k }, { h: t("Value"), f: (x) => x.v }]} /></>}
             <h3>{t("Supervision notes")}</h3><p>{r.supervision_notes || "–"}</p>
             <h3>{t("Feedback")}</h3><p>{r.feedback || "–"}</p>
             <h3>{t("Corrective actions")}</h3>

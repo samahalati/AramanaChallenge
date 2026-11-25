@@ -193,3 +193,25 @@ def User_role(uid_: int) -> str:
 def test_7_1_api_documentation_declares_bearer_authentication(api):
     schema = api.client.get("/api/schema/").content.decode()
     assert "bearerAuth" in schema and "/api/hr/practitioners/{id}/activity" in schema
+
+
+def test_4_3_review_shows_the_authorised_case_information(api):
+    """§4.3 'reviewing authorized case information': the supervisor sees the reviewed session (pseudonymous client, times, durations); the page of another supervisor stays closed."""
+    from supervision.models import Review
+    review = Review.objects.filter(supervisor_id=uid(api, SUP), session__isnull=False).first()
+    case = api.get(f"/supervision/reviews/{review.id}", SUP).json()["case"]
+    assert {"client_ref", "scheduled_start", "status", "mode", "planned_duration_min", "reported_duration_min", "checkin_at", "modification_count"} <= set(case)
+    assert api.get(f"/supervision/reviews/{review.id}", "supervisor2@aramana.test").status_code in (403, 404)
+
+
+def test_3_1_profile_can_be_managed_and_supervision_schedule_defined(api):
+    """§3.1 management of professional profiles; §4.2 defining supervision schedules."""
+    target = uid(api, THER)
+    assert api.client.patch(f"/api/hr/practitioners/{target}/profile", {"specialization": "anxiety", "capacity_weekly_sessions": 18, "bio": "Updated"}, format="json",
+                            HTTP_AUTHORIZATION=f"Bearer {api.token(HR)}").status_code == 200
+    profile = api.get(f"/hr/practitioners/{target}", HR).json()["profile"]
+    assert (profile["specialization"], profile["capacity_weekly_sessions"], profile["bio"]) == ("anxiety", 18, "Updated")
+    sups = api.get("/hr/practitioners?role=clinical_supervisor&status=active", HR).json()
+    r = api.post("/hr/assignments", HR, supervisee_id=target, supervisor_id=sups[-1]["id"], reason="Schedule test", schedule_every_days=14)
+    assert r.status_code in (200, 201), r.content
+    assert [a["schedule_every_days"] for a in api.get("/hr/assignments", HR).json() if a["supervisee_id"] == target] == [14]

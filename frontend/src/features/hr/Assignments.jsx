@@ -18,8 +18,8 @@ export default function Assignments() {
     title: t("Assign / reassign supervisor"), submit: t("Assign"),
     fields: [{ name: "supervisee_id", label: t("Supervisee"), type: "select", options: subs.filter((s) => s.role !== "clinical_supervisor").map((s) => [s.id, s.full_name]) },
       { name: "supervisor_id", label: t("New supervisor"), type: "select", options: sups.map((s) => [s.id, s.full_name]) }, { name: "effective_from", label: t("Effective from"), type: "date", value: today() },
-      { name: "reason", label: t("Reason"), type: "textarea" }],
-    onSubmit: (v) => act(() => post("/hr/assignments", { ...v, supervisee_id: +v.supervisee_id, supervisor_id: +v.supervisor_id }), t("Assignment saved – previous relationship end-dated")),
+      { name: "reason", label: t("Reason"), type: "textarea" }, { name: "schedule_every_days", label: t("Supervision every (days)"), type: "number", value: 7 }],
+    onSubmit: (v) => act(() => post("/hr/assignments", { ...v, supervisee_id: +v.supervisee_id, supervisor_id: +v.supervisor_id, schedule_every_days: v.schedule_every_days ?? 7 }), t("Assignment saved – previous relationship end-dated")),
   });
   return (
     <Card title={t("Current supervisor–supervisee relationships")} action={can("hr:write") && <button className="primary" onClick={assign}>{t("+ Assign / reassign")}</button>}>
