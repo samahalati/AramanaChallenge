@@ -29,6 +29,7 @@ class MyClientsView(APIView):
 
 
 class SessionCreateView(APIView):
+    bodies = {"post": SessionCreateSerializer}
     perms = {"post": "clinical:write:own"}
 
     def post(self, request):
@@ -37,6 +38,7 @@ class SessionCreateView(APIView):
 
 
 class SessionDetailView(APIView):
+    bodies = {"patch": SessionPatchSerializer}
     perms = {"patch": "clinical:write:own"}
 
     def patch(self, request, sid):
@@ -59,6 +61,7 @@ class EligibleView(APIView):
 
 
 class ReferralView(APIView):
+    bodies = {"post": ReferralCreateSerializer}
     perms = {"post": "referrals:write:own"}
 
     def post(self, request):

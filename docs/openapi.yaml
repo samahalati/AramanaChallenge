@@ -12,7 +12,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/admin/users:
     get:
       operationId: admin_users_retrieve
@@ -23,17 +28,39 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: admin_users_create
       description: Platform account administration (no HR/clinical content).
       tags:
       - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Account'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '201':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/admin/users/{id}/role:
     patch:
       operationId: admin_users_role_partial_update
@@ -46,11 +73,27 @@ paths:
         required: true
       tags:
       - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRoleChange'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/admin/users/{id}/status:
     patch:
       operationId: admin_users_status_partial_update
@@ -63,11 +106,27 @@ paths:
         required: true
       tags:
       - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStatusChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStatusChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStatusChange'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts:
     get:
       operationId: alerts_retrieve
@@ -77,7 +136,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts/{aid}:
     get:
       operationId: alerts_retrieve_2
@@ -93,7 +157,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts/{aid}/actions:
     post:
       operationId: alerts_actions_create
@@ -105,11 +174,28 @@ paths:
         required: true
       tags:
       - alerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertAction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AlertAction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AlertAction'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts/{aid}/ai-summary:
     post:
       operationId: alerts_ai_summary_create
@@ -125,7 +211,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts/{aid}/assistant:
     get:
       operationId: alerts_assistant_retrieve
@@ -143,7 +234,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: alerts_assistant_create
       description: Grounded Q&A over one alert's evidence. GET = history; POST {question}
@@ -156,11 +252,28 @@ paths:
         required: true
       tags:
       - alerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Ask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Ask'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/alerts/{aid}/route-to-supervisor:
     post:
       operationId: alerts_route_to_supervisor_create
@@ -172,11 +285,28 @@ paths:
         required: true
       tags:
       - alerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Route'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Route'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Route'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/audit:
     get:
       operationId: audit_retrieve
@@ -186,7 +316,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/audit/access-events:
     get:
       operationId: audit_access_events_retrieve
@@ -196,7 +331,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/audit/verify:
     get:
       operationId: audit_verify_retrieve
@@ -206,18 +346,40 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/auth/login:
     post:
       operationId: auth_login_create
       tags:
       - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
       security:
       - bearerAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/auth/me:
     get:
       operationId: auth_me_retrieve
@@ -227,7 +389,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/my-clients:
     get:
       operationId: clinical_my_clients_retrieve
@@ -237,7 +404,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/practitioners/{pid}/sessions:
     get:
       operationId: clinical_practitioners_sessions_retrieve
@@ -255,17 +427,39 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/sessions:
     post:
       operationId: clinical_sessions_create
       tags:
       - clinical
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SessionCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SessionCreate'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/sessions/{sid}:
     patch:
       operationId: clinical_sessions_partial_update
@@ -277,11 +471,27 @@ paths:
         required: true
       tags:
       - clinical
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSessionPatch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSessionPatch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSessionPatch'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/sessions/{sid}/checkin:
     post:
       operationId: clinical_sessions_checkin_create
@@ -297,7 +507,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/clinical/sessions/{sid}/checkout:
     post:
       operationId: clinical_sessions_checkout_create
@@ -313,7 +528,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/detection/config:
     get:
       operationId: detection_config_retrieve
@@ -323,7 +543,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/detection/evaluation:
     get:
       operationId: detection_evaluation_retrieve
@@ -333,7 +558,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/detection/run:
     get:
       operationId: detection_run_retrieve
@@ -343,7 +573,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: detection_run_create
       tags:
@@ -352,7 +587,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/detection/runs:
     get:
       operationId: detection_runs_retrieve
@@ -362,7 +602,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: detection_runs_create
       tags:
@@ -371,7 +616,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/health:
     get:
       operationId: health_retrieve
@@ -381,7 +631,12 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/assignments:
     get:
       operationId: hr_assignments_retrieve
@@ -391,16 +646,38 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: hr_assignments_create
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Assignment'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/contracts/{id}:
     put:
       operationId: hr_contracts_update
@@ -542,7 +819,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/org-units:
     get:
       operationId: hr_org_units_retrieve
@@ -552,7 +834,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners:
     get:
       operationId: hr_practitioners_retrieve
@@ -562,16 +849,38 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: hr_practitioners_create
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PractitionerCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PractitionerCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PractitionerCreate'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '201':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}:
     get:
       operationId: hr_practitioners_retrieve_2
@@ -587,7 +896,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/activity:
     get:
       operationId: hr_practitioners_activity_retrieve
@@ -605,7 +919,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/contracts:
     post:
       operationId: hr_practitioners_contracts_create
@@ -617,11 +936,28 @@ paths:
         required: true
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contract'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Contract'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Contract'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/credentials:
     post:
       operationId: hr_practitioners_credentials_create
@@ -633,11 +969,28 @@ paths:
         required: true
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credential'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Credential'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Credential'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/development:
     post:
       operationId: hr_practitioners_development_create
@@ -649,11 +1002,28 @@ paths:
         required: true
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Development'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Development'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Development'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/lifecycle:
     post:
       operationId: hr_practitioners_lifecycle_create
@@ -665,11 +1035,28 @@ paths:
         required: true
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LifecycleAction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LifecycleAction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LifecycleAction'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/hr/practitioners/{id}/profile:
     patch:
       operationId: hr_practitioners_profile_partial_update
@@ -681,11 +1068,27 @@ paths:
         required: true
       tags:
       - hr
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilePatch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilePatch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfilePatch'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/meta/labels:
     get:
       operationId: meta_labels_retrieve
@@ -697,7 +1100,12 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/meta/rbac:
     get:
       operationId: meta_rbac_retrieve
@@ -709,7 +1117,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/monitoring/summary:
     get:
       operationId: monitoring_summary_retrieve
@@ -719,7 +1132,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/monitoring/users/{uid}/history:
     get:
       operationId: monitoring_users_history_retrieve
@@ -735,17 +1153,39 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/referrals:
     post:
       operationId: referrals_create
       tags:
       - referrals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReferralCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReferralCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReferralCreate'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/referrals/eligible:
     get:
       operationId: referrals_eligible_retrieve
@@ -755,7 +1195,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/referrals/mine:
     get:
       operationId: referrals_mine_retrieve
@@ -765,7 +1210,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/corrective-actions/{aid}:
     patch:
       operationId: supervision_corrective_actions_partial_update
@@ -777,11 +1227,27 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCorrectivePatch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCorrectivePatch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCorrectivePatch'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/dashboard:
     get:
       operationId: supervision_dashboard_retrieve
@@ -793,7 +1259,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/meetings:
     post:
       operationId: supervision_meetings_create
@@ -801,11 +1272,28 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meeting'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Meeting'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Meeting'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/meetings/{mid}:
     patch:
       operationId: supervision_meetings_partial_update
@@ -819,11 +1307,27 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMeetingPatch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMeetingPatch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMeetingPatch'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/my-reviews:
     get:
       operationId: supervision_my_reviews_retrieve
@@ -833,7 +1337,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/quality-issues:
     get:
       operationId: supervision_quality_issues_retrieve
@@ -843,16 +1352,38 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: supervision_quality_issues_create
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityIssue'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QualityIssue'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QualityIssue'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/quality-issues/{iid}/escalate:
     post:
       operationId: supervision_quality_issues_escalate_create
@@ -864,11 +1395,28 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Escalate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Escalate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Escalate'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/quality-issues/{iid}/resolve:
     post:
       operationId: supervision_quality_issues_resolve_create
@@ -884,7 +1432,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews:
     get:
       operationId: supervision_reviews_retrieve
@@ -896,18 +1449,40 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
     post:
       operationId: supervision_reviews_create
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReviewCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReviewCreate'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews/{rid}:
     get:
       operationId: supervision_reviews_retrieve_2
@@ -925,7 +1500,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews/{rid}/close:
     post:
       operationId: supervision_reviews_close_create
@@ -939,11 +1519,27 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CloseReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CloseReview'
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews/{rid}/corrective-actions:
     post:
       operationId: supervision_reviews_corrective_actions_create
@@ -957,11 +1553,28 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorrectiveAction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CorrectiveAction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CorrectiveAction'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews/{rid}/decision:
     post:
       operationId: supervision_reviews_decision_create
@@ -975,11 +1588,28 @@ paths:
         required: true
       tags:
       - supervision
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewDecision'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReviewDecision'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReviewDecision'
+        required: true
       security:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/reviews/{rid}/start:
     post:
       operationId: supervision_reviews_start_create
@@ -997,7 +1627,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/supervisees:
     get:
       operationId: supervision_supervisees_retrieve
@@ -1009,7 +1644,12 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/supervision/supervisees/{uid}:
     get:
       operationId: supervision_supervisees_retrieve_2
@@ -1027,9 +1667,125 @@ paths:
       - bearerAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
 components:
   schemas:
+    Account:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        full_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        role:
+          $ref: '#/components/schemas/RoleEa8Enum'
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 200
+          minLength: 10
+      required:
+      - email
+      - full_name
+      - password
+      - role
+    AlertAction:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/AlertActionActionEnum'
+        note:
+          type: string
+          nullable: true
+          maxLength: 4000
+        assign_to:
+          type: integer
+          nullable: true
+      required:
+      - action
+    AlertActionActionEnum:
+      enum:
+      - start_review
+      - assign
+      - comment
+      - request_info
+      - provide_info
+      - escalate
+      - false_positive
+      - close_no_action
+      - close_substantiated
+      - reopen
+      type: string
+      description: |-
+        * `start_review` - start_review
+        * `assign` - assign
+        * `comment` - comment
+        * `request_info` - request_info
+        * `provide_info` - provide_info
+        * `escalate` - escalate
+        * `false_positive` - false_positive
+        * `close_no_action` - close_no_action
+        * `close_substantiated` - close_substantiated
+        * `reopen` - reopen
+    Ask:
+      type: object
+      properties:
+        question:
+          type: string
+          maxLength: 300
+          minLength: 3
+      required:
+      - question
+    Assignment:
+      type: object
+      properties:
+        supervisor_id:
+          type: integer
+        supervisee_id:
+          type: integer
+        effective_from:
+          type: string
+          format: date
+          nullable: true
+        schedule_every_days:
+          type: integer
+          maximum: 90
+          minimum: 1
+          default: 7
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+      required:
+      - reason
+      - supervisee_id
+      - supervisor_id
+    CategoryEnum:
+      enum:
+      - operational
+      - clinical
+      - misconduct
+      type: string
+      description: |-
+        * `operational` - operational
+        * `clinical` - clinical
+        * `misconduct` - misconduct
+    CloseReview:
+      type: object
+      properties:
+        monitoring_plan:
+          type: string
+          nullable: true
+          maxLength: 1000
     Contract:
       type: object
       properties:
@@ -1057,6 +1813,27 @@ components:
       - id
       - kind
       - start_date
+    CorrectiveAction:
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 1000
+          minLength: 5
+        due_date:
+          type: string
+          format: date
+      required:
+      - description
+      - due_date
+    CorrectivePatchStatusEnum:
+      enum:
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `completed` - completed
+        * `cancelled` - cancelled
     Credential:
       type: object
       properties:
@@ -1095,6 +1872,163 @@ components:
       - kind
       - number
       - title
+    Development:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          $ref: '#/components/schemas/KindEnum'
+        title:
+          type: string
+          maxLength: 160
+          minLength: 3
+        provider:
+          type: string
+          maxLength: 160
+        hours:
+          type: number
+          format: double
+          maximum: 200
+          minimum: 0.5
+        completed_on:
+          type: string
+          format: date
+      required:
+      - completed_on
+      - hours
+      - id
+      - kind
+      - title
+    EmploymentTypeEnum:
+      enum:
+      - employee
+      - contractor
+      - volunteer
+      type: string
+      description: |-
+        * `employee` - employee
+        * `contractor` - contractor
+        * `volunteer` - volunteer
+    Escalate:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 1000
+          minLength: 10
+      required:
+      - reason
+    KindEnum:
+      enum:
+      - training
+      - course
+      - conference
+      - workshop
+      - supervision_hours
+      type: string
+      description: |-
+        * `training` - training
+        * `course` - course
+        * `conference` - conference
+        * `workshop` - workshop
+        * `supervision_hours` - supervision_hours
+    LifecycleAction:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/LifecycleActionActionEnum'
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+        effective_date:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - action
+      - reason
+    LifecycleActionActionEnum:
+      enum:
+      - activate
+      - suspend
+      - reactivate
+      - terminate
+      type: string
+      description: |-
+        * `activate` - activate
+        * `suspend` - suspend
+        * `reactivate` - reactivate
+        * `terminate` - terminate
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          maxLength: 200
+      required:
+      - email
+      - password
+    Meeting:
+      type: object
+      properties:
+        supervisee_id:
+          type: integer
+        scheduled_at:
+          type: string
+          format: date-time
+      required:
+      - scheduled_at
+      - supervisee_id
+    MeetingPatchStatusEnum:
+      enum:
+      - completed
+      - missed
+      - scheduled
+      type: string
+      description: |-
+        * `completed` - completed
+        * `missed` - missed
+        * `scheduled` - scheduled
+    ModeEnum:
+      enum:
+      - online
+      - in_person
+      type: string
+      description: |-
+        * `online` - online
+        * `in_person` - in_person
+    NeedEnum:
+      enum:
+      - trauma
+      - anxiety
+      - depression
+      - couples
+      - child
+      - addiction
+      type: string
+      description: |-
+        * `trauma` - trauma
+        * `anxiety` - anxiety
+        * `depression` - depression
+        * `couples` - couples
+        * `child` - child
+        * `addiction` - addiction
+    NullEnum:
+      enum:
+      - null
+    OutcomeEnum:
+      enum:
+      - approved
+      - needs_changes
+      type: string
+      description: |-
+        * `approved` - approved
+        * `needs_changes` - needs_changes
     PatchedContract:
       type: object
       properties:
@@ -1118,6 +2052,11 @@ components:
           type: string
           nullable: true
           maxLength: 120
+    PatchedCorrectivePatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CorrectivePatchStatusEnum'
     PatchedCredential:
       type: object
       properties:
@@ -1150,6 +2089,288 @@ components:
         days_to_expiry:
           type: string
           readOnly: true
+    PatchedMeetingPatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/MeetingPatchStatusEnum'
+    PatchedProfilePatch:
+      type: object
+      properties:
+        specialization:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SpecializationEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        org_unit_id:
+          type: integer
+          nullable: true
+        employment_type:
+          $ref: '#/components/schemas/EmploymentTypeEnum'
+        capacity_weekly_sessions:
+          type: integer
+          maximum: 60
+          minimum: 0
+        bio:
+          type: string
+          nullable: true
+          maxLength: 1000
+    PatchedRoleChange:
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/RoleEa8Enum'
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+    PatchedSessionPatch:
+      type: object
+      properties:
+        scheduled_start:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/SessionPatchStatusEnum'
+        reported_duration_min:
+          type: integer
+          maximum: 300
+          minimum: 0
+    PatchedStatusChange:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusChangeStatusEnum'
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+    PractitionerCreate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        full_name:
+          type: string
+          maxLength: 255
+          minLength: 2
+        role:
+          $ref: '#/components/schemas/PractitionerCreateRoleEnum'
+        specialization:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SpecializationEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        org_unit_id:
+          type: integer
+          nullable: true
+        employment_type:
+          allOf:
+          - $ref: '#/components/schemas/EmploymentTypeEnum'
+          default: employee
+        hire_date:
+          type: string
+          format: date
+          nullable: true
+        capacity_weekly_sessions:
+          type: integer
+          maximum: 60
+          minimum: 0
+          default: 25
+        initial_password:
+          type: string
+          maxLength: 200
+          minLength: 10
+      required:
+      - email
+      - full_name
+      - initial_password
+      - role
+    PractitionerCreateRoleEnum:
+      enum:
+      - therapist
+      - assistant_counselor
+      - clinical_supervisor
+      type: string
+      description: |-
+        * `therapist` - therapist
+        * `assistant_counselor` - assistant_counselor
+        * `clinical_supervisor` - clinical_supervisor
+    QualityIssue:
+      type: object
+      properties:
+        practitioner_id:
+          type: integer
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        title:
+          type: string
+          maxLength: 200
+          minLength: 5
+        detail:
+          type: string
+          nullable: true
+          maxLength: 2000
+        severity:
+          allOf:
+          - $ref: '#/components/schemas/SeverityEnum'
+          default: medium
+      required:
+      - category
+      - practitioner_id
+      - title
+    ReferralCreate:
+      type: object
+      properties:
+        client_ref:
+          type: string
+        to_practitioner_id:
+          type: integer
+        need:
+          $ref: '#/components/schemas/NeedEnum'
+      required:
+      - client_ref
+      - need
+      - to_practitioner_id
+    ReviewCreate:
+      type: object
+      properties:
+        supervisee_id:
+          type: integer
+        session_id:
+          type: integer
+          nullable: true
+        due_date:
+          type: string
+          format: date
+      required:
+      - due_date
+      - supervisee_id
+    ReviewDecision:
+      type: object
+      properties:
+        outcome:
+          $ref: '#/components/schemas/OutcomeEnum'
+        notes:
+          type: string
+          maxLength: 4000
+          minLength: 3
+        feedback:
+          type: string
+          maxLength: 4000
+          minLength: 3
+        performance_score:
+          type: integer
+          maximum: 5
+          minimum: 1
+        has_documentation:
+          type: boolean
+        minutes_spent:
+          type: number
+          format: double
+          maximum: 600
+          minimum: 0
+          nullable: true
+      required:
+      - feedback
+      - has_documentation
+      - notes
+      - outcome
+      - performance_score
+    RoleEa8Enum:
+      enum:
+      - platform_admin
+      - hr_admin
+      - clinical_supervisor
+      - therapist
+      - assistant_counselor
+      - compliance_reviewer
+      type: string
+      description: |-
+        * `platform_admin` - Platform Admin
+        * `hr_admin` - Hr Admin
+        * `clinical_supervisor` - Clinical Supervisor
+        * `therapist` - Therapist
+        * `assistant_counselor` - Assistant Counselor
+        * `compliance_reviewer` - Compliance Reviewer
+    Route:
+      type: object
+      properties:
+        note:
+          type: string
+          maxLength: 1000
+          minLength: 10
+      required:
+      - note
+    SessionCreate:
+      type: object
+      properties:
+        client_ref:
+          type: string
+        scheduled_start:
+          type: string
+          format: date-time
+        duration_min:
+          type: integer
+          maximum: 240
+          minimum: 10
+          default: 50
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          default: online
+        location_code:
+          type: string
+          nullable: true
+      required:
+      - client_ref
+      - scheduled_start
+    SessionPatchStatusEnum:
+      enum:
+      - completed
+      - cancelled
+      - no_show
+      type: string
+      description: |-
+        * `completed` - completed
+        * `cancelled` - cancelled
+        * `no_show` - no_show
+    SeverityEnum:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+      description: |-
+        * `low` - low
+        * `medium` - medium
+        * `high` - high
+    SpecializationEnum:
+      enum:
+      - trauma
+      - anxiety
+      - depression
+      - couples
+      - child
+      - addiction
+      type: string
+      description: |-
+        * `trauma` - trauma
+        * `anxiety` - anxiety
+        * `depression` - depression
+        * `couples` - couples
+        * `child` - child
+        * `addiction` - addiction
+    StatusChangeStatusEnum:
+      enum:
+      - active
+      - suspended
+      type: string
+      description: |-
+        * `active` - active
+        * `suspended` - suspended
   securitySchemes:
     bearerAuth:
       type: http

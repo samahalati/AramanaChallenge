@@ -63,7 +63,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["core.permissions.RolePermission"],   # secure by default: every view declares `perms`
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "EXCEPTION_HANDLER": "core.errors.exception_handler",
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "core.openapi.ArmanaSchema",
     "UNAUTHENTICATED_USER": None,
 }
 SPECTACULAR_SETTINGS = {"TITLE": "ARAMANA governance API", "VERSION": "2.0.0", "SERVE_INCLUDE_SCHEMA": False}

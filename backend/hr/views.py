@@ -16,6 +16,7 @@ def validated(serializer_cls, request, **kw):
 
 
 class PractitionerViewSet(viewsets.ViewSet):
+    bodies = {"create": PractitionerCreateSerializer, "development": DevelopmentSerializer, "profile": ProfilePatchSerializer, "lifecycle": LifecycleActionSerializer, "credentials": CredentialSerializer, "contracts": ContractSerializer}
     perms = {"list": "hr:read", "retrieve": "hr:read", "activity": "hr:read", "*": "hr:write"}
 
     def list(self, request):
@@ -103,6 +104,7 @@ class ContractUpdateView(AuditedUpdateView):
 
 
 class AssignmentView(APIView):
+    bodies = {"post": AssignmentSerializer}
     perms = {"get": "hr:read", "post": "hr:write"}
 
     def get(self, request):

@@ -26,16 +26,19 @@ class SuperviseeDetail(SupervisionView):
 
 
 class Meetings(SupervisionView):
+    bodies = {"post": s.MeetingSerializer}
     def post(self, request):
         return Response({"id": services.schedule_meeting(request.user, validated(s.MeetingSerializer, request)).id}, status=201)
 
 
 class MeetingDetail(SupervisionView):
+    bodies = {"patch": s.MeetingPatchSerializer}
     def patch(self, request, mid):
         return Response({"id": services.update_meeting(request.user, mid, validated(s.MeetingPatchSerializer, request)["status"]).id})
 
 
 class Reviews(SupervisionView):
+    bodies = {"post": s.ReviewCreateSerializer}
     def get(self, request):
         return Response(services.list_reviews(request.user, request.query_params))
 
@@ -50,6 +53,7 @@ class ReviewDetail(SupervisionView):
 
 class ReviewAction(SupervisionView):
     """POST /reviews/<id>/<start|decision|corrective-actions|close> – one class, one table (DRY)."""
+    bodies = {"decision": s.ReviewDecisionSerializer, "corrective-actions": s.CorrectiveActionSerializer, "close": s.CloseReviewSerializer}
     handlers = {
         "start": lambda u, rid, r: {"id": services.start_review(u, rid).id},
         "decision": lambda u, rid, r: services.decide_review(u, rid, validated(s.ReviewDecisionSerializer, r)),
@@ -63,6 +67,7 @@ class ReviewAction(SupervisionView):
 
 
 class CorrectiveActionDetail(APIView):
+    bodies = {"patch": s.CorrectivePatchSerializer}
     perms = {"patch": ("supervision:write", "supervision:read:own")}
 
     def patch(self, request, aid):
@@ -77,6 +82,7 @@ class MyReviews(APIView):
 
 
 class Issues(APIView):
+    bodies = {"post": s.QualityIssueSerializer}
     perms = {"get": "supervision:read", "post": "quality:write"}
 
     def get(self, request):
@@ -89,6 +95,10 @@ class Issues(APIView):
 class IssueAction(APIView):
     perms = {"post": "quality:write"}
     escalate = False
+
+    @property
+    def bodies(self):
+        return {"post": s.EscalateSerializer} if self.escalate else {}
 
     def post(self, request, iid):
         if self.escalate:

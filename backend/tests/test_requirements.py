@@ -215,3 +215,14 @@ def test_3_1_profile_can_be_managed_and_supervision_schedule_defined(api):
     r = api.post("/hr/assignments", HR, supervisee_id=target, supervisor_id=sups[-1]["id"], reason="Schedule test", schedule_every_days=14)
     assert r.status_code in (200, 201), r.content
     assert [a["schedule_every_days"] for a in api.get("/hr/assignments", HR).json() if a["supervisee_id"] == target] == [14]
+
+
+def test_6_api_documentation_lists_request_bodies(api):
+    """§10-C.6: the generated OpenAPI document describes the input fields of every write endpoint that takes a body."""
+    import yaml
+    spec = yaml.safe_load(api.client.get("/api/schema/").content)
+    bodyless = {"/api/alerts/{aid}/ai-summary", "/api/clinical/sessions/{sid}/checkin", "/api/clinical/sessions/{sid}/checkout", "/api/detection/run", "/api/detection/runs",
+                "/api/supervision/quality-issues/{iid}/resolve", "/api/supervision/reviews/{rid}/start"}
+    missing = [f"{m.upper()} {p}" for p, ops in spec["paths"].items() for m, o in ops.items()
+               if m in ("post", "patch", "put") and "requestBody" not in o and p not in bodyless]
+    assert not missing, missing

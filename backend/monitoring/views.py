@@ -29,6 +29,7 @@ class AlertDetail(APIView):
 
 
 class AlertAction(APIView):
+    bodies = {"post": AlertActionSerializer}
     perms = {"post": ("alerts:comment", "alerts:investigate")}
 
     def post(self, request, aid):
@@ -45,6 +46,7 @@ class AlertAiSummary(APIView):
 
 class AlertAssistant(APIView):
     """Grounded Q&A over one alert's evidence. GET = history; POST {question} = ask (guardrails + citations)."""
+    bodies = {"post": AskSerializer}
     perms = {"get": "alerts:investigate", "post": "alerts:investigate"}
 
     def get(self, request, aid):
@@ -55,6 +57,7 @@ class AlertAssistant(APIView):
 
 
 class AlertRoute(APIView):
+    bodies = {"post": RouteSerializer}
     perms = {"post": "alerts:investigate"}
 
     def post(self, request, aid):

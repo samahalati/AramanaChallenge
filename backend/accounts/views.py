@@ -13,6 +13,7 @@ from core.permissions import AUTHENTICATED
 
 
 class LoginView(APIView):
+    bodies = {"post": LoginSerializer}
     permission_classes, authentication_classes = [AllowAny], [JWTAuthentication]   # authenticator supplies the 401 challenge header
 
     def post(self, request):
@@ -31,6 +32,7 @@ class MeView(APIView):
 
 class AdminUserViewSet(viewsets.ViewSet):
     """Platform account administration (no HR/clinical content)."""
+    bodies = {"create": AccountSerializer, "role": RoleChangeSerializer, "set_status": StatusChangeSerializer}
     perms = {"*": "users:manage"}
 
     def list(self, request):

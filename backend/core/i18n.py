@@ -82,7 +82,7 @@ TERMS = {
     "minutes": "دقیقه", "n": "تعداد", "others_rate": "نرخ سایرین", "out_share": "سهم خروجی", "overlap_min": "دقیقه‌ی هم‌پوشانی", "path": "مسیر", "permission": "مجوز",
     "policy_expected_share": "سهم مورد انتظار از سیاست", "practitioner_id": "شناسه‌ی متخصص", "referrals": "ارجاع‌ها", "reported_min": "دقیقه‌ی گزارش‌شده", "review": "بازبینی",
     "robust_z": "z مقاوم", "role": "نقش", "session": "جلسه", "session_a": "جلسه (الف)", "session_b": "جلسه (ب)", "share": "سهم", "specialisation": "تخصص", "start": "شروع",
-    "supervisee": "زیردست", "supervisor": "سوپروایزر", "target_user": "کاربر هدف", "therapist": "درمانگر", "to": "به", "ts": "زمان", "user": "کاربر", "value": "مقدار",
+    "supervisee": "زیردست", "supervisor": "سوپروایزر", "target_user": "کاربر هدف", "to": "به", "ts": "زمان", "user": "کاربر", "value": "مقدار",
     "verified_span_min": "بازه‌ی راستی‌آزمایی‌شده (دقیقه)", "day": "روز", "issue_id": "شناسه‌ی مسئله", "category": "دسته", "severity": "شدت", "decisions_in_window": "تصمیم‌ها در بازه",
     "op": "عملیات", "record": "رکورد", "summary": "خلاصه", "field": "فیلد", "after": "پس از", "before": "پیش از", "from": "از", "action": "اقدام", "reason": "دلیل", "new_status": "وضعیت جدید",
     # form fields (validation messages)
