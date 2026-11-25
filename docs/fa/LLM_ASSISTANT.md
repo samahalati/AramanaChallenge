@@ -36,6 +36,33 @@ flowchart LR
 
 مبادله‌ها، صادقانه: دو تماس به‌جای یکی؛ بررسی‌های معنایی به‌اندازه‌ی مدلِ قاضی خوب‌اند و آفلاین تکرارپذیر نیستند (CI با قاضیِ اسکریپت‌شده فقط *لوله‌کشی* را ثابت می‌کند؛ `evaluate_llm --live` قاضی واقعی را می‌سنجد).
 
+## مدل تهدید ← کنترل ← اثبات
+
+| تهدید | کنترل | محل آزمون |
+|---|---|---|
+| تزریق پرامپت از طریق داده‌ی ثبت‌شده یا پرسش | شواهد به‌عنوان «داده» درون `<evidence>` محدود می‌شود (قاعده‌ی ۱ پرامپت)؛ ایمیل‌ها حذف، IPها پوشانده و نویسه‌های کنترلی پاک می‌شوند؛ قاضی پاسخی را که از دستور پیروی کند پرچم می‌زند | `evidence_redacted`؛ زنده: `judge flags injection_obedience`، `refuses question_injection` |
+| دست‌کاری سطح ریسک / کم‌نمایی یا بزرگ‌نمایی | `consistency` – قاضی با سطح محاسبه‌شده در F1 مقایسه می‌کند | زنده: `judge flags risk_level_tampering` |
+| آمار ساختگی | `numbers` – هر عدد (رقم لاتین و فارسی نرمال‌شده) باید در شواهد باشد؛ عددهای حروفی را قاضی می‌گیرد | `hallucinated_statistic` (قطعی)؛ زنده: `spelled_out_statistic` |
+| ادعای بی‌پشتوانه | `citations` – هر یافته دست‌کم یک شناسه‌ی منبعِ **موجود** را ارجاع می‌دهد | `uncited_claim`، `invented_source` |
+| مجازات / اتهام / ارجاع حقوقی | قاعده‌ی ۴ پرامپت + قاضیِ لحن | زنده: `sanction_recommendation`، `accusation`، `employment_paraphrase`، `authorities_referral`، `judgemental_label` … |
+| شناسایی هویت / نشت | پرامپت هیچ نام/ایمیل/شناسه‌ی مراجع ندارد؛ بررسی `identity` (ایمیل، شناسه‌ی مراجع، نام‌های شناخته‌شده؛ شکل‌های پنهان‌شده با قاضی) | `email_leak`، `client_ref_leak`، `name_leak`، `unicode_obfuscation`، `test_prompt_never_contains_names…` |
+| فشار برای تصمیم‌گیری / شناسایی / پرسش خارج از حوزه | قاعده‌ی ۷ پرامپت: مدل با دقیقاً یک جمله‌ی کوتاه رد می‌کند (`refused: true`)؛ آفلاین (بدون مدل) رد ممکن نیست – جایگزین فقط شواهد را نشان می‌دهد، هرگز تصمیم نمی‌دهد | `model_refusal_is_shown`؛ زنده: `refuses …` |
+| خروجی نامعتبر | JSON schema سخت‌گیرانه؛ یک تلاش اصلاحی؛ سپس جایگزین | `not_json`، `missing_steps` |
+| قطعی ارائه‌دهنده / محدودیت نرخ / نبود کلید / قطعی قاضی | تلاش مجدد روی ۴۲۹/۵۰۳ (۳ و ۸ ثانیه)؛ جایگزین با همان schema و نشان در رابط | `provider_outage`، `judge_outage`، `judge_garbage` |
+| سوءاستفاده / هزینه | ۳۰ درخواست در ساعت برای هر کاربر (HTTP 429)؛ پرسش حداکثر ۳۰۰ نویسه | `test_rate_limit` |
+| استفاده‌ی بی‌پاسخگو از AI | هر مبادله ذخیره، در خط زمانی هشدار و audit زنجیره‌ی هش نوشته می‌شود؛ فقط بازبینان | `test_briefing_offline…`، `test_only_authorised_investigators…` |
+| تبدیل متن AI به تصمیم | برچسب «مشورتی»؛ «استفاده به‌عنوان پیش‌نویس یادداشت» همان پنجره‌ی عادی یادداشت را باز می‌کند؛ هیچ مسیر اقدام خودکار نیست | `test_assistant_never_changes_state` |
+
+## API
+
+| نقطه‌ی پایانی | کار |
+|---|---|
+| `POST /api/alerts/{id}/ai-summary` | تولید خلاصه‌ی ساخت‌یافته |
+| `POST /api/alerts/{id}/assistant` `{question}` | پرسش زمین‌گذاری‌شده (مدل ممکن است رد کند) |
+| `GET /api/alerts/{id}/assistant` | تاریخچه‌ی مبادله‌ها (فقط بازبینان) |
+
+پاسخ: `{kind, provider, refused, content, citations{id: متن منبع}, guardrails{input{redacted, evidence_rows_omitted, refused_reason}, output{checks, attempts, rejected_violations, fallback_used, fallback_reason}}, advisory}`. `provider` یکی از `groq`/`gemini`/`ollama` (مدل)، `template` (ارائه‌دهنده‌ای تنظیم نشده) یا `template(fallback)` (مدل/قاضی شکست خورد یا رد شد) است.
+
 ## ارزیابی (`python manage.py evaluate_llm [--live]`)
 
 **لایه‌ی قطعی (CI، بدون شبکه):** مدل و قاضیِ اسکریپت‌شده روی ۱۳ هشدار، انگلیسی + فارسی ← **۷۲۸ از ۷۲۸** (`docs/llm_eval.txt`). ثابت می‌کند بررسی‌های بدون‌لیست پاسخ بد را می‌بندند، حکم قاضی رعایت می‌شود (پرچم ← اصلاح ← جایگزین)، *بدون حکم ⇒ بدون متن مدل*، ردِ مدل به‌صورت رد نمایش داده می‌شود و شواهد پاک‌سازی می‌شوند. درباره‌ی کیفیتِ مدل/قاضیِ واقعی **هیچ** چیز نمی‌گوید.
