@@ -5,7 +5,7 @@ info:
 paths:
   /api/admin/activity:
     get:
-      operationId: admin_activity_retrieve
+      operationId: get_api_admin_activity
       tags:
       - admin
       security:
@@ -20,7 +20,7 @@ paths:
           description: ''
   /api/admin/users:
     get:
-      operationId: admin_users_retrieve
+      operationId: get_api_admin_users
       description: Platform account administration (no HR/clinical content).
       tags:
       - admin
@@ -35,7 +35,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: admin_users_create
+      operationId: post_api_admin_users
       description: Platform account administration (no HR/clinical content).
       tags:
       - admin
@@ -63,7 +63,7 @@ paths:
           description: ''
   /api/admin/users/{id}/role:
     patch:
-      operationId: admin_users_role_partial_update
+      operationId: patch_api_admin_users_id_role
       description: Platform account administration (no HR/clinical content).
       parameters:
       - in: path
@@ -96,7 +96,7 @@ paths:
           description: ''
   /api/admin/users/{id}/status:
     patch:
-      operationId: admin_users_status_partial_update
+      operationId: patch_api_admin_users_id_status
       description: Platform account administration (no HR/clinical content).
       parameters:
       - in: path
@@ -129,7 +129,7 @@ paths:
           description: ''
   /api/alerts:
     get:
-      operationId: alerts_retrieve
+      operationId: get_api_alerts
       tags:
       - alerts
       security:
@@ -144,7 +144,7 @@ paths:
           description: ''
   /api/alerts/{aid}:
     get:
-      operationId: alerts_retrieve_2
+      operationId: get_api_alerts_aid
       parameters:
       - in: path
         name: aid
@@ -165,7 +165,7 @@ paths:
           description: ''
   /api/alerts/{aid}/actions:
     post:
-      operationId: alerts_actions_create
+      operationId: post_api_alerts_aid_actions
       parameters:
       - in: path
         name: aid
@@ -198,7 +198,7 @@ paths:
           description: ''
   /api/alerts/{aid}/ai-summary:
     post:
-      operationId: alerts_ai_summary_create
+      operationId: post_api_alerts_aid_ai_summary
       parameters:
       - in: path
         name: aid
@@ -219,7 +219,7 @@ paths:
           description: ''
   /api/alerts/{aid}/assistant:
     get:
-      operationId: alerts_assistant_retrieve
+      operationId: get_api_alerts_aid_assistant
       description: Grounded Q&A over one alert's evidence. GET = history; POST {question}
         = ask (guardrails + citations).
       parameters:
@@ -241,7 +241,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: alerts_assistant_create
+      operationId: post_api_alerts_aid_assistant
       description: Grounded Q&A over one alert's evidence. GET = history; POST {question}
         = ask (guardrails + citations).
       parameters:
@@ -276,7 +276,7 @@ paths:
           description: ''
   /api/alerts/{aid}/route-to-supervisor:
     post:
-      operationId: alerts_route_to_supervisor_create
+      operationId: post_api_alerts_aid_route_to_supervisor
       parameters:
       - in: path
         name: aid
@@ -309,7 +309,7 @@ paths:
           description: ''
   /api/audit:
     get:
-      operationId: audit_retrieve
+      operationId: get_api_audit
       tags:
       - audit
       security:
@@ -324,7 +324,7 @@ paths:
           description: ''
   /api/audit/access-events:
     get:
-      operationId: audit_access_events_retrieve
+      operationId: get_api_audit_access_events
       tags:
       - audit
       security:
@@ -339,7 +339,7 @@ paths:
           description: ''
   /api/audit/verify:
     get:
-      operationId: audit_verify_retrieve
+      operationId: get_api_audit_verify
       tags:
       - audit
       security:
@@ -354,7 +354,7 @@ paths:
           description: ''
   /api/auth/login:
     post:
-      operationId: auth_login_create
+      operationId: post_api_auth_login
       tags:
       - auth
       requestBody:
@@ -382,7 +382,7 @@ paths:
           description: ''
   /api/auth/me:
     get:
-      operationId: auth_me_retrieve
+      operationId: get_api_auth_me
       tags:
       - auth
       security:
@@ -397,7 +397,7 @@ paths:
           description: ''
   /api/clinical/my-clients:
     get:
-      operationId: clinical_my_clients_retrieve
+      operationId: get_api_clinical_my_clients
       tags:
       - clinical
       security:
@@ -412,7 +412,7 @@ paths:
           description: ''
   /api/clinical/practitioners/{pid}/sessions:
     get:
-      operationId: clinical_practitioners_sessions_retrieve
+      operationId: get_api_clinical_practitioners_pid_sessions
       description: Role grants the *kind* of access; the relationship (own / current
         supervisee / alerted subject) grants the *record*.
       parameters:
@@ -435,7 +435,7 @@ paths:
           description: ''
   /api/clinical/sessions:
     post:
-      operationId: clinical_sessions_create
+      operationId: post_api_clinical_sessions
       tags:
       - clinical
       requestBody:
@@ -462,7 +462,7 @@ paths:
           description: ''
   /api/clinical/sessions/{sid}:
     patch:
-      operationId: clinical_sessions_partial_update
+      operationId: patch_api_clinical_sessions_sid
       parameters:
       - in: path
         name: sid
@@ -494,7 +494,7 @@ paths:
           description: ''
   /api/clinical/sessions/{sid}/checkin:
     post:
-      operationId: clinical_sessions_checkin_create
+      operationId: post_api_clinical_sessions_sid_checkin
       parameters:
       - in: path
         name: sid
@@ -515,7 +515,7 @@ paths:
           description: ''
   /api/clinical/sessions/{sid}/checkout:
     post:
-      operationId: clinical_sessions_checkout_create
+      operationId: post_api_clinical_sessions_sid_checkout
       parameters:
       - in: path
         name: sid
@@ -536,7 +536,7 @@ paths:
           description: ''
   /api/detection/config:
     get:
-      operationId: detection_config_retrieve
+      operationId: get_api_detection_config
       tags:
       - detection
       security:
@@ -551,7 +551,7 @@ paths:
           description: ''
   /api/detection/evaluation:
     get:
-      operationId: detection_evaluation_retrieve
+      operationId: get_api_detection_evaluation
       tags:
       - detection
       security:
@@ -566,7 +566,7 @@ paths:
           description: ''
   /api/detection/run:
     get:
-      operationId: detection_run_retrieve
+      operationId: get_api_detection_run
       tags:
       - detection
       security:
@@ -580,7 +580,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: detection_run_create
+      operationId: post_api_detection_run
       tags:
       - detection
       security:
@@ -595,7 +595,7 @@ paths:
           description: ''
   /api/detection/runs:
     get:
-      operationId: detection_runs_retrieve
+      operationId: get_api_detection_runs
       tags:
       - detection
       security:
@@ -609,7 +609,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: detection_runs_create
+      operationId: post_api_detection_runs
       tags:
       - detection
       security:
@@ -624,7 +624,7 @@ paths:
           description: ''
   /api/health:
     get:
-      operationId: health_retrieve
+      operationId: get_api_health
       description: 'Readiness probe for load balancers: 200 only when the database
         answers, so a replica without a database is taken out of rotation.'
       tags:
@@ -641,7 +641,7 @@ paths:
           description: ''
   /api/hr/assignments:
     get:
-      operationId: hr_assignments_retrieve
+      operationId: get_api_hr_assignments
       tags:
       - hr
       security:
@@ -655,7 +655,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: hr_assignments_create
+      operationId: post_api_hr_assignments
       tags:
       - hr
       requestBody:
@@ -682,7 +682,7 @@ paths:
           description: ''
   /api/hr/contracts/{id}:
     put:
-      operationId: hr_contracts_update
+      operationId: put_api_hr_contracts_id
       description: PATCH one child record of a practitioner and log it as an administrative
         activity.
       parameters:
@@ -715,7 +715,7 @@ paths:
                 $ref: '#/components/schemas/Contract'
           description: ''
     patch:
-      operationId: hr_contracts_partial_update
+      operationId: patch_api_hr_contracts_id
       description: PATCH one child record of a practitioner and log it as an administrative
         activity.
       parameters:
@@ -748,7 +748,7 @@ paths:
           description: ''
   /api/hr/credentials/{id}:
     put:
-      operationId: hr_credentials_update
+      operationId: put_api_hr_credentials_id
       description: PATCH one child record of a practitioner and log it as an administrative
         activity.
       parameters:
@@ -781,7 +781,7 @@ paths:
                 $ref: '#/components/schemas/Credential'
           description: ''
     patch:
-      operationId: hr_credentials_partial_update
+      operationId: patch_api_hr_credentials_id
       description: PATCH one child record of a practitioner and log it as an administrative
         activity.
       parameters:
@@ -814,7 +814,7 @@ paths:
           description: ''
   /api/hr/dashboard:
     get:
-      operationId: hr_dashboard_retrieve
+      operationId: get_api_hr_dashboard
       tags:
       - hr
       security:
@@ -829,7 +829,7 @@ paths:
           description: ''
   /api/hr/org-units:
     get:
-      operationId: hr_org_units_retrieve
+      operationId: get_api_hr_org_units
       tags:
       - hr
       security:
@@ -844,7 +844,7 @@ paths:
           description: ''
   /api/hr/practitioners:
     get:
-      operationId: hr_practitioners_retrieve
+      operationId: get_api_hr_practitioners
       tags:
       - hr
       security:
@@ -858,7 +858,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: hr_practitioners_create
+      operationId: post_api_hr_practitioners
       tags:
       - hr
       requestBody:
@@ -885,7 +885,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}:
     get:
-      operationId: hr_practitioners_retrieve_2
+      operationId: get_api_hr_practitioners_id
       parameters:
       - in: path
         name: id
@@ -906,7 +906,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/activity:
     get:
-      operationId: hr_practitioners_activity_retrieve
+      operationId: get_api_hr_practitioners_id_activity
       description: Aggregated activity, quality, participation and development indicators
         (no clinical content).
       parameters:
@@ -929,7 +929,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/contracts:
     post:
-      operationId: hr_practitioners_contracts_create
+      operationId: post_api_hr_practitioners_id_contracts
       parameters:
       - in: path
         name: id
@@ -962,7 +962,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/credentials:
     post:
-      operationId: hr_practitioners_credentials_create
+      operationId: post_api_hr_practitioners_id_credentials
       parameters:
       - in: path
         name: id
@@ -995,7 +995,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/development:
     post:
-      operationId: hr_practitioners_development_create
+      operationId: post_api_hr_practitioners_id_development
       parameters:
       - in: path
         name: id
@@ -1028,7 +1028,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/lifecycle:
     post:
-      operationId: hr_practitioners_lifecycle_create
+      operationId: post_api_hr_practitioners_id_lifecycle
       parameters:
       - in: path
         name: id
@@ -1061,7 +1061,7 @@ paths:
           description: ''
   /api/hr/practitioners/{id}/profile:
     patch:
-      operationId: hr_practitioners_profile_partial_update
+      operationId: patch_api_hr_practitioners_id_profile
       parameters:
       - in: path
         name: id
@@ -1093,7 +1093,7 @@ paths:
           description: ''
   /api/meta/labels:
     get:
-      operationId: meta_labels_retrieve
+      operationId: get_api_meta_labels
       description: Persian labels for every backend vocabulary (roles, statuses, actions,
         evidence keys…). Empty for English – the UI falls back to the raw tokens.
       tags:
@@ -1110,7 +1110,7 @@ paths:
           description: ''
   /api/meta/rbac:
     get:
-      operationId: meta_rbac_retrieve
+      operationId: get_api_meta_rbac
       description: The matrix the API enforces – the UI renders exactly this (single
         source of truth).
       tags:
@@ -1127,7 +1127,7 @@ paths:
           description: ''
   /api/monitoring/summary:
     get:
-      operationId: monitoring_summary_retrieve
+      operationId: get_api_monitoring_summary
       tags:
       - monitoring
       security:
@@ -1142,7 +1142,7 @@ paths:
           description: ''
   /api/monitoring/users/{uid}/history:
     get:
-      operationId: monitoring_users_history_retrieve
+      operationId: get_api_monitoring_users_uid_history
       parameters:
       - in: path
         name: uid
@@ -1163,7 +1163,7 @@ paths:
           description: ''
   /api/referrals:
     post:
-      operationId: referrals_create
+      operationId: post_api_referrals
       tags:
       - referrals
       requestBody:
@@ -1190,7 +1190,7 @@ paths:
           description: ''
   /api/referrals/eligible:
     get:
-      operationId: referrals_eligible_retrieve
+      operationId: get_api_referrals_eligible
       tags:
       - referrals
       security:
@@ -1205,7 +1205,7 @@ paths:
           description: ''
   /api/referrals/mine:
     get:
-      operationId: referrals_mine_retrieve
+      operationId: get_api_referrals_mine
       tags:
       - referrals
       security:
@@ -1220,7 +1220,7 @@ paths:
           description: ''
   /api/supervision/corrective-actions/{aid}:
     patch:
-      operationId: supervision_corrective_actions_partial_update
+      operationId: patch_api_supervision_corrective_actions_aid
       parameters:
       - in: path
         name: aid
@@ -1252,7 +1252,7 @@ paths:
           description: ''
   /api/supervision/dashboard:
     get:
-      operationId: supervision_dashboard_retrieve
+      operationId: get_api_supervision_dashboard
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
@@ -1269,7 +1269,7 @@ paths:
           description: ''
   /api/supervision/meetings:
     post:
-      operationId: supervision_meetings_create
+      operationId: post_api_supervision_meetings
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
@@ -1298,7 +1298,7 @@ paths:
           description: ''
   /api/supervision/meetings/{mid}:
     patch:
-      operationId: supervision_meetings_partial_update
+      operationId: patch_api_supervision_meetings_mid
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       parameters:
@@ -1332,7 +1332,7 @@ paths:
           description: ''
   /api/supervision/my-reviews:
     get:
-      operationId: supervision_my_reviews_retrieve
+      operationId: get_api_supervision_my_reviews
       tags:
       - supervision
       security:
@@ -1347,7 +1347,7 @@ paths:
           description: ''
   /api/supervision/quality-issues:
     get:
-      operationId: supervision_quality_issues_retrieve
+      operationId: get_api_supervision_quality_issues
       tags:
       - supervision
       security:
@@ -1361,7 +1361,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: supervision_quality_issues_create
+      operationId: post_api_supervision_quality_issues
       tags:
       - supervision
       requestBody:
@@ -1388,7 +1388,7 @@ paths:
           description: ''
   /api/supervision/quality-issues/{iid}/escalate:
     post:
-      operationId: supervision_quality_issues_escalate_create
+      operationId: post_api_supervision_quality_issues_iid_escalate
       parameters:
       - in: path
         name: iid
@@ -1421,7 +1421,7 @@ paths:
           description: ''
   /api/supervision/quality-issues/{iid}/resolve:
     post:
-      operationId: supervision_quality_issues_resolve_create
+      operationId: post_api_supervision_quality_issues_iid_resolve
       parameters:
       - in: path
         name: iid
@@ -1442,7 +1442,7 @@ paths:
           description: ''
   /api/supervision/reviews:
     get:
-      operationId: supervision_reviews_retrieve
+      operationId: get_api_supervision_reviews
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
@@ -1458,7 +1458,7 @@ paths:
                 additionalProperties: {}
           description: ''
     post:
-      operationId: supervision_reviews_create
+      operationId: post_api_supervision_reviews
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
@@ -1487,7 +1487,7 @@ paths:
           description: ''
   /api/supervision/reviews/{rid}:
     get:
-      operationId: supervision_reviews_retrieve_2
+      operationId: get_api_supervision_reviews_rid
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       parameters:
@@ -1510,7 +1510,7 @@ paths:
           description: ''
   /api/supervision/reviews/{rid}/close:
     post:
-      operationId: supervision_reviews_close_create
+      operationId: post_api_supervision_reviews_rid_close
       description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
         one class, one table (DRY).
       parameters:
@@ -1544,7 +1544,7 @@ paths:
           description: ''
   /api/supervision/reviews/{rid}/corrective-actions:
     post:
-      operationId: supervision_reviews_corrective_actions_create
+      operationId: post_api_supervision_reviews_rid_corrective_actions
       description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
         one class, one table (DRY).
       parameters:
@@ -1579,7 +1579,7 @@ paths:
           description: ''
   /api/supervision/reviews/{rid}/decision:
     post:
-      operationId: supervision_reviews_decision_create
+      operationId: post_api_supervision_reviews_rid_decision
       description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
         one class, one table (DRY).
       parameters:
@@ -1614,7 +1614,7 @@ paths:
           description: ''
   /api/supervision/reviews/{rid}/start:
     post:
-      operationId: supervision_reviews_start_create
+      operationId: post_api_supervision_reviews_rid_start
       description: POST /reviews/<id>/<start|decision|corrective-actions|close> –
         one class, one table (DRY).
       parameters:
@@ -1637,7 +1637,7 @@ paths:
           description: ''
   /api/supervision/supervisees:
     get:
-      operationId: supervision_supervisees_retrieve
+      operationId: get_api_supervision_supervisees
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       tags:
@@ -1654,7 +1654,7 @@ paths:
           description: ''
   /api/supervision/supervisees/{uid}:
     get:
-      operationId: supervision_supervisees_retrieve_2
+      operationId: get_api_supervision_supervisees_uid
       description: 'Base for Module-B endpoints: reads need supervision:read, writes
         supervision:write.'
       parameters:
