@@ -1,0 +1,177 @@
+{
+  "min_level": "medium",
+  "seed": 42,
+  "alerts_total": 13,
+  "overall": {
+    "tp": 16,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "per_category": {
+    "A": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "B": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "C": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "D": {
+      "tp": 7,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "E": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "per_scenario": {
+    "session_overlap": {
+      "category": "A",
+      "detected": 1,
+      "of": 1
+    },
+    "duration_discrepancy": {
+      "category": "A",
+      "detected": 1,
+      "of": 1
+    },
+    "cancellation_pattern": {
+      "category": "A",
+      "detected": 1,
+      "of": 1
+    },
+    "referral_concentration": {
+      "category": "B",
+      "detected": 2,
+      "of": 2
+    },
+    "referral_behavior_shift": {
+      "category": "B",
+      "detected": 1,
+      "of": 1
+    },
+    "approval_burst": {
+      "category": "C",
+      "detected": 1,
+      "of": 1
+    },
+    "admin_out_of_scope": {
+      "category": "D",
+      "detected": 1,
+      "of": 1
+    },
+    "admin_modification_burst": {
+      "category": "D",
+      "detected": 1,
+      "of": 1
+    },
+    "failed_login_burst": {
+      "category": "D",
+      "detected": 1,
+      "of": 1
+    },
+    "multi_account_ip": {
+      "category": "D",
+      "detected": 5,
+      "of": 5
+    },
+    "referral_approval_ring": {
+      "category": "E",
+      "detected": 3,
+      "of": 3
+    }
+  },
+  "hard_negatives": {
+    "n": 7,
+    "false_positives_at_min_level": 0,
+    "pairs": [],
+    "alerts_any_level": {
+      "11": [
+        {
+          "alert": "ALR-000002",
+          "level": "low",
+          "score": 28.7,
+          "scenario": "approval_burst"
+        }
+      ]
+    }
+  },
+  "ablation": {
+    "rules_only": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 6,
+      "precision": 1.0,
+      "recall": 0.625,
+      "f1": 0.769
+    },
+    "statistics_only": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 13,
+      "precision": 1.0,
+      "recall": 0.188,
+      "f1": 0.316
+    },
+    "ml_only": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 16,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "graph_only": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 13,
+      "precision": 1.0,
+      "recall": 0.188,
+      "f1": 0.316
+    },
+    "rules+statistics": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.812,
+      "f1": 0.897
+    },
+    "full_ensemble": {
+      "tp": 16,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  }
+}

@@ -8,6 +8,8 @@ paths:
       operationId: admin_activity_retrieve
       tags:
       - admin
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -17,6 +19,8 @@ paths:
       description: Platform account administration (no HR/clinical content).
       tags:
       - admin
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -25,6 +29,8 @@ paths:
       description: Platform account administration (no HR/clinical content).
       tags:
       - admin
+      security:
+      - bearerAuth: []
       responses:
         '201':
           description: No response body
@@ -40,6 +46,8 @@ paths:
         required: true
       tags:
       - admin
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -55,6 +63,8 @@ paths:
         required: true
       tags:
       - admin
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -63,6 +73,8 @@ paths:
       operationId: alerts_retrieve
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -77,6 +89,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -91,6 +105,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -105,6 +121,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -121,6 +139,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -136,6 +156,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -150,6 +172,8 @@ paths:
         required: true
       tags:
       - alerts
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -158,6 +182,8 @@ paths:
       operationId: audit_retrieve
       tags:
       - audit
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -166,6 +192,8 @@ paths:
       operationId: audit_access_events_retrieve
       tags:
       - audit
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -174,6 +202,8 @@ paths:
       operationId: audit_verify_retrieve
       tags:
       - audit
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -183,6 +213,7 @@ paths:
       tags:
       - auth
       security:
+      - bearerAuth: []
       - {}
       responses:
         '200':
@@ -192,6 +223,8 @@ paths:
       operationId: auth_me_retrieve
       tags:
       - auth
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -200,6 +233,8 @@ paths:
       operationId: clinical_my_clients_retrieve
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -216,6 +251,8 @@ paths:
         required: true
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -224,6 +261,8 @@ paths:
       operationId: clinical_sessions_create
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -238,6 +277,8 @@ paths:
         required: true
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -252,6 +293,8 @@ paths:
         required: true
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -266,6 +309,8 @@ paths:
         required: true
       tags:
       - clinical
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -274,6 +319,8 @@ paths:
       operationId: detection_config_retrieve
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -282,6 +329,8 @@ paths:
       operationId: detection_evaluation_retrieve
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -290,6 +339,8 @@ paths:
       operationId: detection_run_retrieve
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -297,6 +348,8 @@ paths:
       operationId: detection_run_create
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -305,6 +358,8 @@ paths:
       operationId: detection_runs_retrieve
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -312,6 +367,8 @@ paths:
       operationId: detection_runs_create
       tags:
       - detection
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -330,6 +387,8 @@ paths:
       operationId: hr_assignments_retrieve
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -337,6 +396,8 @@ paths:
       operationId: hr_assignments_create
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -365,6 +426,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Contract'
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '200':
           content:
@@ -395,6 +458,8 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedContract'
+      security:
+      - bearerAuth: []
       responses:
         '200':
           content:
@@ -427,6 +492,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Credential'
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '200':
           content:
@@ -457,6 +524,8 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedCredential'
+      security:
+      - bearerAuth: []
       responses:
         '200':
           content:
@@ -469,6 +538,8 @@ paths:
       operationId: hr_dashboard_retrieve
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -477,6 +548,8 @@ paths:
       operationId: hr_org_units_retrieve
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -485,6 +558,8 @@ paths:
       operationId: hr_practitioners_retrieve
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -492,6 +567,8 @@ paths:
       operationId: hr_practitioners_create
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '201':
           description: No response body
@@ -506,6 +583,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -522,6 +601,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -536,6 +617,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -550,6 +633,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -564,6 +649,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -578,6 +665,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -592,6 +681,8 @@ paths:
         required: true
       tags:
       - hr
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -614,6 +705,8 @@ paths:
         source of truth).
       tags:
       - meta
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -622,6 +715,8 @@ paths:
       operationId: monitoring_summary_retrieve
       tags:
       - monitoring
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -636,6 +731,8 @@ paths:
         required: true
       tags:
       - monitoring
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -644,6 +741,8 @@ paths:
       operationId: referrals_create
       tags:
       - referrals
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -652,6 +751,8 @@ paths:
       operationId: referrals_eligible_retrieve
       tags:
       - referrals
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -660,6 +761,8 @@ paths:
       operationId: referrals_mine_retrieve
       tags:
       - referrals
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -674,6 +777,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -684,6 +789,8 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -694,6 +801,8 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -710,6 +819,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -718,6 +829,8 @@ paths:
       operationId: supervision_my_reviews_retrieve
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -726,6 +839,8 @@ paths:
       operationId: supervision_quality_issues_retrieve
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -733,6 +848,8 @@ paths:
       operationId: supervision_quality_issues_create
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -747,6 +864,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -761,6 +880,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -771,6 +892,8 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -780,6 +903,8 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -796,6 +921,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -812,6 +939,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -828,6 +957,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -844,6 +975,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -860,6 +993,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -870,6 +1005,8 @@ paths:
         supervision:write.'
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -886,6 +1023,8 @@ paths:
         required: true
       tags:
       - supervision
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: No response body
@@ -1011,3 +1150,9 @@ components:
         days_to_expiry:
           type: string
           readOnly: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token from POST /api/auth/login

@@ -32,3 +32,16 @@ class JWTAuthentication(BaseAuthentication):
         if user.status != UserStatus.ACTIVE:
             raise AuthenticationFailed("Account not active")
         return user, parts[1].decode()
+
+
+try:   # API documentation: tell Swagger how requests authenticate, so the "Authorize" button appears (documentation only, no runtime effect)
+    from drf_spectacular.extensions import OpenApiAuthenticationExtension
+
+    class JWTScheme(OpenApiAuthenticationExtension):
+        target_class = "core.auth.JWTAuthentication"
+        name = "bearerAuth"
+
+        def get_security_definition(self, auto_schema):
+            return {"type": "http", "scheme": "bearer", "bearerFormat": "JWT", "description": "Token from POST /api/auth/login"}
+except ImportError:   # pragma: no cover
+    pass

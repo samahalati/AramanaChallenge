@@ -7,6 +7,8 @@ SCENARIO_TEXT = {
                              ["late/forgotten check-out", "technical problems with the check-in tool", "sessions delivered through a channel that is not instrumented"]),
     "cancellation_pattern": ("Unusual cancellation / modification pattern compared with peers and with the practitioner's own history.",
                              ["illness, leave or caseload transition", "platform outage", "client-driven rescheduling"]),
+    "referral_behavior_shift": ("The counselor's referral targets changed between the previous and the recent period by more than chance explains.",
+                                ["a change in the client mix or needs", "a new assignment policy or practitioner capacity", "client requests for specific practitioners"]),
     "referral_concentration": ("Referral distribution differs significantly from what the assignment policy (specialisation + capacity) would predict: referrals are concentrated on very few practitioners.",
                                ["a niche specialisation with few eligible practitioners (policy-explained)", "a client request for a specific practitioner", "capacity/availability constraints not captured in the data"]),
     "approval_burst": ("Supervisor approval pattern is unusual: approvals were issued without the required supporting documentation and/or with implausibly short review time.",

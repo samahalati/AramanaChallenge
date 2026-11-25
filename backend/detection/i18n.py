@@ -47,6 +47,10 @@ SCENARIOS = {
         "name": "الگوی لغو/ویرایش جلسه‌ها", "title": "الگوی لغو/ویرایش جلسه‌ها: {subject}",
         "summary": "الگوی غیرعادیِ لغو و ویرایش جلسه‌ها در مقایسه با همتایان و تاریخچه‌ی خودِ متخصص.",
         "benign": ["بیماری، مرخصی یا تغییر پرونده‌ها", "اختلال پلتفرم", "جابه‌جایی‌های درخواستیِ مراجعان"]},
+    "referral_behavior_shift": {
+        "name": "تغییر مشکوک در رفتار ارجاع", "title": "تغییر در رفتار ارجاعِ {subject}",
+        "summary": "مقصدهای ارجاعِ مشاور بین دوره‌ی قبلی و دوره‌ی اخیر بیش از آنچه تصادف توضیح می‌دهد تغییر کرده است.",
+        "benign": ["تغییر در ترکیب یا نیازهای مراجعان", "سیاست تخصیص تازه یا تغییر ظرفیت متخصصان", "درخواست مراجعان برای متخصصان مشخص"]},
     "referral_concentration": {
         "name": "تمرکز غیرعادی ارجاع", "title": "تمرکز غیرعادی ارجاع برای {subject}",
         "summary": "توزیع ارجاع‌ها به‌طور معنادار با آنچه سیاست انتساب (تخصص + ظرفیت) پیش‌بینی می‌کند فرق دارد: ارجاع‌ها روی تعداد بسیار کمی متخصص متمرکز شده‌اند.",
@@ -93,6 +97,8 @@ LABELS = {
     "Distinct resource areas probed": "حوزه‌های منبعِ متمایزِ کاوش‌شده",
     "Failed logins in one window": "ورودهای ناموفق در یک بازه",
     "Isolation-Forest anomaly score (recent weeks)": "امتیاز ناهنجاری Isolation Forest (هفته‌های اخیر)",
+    "Change of referral targets between the previous and the recent period (permutation p-value)": "تغییر مقصدهای ارجاع بین دوره‌ی قبلی و اخیر (مقدار p آزمون جایگشت)",
+    "Jensen-Shannon distance between the two periods": "فاصله‌ی ینسن–شانون میان دو دوره",
     "Jensen-Shannon distance observed vs expected": "فاصله‌ی ینسن–شانون مشاهده‌شده در برابر مورد انتظار",
     "Overlap between sessions both recorded as completed": "هم‌پوشانی میان جلسه‌هایی که هر دو انجام‌شده ثبت شده‌اند",
     "Overlapping session pairs": "جفت‌جلسه‌های هم‌پوشان",
@@ -158,6 +164,7 @@ TEMPLATES = [
     (r"(\d+)/(\d+) approved \(supervisor's other supervisees: (\d+%|n/a)\)", lambda m: f"{m.group(1)}/{m.group(2)} تأییدشده (سایر زیردستان سوپروایزر: {'نامشخص' if m.group(3) == 'n/a' else m.group(3).replace('%', '٪')})"),
 ]
 ACTIONS = {
+    "Ask the counselor and their supervisor what changed between the two periods (new client mix, assignment policy, requests); compare with the concentration alert for the same person. A shift alone is not evidence of wrongdoing.": "از مشاور و سوپروایزرش بپرسید بین دو دوره چه چیزی تغییر کرده است (ترکیب مراجعان، سیاست تخصیص، درخواست‌ها)؛ با هشدار تمرکزِ همان فرد مقایسه کنید. تغییر به‌تنهایی مدرک تخلف نیست.",
     "Block/rate-limit the address; reset targeted accounts; check whether any attempt succeeded.": "نشانی را مسدود/محدود کنید؛ حساب‌های هدف را بازنشانی کنید؛ بررسی کنید آیا تلاشی موفق بوده است.",
     "Check for an approved change request; compare modified values with source documents; verify the credentials/contracts changed are valid.": "وجود درخواست تغییرِ تأییدشده را بررسی کنید؛ مقادیر ویرایش‌شده را با اسناد مبدأ مقایسه کنید؛ از معتبربودن مدارک/قراردادهای تغییرکرده مطمئن شوید.",
     "Compare the distribution with assignment policy and client requests; check declared relationships/conflicts of interest between the counselor and the top practitioners. Rule out specialisation or capacity constraints before drawing any conclusion.": "توزیع را با سیاست انتساب و درخواست‌های مراجعان مقایسه کنید؛ روابط/تعارض منافع اعلام‌شده میان مشاور و متخصصانِ پرارجاع را بررسی کنید. پیش از هر نتیجه‌گیری، محدودیت‌های تخصص یا ظرفیت را کنار بگذارید.",

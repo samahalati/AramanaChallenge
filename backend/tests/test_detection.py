@@ -66,7 +66,7 @@ def test_scenario1_overlapping_sessions(gt):
 
 
 def test_scenario2_referral_network_and_policy_suppression(gt):
-    conc = alerts_for(gt["roles"]["C_conc"], "B")
+    conc = [a for a in alerts_for(gt["roles"]["C_conc"], "B") if a.scenario == "referral_concentration"]      # (the behaviour-shift alert is a separate scenario)
     assert conc and conc[0].risk_level in ("high", "critical")
     ev = [e for e in conc[0].evidence if e["type"] == "referral_distribution"]
     assert ev[0]["share"] > ev[0]["policy_expected_share"] + 0.2
@@ -129,3 +129,10 @@ def test_detection_never_modifies_users():
 def test_config_is_versioned():
     cfg, digest = load_config(__import__("django.conf", fromlist=["settings"]).settings.DETECTION_CONFIG)
     assert cfg.raw["ruleset_version"] and len(digest) == 64
+
+
+def test_referral_behaviour_shift_detected_for_the_counselor_whose_targets_changed(gt):
+    """Brief §5.1-B 'suspicious changes in referral behavior': the injected change is found, benign counselors are not flagged."""
+    flagged = set(Alert.objects.filter(scenario="referral_behavior_shift").values_list("subject_user_id", flat=True))
+    assert flagged == {gt["roles"]["C_conc"]}
+    assert gt["roles"]["C_spec"] not in flagged

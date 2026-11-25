@@ -102,7 +102,7 @@ React SPA ──REST/JWT──▶ Django + DRF: views → services → ORM ─�
 | **Full ensemble** | | **1.00** | |
 
 0 / 7 hard negatives alerted at Medium+. **Caveat:** self-authored synthetic anomalies ⇒ optimistic; seed 2 showed a chance graph cluster (documented, not tuned away).
-Engineering: 87 tests (detection, RBAC, workflows, 5 end-to-end flows, LLM guardrail red-team) + browser smoke test · full detection run ≈ 1 s
+Engineering: 91 tests (detection, RBAC, workflows, 5 end-to-end flows, LLM guardrail red-team) + browser smoke test · full detection run ≈ 1 s
 
 ---
 

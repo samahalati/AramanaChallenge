@@ -171,7 +171,7 @@ LLM_API_KEY=کلید-رایگان-شما            # https://aistudio.google.co
 | `python manage.py evaluate [--write file.json]` | precision/recall/F1 نسبت به ground truth |
 | `python manage.py evaluate_llm [--live] [--alerts N]` | red-team محافظ‌های LLM (`--live` با کلید شما) |
 | `python manage.py export_docs` | بازتولید `docs/RBAC_MATRIX.md` و `docs/openapi.yaml` از روی کد |
-| `python -m pytest -q` | اجرای ۸۷ تست |
+| `python -m pytest -q` | اجرای ۹۱ تست |
 | `python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8` | پایداری در دنیاهای مصنوعی مختلف |
 
 فرانت‌اند (از `frontend/`): `npm run dev` · `npm run build` · `npm run check:i18n` · `BASE=http://localhost:5173 node e2e/smoke.cjs` (تست دود مرورگر؛ نیاز به Playwright).

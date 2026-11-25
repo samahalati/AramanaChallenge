@@ -94,7 +94,7 @@ npm run dev                                                # ← http://localhos
 | Groq | کلید رایگان – <https://console.groq.com/keys> | `LLM_PROVIDER=groq`، `LLM_API_KEY=…` |
 | Ollama | محلی، بدون کلید | `LLM_PROVIDER=ollama` (بعد از `ollama pull llama3.2`) |
 
-مدل زبانی فقط شواهدِ **شبه‌ناشناس و پاک‌سازی‌شده** را می‌بیند؛ هرگز امتیاز نمی‌دهد، تصمیم نمی‌گیرد و مسیر نوشتن ندارد. `python manage.py evaluate_llm` محافظ‌ها را red-team می‌کند (۶۷۲ بررسی، ۱۰۰٪ ایمن – برای اینکه این عدد چه چیزی را ثابت می‌کند به سند مراجعه کنید). *با سطح رایگان Gemini به‌صورت نقطه‌ای آزمایش شده (جزئیات و محدودیت‌ها در سند)؛ نگهبان‌های معنایی به مدل قاضی وابسته‌اند، پس پیش از اتکا با کلید خودتان بسنجید.*
+مدل زبانی فقط شواهدِ **شبه‌ناشناس و پاک‌سازی‌شده** را می‌بیند؛ هرگز امتیاز نمی‌دهد، تصمیم نمی‌گیرد و مسیر نوشتن ندارد. `python manage.py evaluate_llm` محافظ‌ها را red-team می‌کند (۷۲۸ بررسی، ۱۰۰٪ ایمن – برای اینکه این عدد چه چیزی را ثابت می‌کند به سند مراجعه کنید). *با سطح رایگان Gemini به‌صورت نقطه‌ای آزمایش شده (جزئیات و محدودیت‌ها در سند)؛ نگهبان‌های معنایی به مدل قاضی وابسته‌اند، پس پیش از اتکا با کلید خودتان بسنجید.*
 
 ---
 
@@ -111,7 +111,7 @@ backend/                         پروژه‌ی Django
   monitoring/                    ماژول ج: هشدارها، گردش‌کار تحقیق، اجراها، ارزیابی، سیاست دید (visibility)
   detection/                     موتور پایتون خالص: آشکارسازهای Strategy، امتیازدهی، توضیح، آداپتور LLM، config.yaml
   seed/                          داده‌ی مصنوعی + ناهنجاری‌های تزریقی + ground truth
-  tests/                         pytest-django (۸۷ تست)
+  tests/                         pytest-django (۹۱ تست)
 frontend/                        React + Vite (TanStack Query، React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
 docs/                            UNDERSTANDING · ENGINEERING_RULES · HOWTO · ARCHITECTURE · TECHNICAL_REPORT · DATASET · LLM_ASSISTANT · I18N · PRESENTATION · RBAC_MATRIX · openapi.yaml · PLAN
@@ -128,7 +128,7 @@ python manage.py run_detection                   # idempotent؛ با هشدار�
 python manage.py evaluate                        # precision/recall/F1 + ablation نسبت به ground truth مصنوعی
 python manage.py export_docs                     # بازتولید docs/RBAC_MATRIX.md و docs/openapi.yaml از روی کد
 python manage.py evaluate_llm [--live]           # red-team محافظ‌های LLM (مدل اسکریپت‌شده، بدون شبکه؛ --live با کلید شما)
-python -m pytest -q                              # ۸۷ تست
+python -m pytest -q                              # ۹۱ تست
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # پایداری در دنیاهای مصنوعی مختلف
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دود مرورگر (به Playwright نیاز دارد)
 ```

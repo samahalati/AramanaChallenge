@@ -156,3 +156,40 @@ def test_10_deliverables_exist():
     assert [p for p in required if not (root / p).exists()] == []
     arch = (root / "docs/ARCHITECTURE.md").read_text()
     assert "erDiagram" in arch and arch.count("```mermaid") >= 5                                                  # ERD + system / data-flow / detection diagrams
+
+
+# ───────────────────────── §7.4 common API vulnerabilities
+def _token_with(claims_patch: dict | None, keep_signature: bool, alg: str = "HS256") -> str:
+    import base64
+    import json
+    b64 = lambda d: base64.urlsafe_b64encode(json.dumps(d).encode()).rstrip(b"=").decode()    # noqa: E731
+    import jwt
+    from django.conf import settings
+    claims = jwt.decode(jwt.encode({"sub": "1", "role": "therapist", "exp": 4_000_000_000}, settings.SECRET_KEY, algorithm="HS256"), settings.SECRET_KEY, algorithms=["HS256"])
+    head, payload, sig = jwt.encode(claims, settings.SECRET_KEY, algorithm="HS256").split(".")
+    return f"{b64({'alg': 'none', 'typ': 'JWT'})}.{payload}." if alg == "none" else f"{head}.{b64({**claims, **(claims_patch or {})})}.{sig if keep_signature else ''}"
+
+
+def test_7_4_forged_tokens_are_rejected(api):
+    for token in (_token_with(None, True, alg="none"), _token_with({"role": "platform_admin"}, True), _token_with(None, False), "a.b.c"):
+        r = api.client.get("/api/auth/me", HTTP_AUTHORIZATION=f"Bearer {token}")
+        assert r.status_code in (401, 403), token[:20]
+
+
+def test_7_4_no_mass_assignment_injection_or_traversal(api):
+    target = uid(api, COUN)
+    assert api.client.patch(f"/api/hr/practitioners/{target}/profile", {"role": "platform_admin", "bio": "x"}, format="json", HTTP_AUTHORIZATION=f"Bearer {api.token(HR)}").status_code == 200
+    assert User_role(target) == "assistant_counselor"                                                         # unknown fields never reach the model
+    r = api.get("/hr/practitioners?q=%27%20OR%201%3D1%20--", HR)
+    assert r.status_code == 200 and r.json() == []                                                             # parameterised queries
+    assert b"SECRET_KEY" not in api.client.get("/assets/..%2f..%2fbackend%2fconfig%2fsettings.py").content
+
+
+def User_role(uid_: int) -> str:
+    from accounts.models import User
+    return User.objects.get(pk=uid_).role
+
+
+def test_7_1_api_documentation_declares_bearer_authentication(api):
+    schema = api.client.get("/api/schema/").content.decode()
+    assert "bearerAuth" in schema and "/api/hr/practitioners/{id}/activity" in schema

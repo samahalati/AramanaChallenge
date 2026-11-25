@@ -1,6 +1,6 @@
 # Fraud & anomaly detection configuration. VERSIONED: bump `ruleset_version` on any change;
 # every alert stores the ruleset + model version that produced it.
-ruleset_version: "rules-1.0.0"
+ruleset_version: "rules-1.1.0"
 random_seed: 42
 
 windows:
@@ -25,6 +25,8 @@ weights:
   inflated_duration_share: 0.80
   no_checkin_share: 0.50
   # B – counselor referral analysis
+  referral_shift_p: 0.50          # change of a counselor's referral targets between two periods (permutation test)
+  referral_shift_js: 0.45
   referral_concentration_p: 0.55
   referral_js_divergence: 0.50
   referral_top2_excess: 0.40
@@ -62,6 +64,11 @@ thresholds:
   referral_alpha: 0.001
   referral_js_min: 0.20
   referral_js_full: 0.60
+  shift_min_referrals: 12         # referrals needed in EACH period
+  shift_alpha: 0.001
+  shift_js_min: 0.45
+  shift_js_full: 0.80
+  shift_simulations: 2000
   referral_simulations: 4000
   referral_policy_slack: 0.05   # share of referrals tolerated outside strict specialisation policy
   approvals_missing_min: 3

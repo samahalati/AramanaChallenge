@@ -42,6 +42,7 @@ Injected on top of the normal process, each with an explicit **ground truth** en
 | A | `session_overlap` | 7 overlapping pairs over the last 3 weeks for one therapist, 4 of them in-person at two different locations |
 | A | `duration_discrepancy` | last 5 weeks: 45 % of completed sessions report 50 min but check-in span 22–30 min; 12 % completed with no check-in |
 | A | `cancellation_pattern` | last 4 weeks: 38 % cancelled, 60 % of sessions modified 2–4 times |
+| B | `referral_behavior_shift` | the same counselor spread referrals evenly before the last 6 weeks, then sends 82 % to two practitioners (change of behaviour between periods) |
 | B | `referral_concentration` | last 6 weeks: 82 % of one counselor's referrals go to 2 practitioners (mostly specialisation mismatches) |
 | C | `approval_burst` | 58 approvals within ~30 hours, review time ≈ 1.2 min, ~45 % intended without documentation (22 of the 87 approvals in the 28-day window lack documentation) |
 | D | `admin_out_of_scope` | platform admin: 9 denied clinical/HR/supervision requests in 27 min, 3 accounts created in 6 min, 3 privileged role grants |

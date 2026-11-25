@@ -113,7 +113,8 @@ ROLE_DESCRIPTIONS = {
     "assistant_counselor": "ارجاع ثبت می‌کند؛ فقط ارجاع‌های خودش را می‌بیند.",
     "compliance_reviewer": "هشدارها را در همه‌ی حوزه‌ها بررسی می‌کند؛ دسترسی فقط‌خواندنیِ شواهد، محدود به موضوعِ هشدارها.",
 }
-TERMS.update({"subject": "موضوع هشدار", "related": "مرتبط", "training": "آموزش", "course": "دوره", "conference": "همایش", "workshop": "کارگاه", "supervision_hours": "ساعت‌های نظارت",
+TERMS.update({"referral_shift_p": "مقدار p تغییر رفتار ارجاع", "referral_shift_js": "فاصله‌ی ینسن–شانون دو دوره", "share_previous": "سهم دوره‌ی قبل", "share_recent": "سهم دوره‌ی اخیر", "referral_shift": "تغییر ارجاع",
+               "subject": "موضوع هشدار", "related": "مرتبط", "training": "آموزش", "course": "دوره", "conference": "همایش", "workshop": "کارگاه", "supervision_hours": "ساعت‌های نظارت",
                "development_add": "ثبت فعالیت توسعه‌ی حرفه‌ای"})
 TERMS.update({   # permission tokens shown on the roles page
     "alerts:comment": "ثبت یادداشت روی هشدار", "alerts:investigate": "تحقیق روی هشدار", "alerts:read": "مشاهده‌ی هشدارها", "audit:read": "مشاهده‌ی حسابرسی",

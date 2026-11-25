@@ -65,7 +65,7 @@ Response: `{kind, provider, refused, content, citations{id: source text}, guardr
 
 ## Evaluation (`python manage.py evaluate_llm [--live]`)
 
-**Deterministic layer (CI, no network):** scripted model + scripted judge on all 12 alerts, English + Persian → **672 / 672** (`docs/llm_eval.txt`). It proves the list-free checks block bad replies, that a judge verdict is honoured (flag → repair → fallback), that *no verdict ⇒ no model text*, that a model refusal is shown as a refusal, and that evidence is redacted. It says **nothing** about how good the real model/judge is.
+**Deterministic layer (CI, no network):** scripted model + scripted judge on all 13 alerts, English + Persian → **728 / 728** (`docs/llm_eval.txt`). It proves the list-free checks block bad replies, that a judge verdict is honoured (flag → repair → fallback), that *no verdict ⇒ no model text*, that a model refusal is shown as a refusal, and that evidence is redacted. It says **nothing** about how good the real model/judge is.
 
 **Live layer (`--live`, needs a key):** the real provider acts as model and judge. One run on one critical alert with Gemini `gemini-3.5-flash-lite` (free tier, which was rate-limiting and returning 503 during the run, so it is a spot check, not a benchmark):
 

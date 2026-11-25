@@ -56,6 +56,42 @@ def referral_analysis(ctx: Context) -> dict:
 
 
 @register
+class ReferralBehaviourShift(Detector):
+    """Category B – "suspicious changes in referral behaviour": did a counselor's referral targets change between the previous and the recent
+    period by more than chance allows? Permutation test (period labels shuffled), so the counselor's own natural variation is the null."""
+    category, domain, scenario = COUNSELOR, MISCONDUCT, "referral_behavior_shift"
+
+    def detect(self):
+        t, d, ind, out = self.t, self.d, self.cfg.ind, []
+        recent_from = d.since(self.cfg.windows["recent_days"])
+        refs = d.referrals[d.referrals.created_at >= d.since(self.cfg.windows["lookback_days"])]
+        rng = np.random.default_rng(self.cfg.seed)
+        for cid, g in refs.groupby("from_user_id"):
+            recent = (g.created_at >= recent_from).to_numpy()
+            if d.roles.get(cid) != "assistant_counselor" or min(recent.sum(), (~recent).sum()) < t["shift_min_referrals"]:
+                continue
+            codes, tgt = np.unique(g.to_practitioner_id.to_numpy(), return_inverse=True)
+            shares = lambda mask: np.bincount(tgt[mask], minlength=len(codes)) / max(1, mask.sum())     # noqa: E731
+            dist = lambda mask: float(js_distance(shares(mask), shares(~mask))[0])                        # noqa: E731
+            obs = dist(recent)
+            null = np.array([dist(rng.permutation(recent)) for _ in range(t["shift_simulations"])])
+            p = (1 + int((null >= obs).sum())) / (len(null) + 1)
+            if p > t["shift_alpha"] or obs < t["shift_js_min"]:
+                continue
+            before, after = shares(~recent), shares(recent)
+            movers = np.argsort(-(after - before))[:3]
+            inds = [ind("referral_shift_p", "Change of referral targets between the previous and the recent period (permutation p-value)", round(p, 5), f"<= {t['shift_alpha']}",
+                        -np.log10(p) / np.log10(len(null) + 1), "statistical"),
+                    ind("referral_shift_js", "Jensen-Shannon distance between the two periods", round(obs, 3), f"null mean {null.mean():.2f}",
+                        (obs - null.mean()) / max(1e-6, t["shift_js_full"] - null.mean()), "statistical")]
+            ev = [{"type": "referral_shift", "therapist": int(codes[k]), "share_previous": round(float(before[k]), 3), "share_recent": round(float(after[k]), 3)} for k in movers]
+            out.append(self.finding(cid, inds, ev, [f"referral:{x}" for x in g[recent].id], title=f"Change in referral behaviour for {d.label(cid)}", related=[int(codes[k]) for k in movers],
+                                    window_days=self.cfg.windows["lookback_days"], action="Ask the counselor and their supervisor what changed between the two periods (new client mix, "
+                                    "assignment policy, requests); compare with the concentration alert for the same person. A shift alone is not evidence of wrongdoing."))
+        return out
+
+
+@register
 class ReferralConcentration(Detector):
     category, domain, scenario = COUNSELOR, MISCONDUCT, "referral_concentration"
 

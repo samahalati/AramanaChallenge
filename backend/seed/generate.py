@@ -578,6 +578,7 @@ def generate(seed: int = 42, ground_truth_path: str | None = None, lang: str = "
             {"category": "A", "scenario": "duration_discrepancy", "users": [uid(T_inflate)]},
             {"category": "A", "scenario": "cancellation_pattern", "users": [uid(T_cancel)]},
             {"category": "B", "scenario": "referral_concentration", "users": [uid(C_conc), uid(C_ring)]},
+            {"category": "B", "scenario": "referral_behavior_shift", "users": [uid(C_conc)]},
             {"category": "C", "scenario": "approval_burst", "users": [uid(S_rubber)]},
             {"category": "D", "scenario": "admin_out_of_scope", "users": [uid(admin2)]},
             {"category": "D", "scenario": "admin_modification_burst", "users": [uid(hr2)]},
