@@ -113,7 +113,7 @@ backend/                         پروژه‌ی Django
   monitoring/                    ماژول ج: هشدارها، گردش‌کار تحقیق، اجراها، ارزیابی، سیاست دید (visibility)
   detection/                     موتور پایتون خالص: آشکارسازهای Strategy، امتیازدهی، توضیح، آداپتور LLM، config.yaml
   seed/                          داده‌ی مصنوعی + ناهنجاری‌های تزریقی + ground truth
-  tests/                         pytest-django (۹۵ تست)
+  tests/                         pytest-django (۹۷ تست)
 frontend/                        React + Vite (TanStack Query، React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
 Dockerfile · docker-compose.yml · deploy/nginx.conf     ایمیج تکی · پشته‌ی تکثیرشده (PostgreSQL + ۲ replica + load balancer)
@@ -133,7 +133,7 @@ python manage.py run_detection                   # idempotent؛ با هشدار�
 python manage.py evaluate                        # precision/recall/F1 + ablation نسبت به ground truth مصنوعی
 python manage.py export_docs                     # بازتولید docs/RBAC_MATRIX.md و docs/openapi.yaml از روی کد
 python manage.py evaluate_llm [--live]           # red-team محافظ‌های LLM (مدل اسکریپت‌شده، بدون شبکه؛ --live با کلید شما)
-python -m pytest -q                              # ۹۵ تست
+python -m pytest -q                              # ۹۷ تست
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # پایداری در دنیاهای مصنوعی مختلف
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # تست دود مرورگر (به Playwright نیاز دارد)
 ```

@@ -43,7 +43,7 @@ TERMS = {
     "low": "کم", "medium": "متوسط", "high": "بالا", "critical": "بحرانی",
     "operational": "عملیاتی", "clinical": "بالینی", "misconduct": "تخلف بالقوه", "security": "امنیتی", "supervision": "نظارت", "hr": "منابع انسانی",
     "rule": "قاعده", "statistical": "آماری", "ml": "یادگیری ماشین", "graph": "گراف", "manual": "دستی",
-    "template": "قالب قطعی", "template(fallback)": "قالب قطعی (جایگزین)", "groq": "Groq", "gemini": "Gemini", "ollama": "Ollama",
+    "template": "قالب قطعی", "template(fallback)": "قالب قطعی (جایگزین)", "groq": "Groq", "gemini": "Gemini", "ollama": "Ollama", "custom": "سرویس سفارشی",
     # sessions / reviews / issues / meetings
     "scheduled": "زمان‌بندی‌شده", "completed": "انجام‌شده", "cancelled": "لغوشده", "no_show": "غیبت", "online": "آنلاین", "in_person": "حضوری",
     "in_progress": "در جریان", "needs_changes": "نیازمند اصلاح", "approved": "تأییدشده", "open": "باز", "resolved": "حل‌شده", "missed": "غایب",

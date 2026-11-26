@@ -88,13 +88,32 @@ Findings from the live runs that changed the code: a model refusal that also sug
 * The number check allows any figure present in the evidence, so a model can still mis-attribute *which* number belongs to *which* indicator; citations and the visible source chips are the control.
 * Offline (no provider) the assistant cannot interpret a question; it shows the key facts only.
 
-## Use a real free model
+## Use a real model – and change provider or model
+
+All settings live in `backend/.env` (loaded automatically; restart the backend after editing). No code change is ever needed.
+
+| `LLM_PROVIDER` | Service | `LLM_API_KEY` | Default model | Endpoint |
+|---|---|---|---|---|
+| `none` (default) | deterministic template, no network | – | – | – |
+| `gemini` | Google AI Studio (free tier) | required | `gemini-3.5-flash-lite` | built in |
+| `groq` | Groq (free tier) | required | `llama-3.3-70b-versatile` | built in |
+| `ollama` | local model, nothing leaves the machine | not needed | `llama3.2` | `http://localhost:11434/v1` |
+| `custom` | **any OpenAI-compatible service** (OpenAI, OpenRouter, Together, Azure, vLLM, LM Studio …) | as the service requires | set `LLM_MODEL` | set `LLM_BASE_URL` |
 
 ```bash
-# backend/.env  (loaded automatically)
-LLM_PROVIDER=gemini            # or groq, or ollama
-LLM_API_KEY=...                # AI Studio / Groq free key (not needed for ollama)
+# switch the MODEL only (same provider)
+LLM_PROVIDER=gemini
+LLM_API_KEY=...
+LLM_MODEL=gemini-3.5-flash
+
+# switch to another SERVICE (example: OpenAI; OpenRouter/Together/vLLM work the same way)
+LLM_PROVIDER=custom
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_MODEL=gpt-4o-mini
+LLM_API_KEY=sk-...
 ```
+The same model answers *and* judges (the guardrail judge is a second call), so pick a model that follows instructions reliably and returns JSON; small models may be rejected more often and fall back to the deterministic text (always shown with a badge, never an unchecked reply). After a change, re-run `python manage.py evaluate_llm --live --alerts 3` to see how the new model behaves with the guardrails before relying on it. If the key is wrong or the service is down, nothing breaks: the assistant falls back to the deterministic text.
+
 Restart the backend, open an alert as `compliance@aramana.test`, click **Generate briefing** or ask a question. The badge shows the provider; "model reply rejected → deterministic fallback" means a check fired (open *details* to see which).
 
 ## Extend

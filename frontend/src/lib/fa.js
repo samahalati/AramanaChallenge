@@ -412,6 +412,7 @@ export default {
   "provider:gemini": "Gemini",
   "provider:ollama": "Ollama",
   "provider:openai": "OpenAI",
+  "provider:custom": "سرویس سفارشی",
   "Meeting scheduled": "جلسه زمان‌بندی شد",
   "Open a review": "گشودنِ بازبینی",
   "Clinical supervision & quality": "نظارتِ بالینی و کیفیت",

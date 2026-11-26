@@ -70,7 +70,7 @@ cp backend/.env.example backend/.env      # Windows: copy backend\.env.example b
 | `DATABASE_URL` | SQLite file in `data/` | PostgreSQL: `postgres://user:pass@host:5432/db` (+ `pip install "psycopg[binary]"`) |
 | `ACCESS_TOKEN_MINUTES` | `60` | login token lifetime |
 | `MAX_FAILED_LOGINS` / `LOCKOUT_MINUTES` | `5` / `15` | account lockout |
-| `LLM_PROVIDER` | `none` | `gemini`, `groq` or `ollama` (see [section 9](#9-the-llm-assistant)) |
+| `LLM_PROVIDER` | `none` | `gemini`, `groq`, `ollama` or `custom` = any OpenAI-compatible service with `LLM_BASE_URL` + `LLM_MODEL` (see [section 9](#9-the-llm-assistant)) |
 | `LLM_API_KEY` / `LLM_MODEL` / `LLM_BASE_URL` | empty | provider key, optional model override, optional endpoint override |
 | `DETECTION_CONFIG` | `backend/detection/config.yaml` | weights and thresholds of the fraud engine |
 
@@ -156,7 +156,7 @@ On an alert page, reviewers (compliance, platform admin for security alerts) get
 
 ```bash
 # backend/.env
-LLM_PROVIDER=gemini                    # or groq, or ollama
+LLM_PROVIDER=gemini                    # or groq, ollama, custom (any OpenAI-compatible service: also set LLM_BASE_URL and LLM_MODEL)
 LLM_API_KEY=your-free-key              # https://aistudio.google.com/apikey · https://console.groq.com/keys · not needed for ollama
 ```
 Restart the backend. The badge on each answer shows who produced it: the model (Gemini/Groq/Ollama), *deterministic template*, or *deterministic template (fallback)* meaning the model failed or a check rejected its reply (open **details** to see why).
@@ -173,7 +173,7 @@ Safety model in one paragraph: the model only sees pseudonymised evidence with c
 | `python manage.py evaluate [--write file.json]` | precision/recall/F1 vs ground truth |
 | `python manage.py evaluate_llm [--live] [--alerts N]` | red-team the LLM guardrails (`--live` uses your key) |
 | `python manage.py export_docs` | regenerate `docs/RBAC_MATRIX.md` and `docs/openapi.yaml` from the code |
-| `python -m pytest -q` | run the 95 tests |
+| `python -m pytest -q` | run the 97 tests |
 | `python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8` | robustness across synthetic worlds |
 
 Frontend (from `frontend/`): `npm run dev` · `npm run build` · `npm run check:i18n` · `BASE=http://localhost:5173 node e2e/smoke.cjs` (browser smoke test; needs Playwright).

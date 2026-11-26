@@ -68,7 +68,7 @@ class AssistantExchange(models.Model):
     actor_id = models.IntegerField(db_index=True)
     kind = models.CharField(max_length=10)            # briefing | answer
     question = models.TextField(null=True)
-    provider = models.CharField(max_length=40)        # groq | gemini | ollama | template | template(fallback) | guardrail (refused)
+    provider = models.CharField(max_length=40)        # groq | gemini | ollama | custom | template | template(fallback) | guardrail (refused)
     refused = models.BooleanField(default=False)
     content = models.JSONField()
     citations = models.JSONField()

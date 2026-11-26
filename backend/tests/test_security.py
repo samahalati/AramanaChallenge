@@ -139,3 +139,17 @@ def test_audit_append_survives_a_lost_race(api, monkeypatch):
     row = audit_mod.audit(None, "second", "test")
     assert row.prev_hash == tail and verify_chain()["ok"]
     assert AuditLog.objects.filter(prev_hash=tail).count() == 1
+
+
+def test_dotenv_loader_handles_comments_and_quotes(tmp_path, monkeypatch):
+    """What a client copies from the docs must work: `KEY=value   # comment`, quoted values, comment lines, `=` inside values."""
+    from config.settings import _load_dotenv
+    for k in ("T_A", "T_B", "T_C", "T_D", "T_E"):
+        monkeypatch.delenv(k, raising=False)
+    f = tmp_path / ".env"
+    f.write_text('# a comment\nT_A=gemini            # or groq\nT_B="quoted # not a comment"\nT_C=\nT_D=postgres://u:p@h:5432/db?x=1\nT_E = spaced\n', encoding="utf-8")
+    _load_dotenv(f)
+    import os
+    assert (os.environ["T_A"], os.environ["T_B"], os.environ["T_C"], os.environ["T_D"], os.environ["T_E"]) == ("gemini", "quoted # not a comment", "", "postgres://u:p@h:5432/db?x=1", "spaced")
+    for k in ("T_A", "T_B", "T_C", "T_D", "T_E"):
+        os.environ.pop(k, None)

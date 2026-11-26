@@ -113,7 +113,7 @@ backend/                         Django project
   monitoring/                    Module C: alerts, investigation workflow, runs, evaluation, visibility policy
   detection/                     PURE PYTHON engine: Strategy detectors, scoring, explain, config.yaml, llm.py (transport) + assistant/ (guarded LLM)
   seed/                          synthetic data + injected anomalies + ground truth
-  tests/                         pytest-django (95 tests)
+  tests/                         pytest-django (97 tests)
 frontend/                        React + Vite (TanStack Query, React Router)
   src/{api,auth,components,features}   e2e/smoke.cjs (Playwright)
 Dockerfile · docker-compose.yml · deploy/nginx.conf     single image · replicated stack (PostgreSQL + 2 replicas + load balancer)
@@ -133,7 +133,7 @@ python manage.py run_detection                   # idempotent; de-duplicates aga
 python manage.py evaluate                        # precision/recall/F1 + ablation vs synthetic ground truth
 python manage.py export_docs                     # regenerate docs/RBAC_MATRIX.md + docs/openapi.yaml from code
 python manage.py evaluate_llm [--live]           # red-team the LLM guardrails (scripted model, no network; --live uses your key)
-python -m pytest -q                              # 95 tests
+python -m pytest -q                              # 97 tests
 python scripts/multi_seed_eval.py 1 2 3 4 5 6 7 8   # robustness across synthetic worlds
 cd ../frontend && BASE=http://localhost:5173 node e2e/smoke.cjs   # browser smoke test (needs Playwright)
 ```

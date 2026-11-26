@@ -1,5 +1,6 @@
 """Django settings – 12-factor: everything configurable via environment (see backend/.env.example)."""
 import os
+import re
 from pathlib import Path
 
 import dj_database_url
@@ -14,7 +15,9 @@ def _load_dotenv(path: Path) -> None:
         for line in path.read_text(encoding="utf-8").splitlines():
             key, sep, value = line.partition("=")
             if sep and key.strip() and not key.lstrip().startswith("#"):
-                os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+                value = value.strip()
+                value = value[1:-1] if value[:1] in "\"'" and value[-1:] == value[:1] and len(value) > 1 else re.split(r"\s+#", value)[0].strip()   # `KEY=value   # comment`
+                os.environ.setdefault(key.strip(), value)
 
 
 _load_dotenv(BASE_DIR / ".env")

@@ -204,3 +204,21 @@ def test_assistant_never_changes_state(api):
     api.post(f"/alerts/{a.id}/assistant", COMP, question="What should I check next?")
     a.refresh_from_db()
     assert before == (a.status, a.risk_score, a.risk_level, set(User.objects.values_list("id", "status", "role")))
+
+
+def test_custom_provider_uses_the_configured_endpoint_model_and_key():
+    """A client can point the assistant at any OpenAI-compatible service with .env only (LLM_PROVIDER=custom + LLM_BASE_URL + LLM_MODEL + LLM_API_KEY)."""
+    import httpx
+
+    from detection import llm
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["url"], seen["auth"], seen["body"] = str(request.url), request.headers.get("authorization"), request.read().decode()
+        return httpx.Response(200, json={"choices": [{"message": {"content": " ok "}}]})
+
+    cfg = {"provider": "custom", "api_key": "k-123", "model": "my-model", "base_url": "https://llm.example.test/v1/"}
+    assert llm.chat([{"role": "user", "content": "hi"}], cfg, transport=httpx.MockTransport(handler)) == "ok"
+    assert seen["url"] == "https://llm.example.test/v1/chat/completions" and seen["auth"] == "Bearer k-123" and '"my-model"' in seen["body"]
+    with pytest.raises(llm.LLMUnavailable):   # custom without URL/model is a configuration error → deterministic fallback, never a crash
+        llm.chat([], {"provider": "custom", "api_key": "k"}, transport=httpx.MockTransport(handler))
